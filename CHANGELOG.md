@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.0.2...v1.1.0) (2026-07-05)
+
+
+### Features
+
+* update CI/CD workflow for feature branches ([346b8da](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/346b8dae14c46ae9672dbf4b6649811236e22417))
+
 ## [1.0.2](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.0.1...v1.0.2) (2026-07-05)
 
 
