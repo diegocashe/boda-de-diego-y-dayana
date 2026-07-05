@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.0.1...v1.0.2) (2026-07-05)
+
+
+### Bug Fixes
+
+* update README.md with project details, installation instructions, and code quality guidelines ([74de8f6](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/74de8f672290e5cc258ae81b8910ae2d0270de3e))
+
 ## [1.0.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.0.0...v1.0.1) (2026-07-05)
 
 
