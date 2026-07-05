@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  # Los hooks de husky son para desarrollo local; en CI los checks corren como steps
+  HUSKY: 0
+
 jobs:
   # ── Corre en cada push a main ─────────────────────────────────────────────
   ci:
@@ -166,8 +170,14 @@ jobs:
 
       - name: Notify Discord — deploy exitoso
         if: steps.semantic.outputs.new_release_published == 'true' && success()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          curl -fv -X POST "${{ secrets.DISCORD_WEBHOOK_URL }}" \
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL no configurado; se omite la notificación."
+            exit 0
+          fi
+          curl -fv -X POST "$DISCORD_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d '{
               "embeds": [{
@@ -204,8 +214,14 @@ jobs:
 
       - name: Notify Discord — fallo en el pipeline
         if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          curl -fv -X POST "${{ secrets.DISCORD_WEBHOOK_URL }}" \
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL no configurado; se omite la notificación."
+            exit 0
+          fi
+          curl -fv -X POST "$DISCORD_WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d '{
               "embeds": [{
