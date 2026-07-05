@@ -43,6 +43,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Search Engine Indexing
+    |--------------------------------------------------------------------------
+    |
+    | While the site is under construction this should stay false so search
+    | engines don't index it (renders a noindex meta tag). Flip the env var
+    | to true on launch, together with reverting public/robots.txt.
+    |
+    */
+
+    'indexable' => (bool) env('APP_INDEXABLE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |

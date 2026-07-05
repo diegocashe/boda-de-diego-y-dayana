@@ -78,7 +78,7 @@ Levanta en paralelo el servidor de Laravel, el worker de colas, los logs (Pail) 
 
 - **Husky + commitlint**: los commits siguen [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, …).
 - **semantic-release**: el versionado y el `CHANGELOG.md` se generan automáticamente en cada push a `main`.
-- **CI/CD** (`.github/workflows/deploy.yml`): en cada push a `main` se ejecutan lint, typecheck y tests; si pasan, se publica el release y se despliega a producción (cPanel).
+- **CI/CD** (`.github/workflows/deploy.yml`): se trabaja en ramas por feature (CI corre en cada push); el merge a `main` publica el release y despliega a producción (cPanel). Despliegue, modo mantenimiento y backups: [docs/deploy.md](docs/deploy.md).
 
 ## Estructura relevante
 
