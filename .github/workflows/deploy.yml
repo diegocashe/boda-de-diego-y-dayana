@@ -1,0 +1,237 @@
+name: CI / CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  # ── Corre en cada push a main ─────────────────────────────────────────────
+  ci:
+    name: Lint, Typecheck & Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Debug environment
+        run: |
+          php -v
+          composer -V
+          node -v
+          pnpm -v
+          pnpm exec tsc -v
+          pwd
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Pint (PHP code style)
+        run: vendor/bin/pint --parallel --test
+
+      - name: PHPStan (PHP static analysis)
+        run: vendor/bin/phpstan analyse --no-progress
+
+      - name: Lint
+        run: pnpm lint:check
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Typecheck
+        run: pnpm types:check
+
+      - name: Build
+        run: pnpm build
+
+      - name: Tests
+        run: php artisan test
+
+  # ── Solo corre si CI pasa ─────────────────────────────────────────────────
+  release:
+    name: Release & Deploy
+    runs-on: ubuntu-latest
+    needs: ci
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Build
+        run: pnpm build
+
+      - name: Prune Composer dev dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+
+      - name: Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy via rsync over SSH
+        id: deploy
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: Burnett01/rsync-deployments@5.2.1
+        with:
+          switches: >-
+            -avzr --delete
+            --exclude='.git*'
+            --exclude='.husky/'
+            --exclude='node_modules/'
+            --exclude='tests/'
+            --exclude='.env'
+            --exclude='storage/'
+            --exclude='database/database.sqlite'
+          path: ./
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_port: 22
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Post-deploy (migrate & optimize)
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            ea-php83 artisan migrate --force
+            ea-php83 artisan optimize
+
+      - name: Notify Discord — deploy exitoso
+        if: steps.semantic.outputs.new_release_published == 'true' && success()
+        run: |
+          curl -fv -X POST "${{ secrets.DISCORD_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "embeds": [{
+                "title": "Despliegue exitoso",
+                "color": 3066993,
+                "fields": [
+                  {
+                    "name": "Version",
+                    "value": "v${{ steps.semantic.outputs.new_release_version }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Rama",
+                    "value": "`${{ github.ref_name }}`",
+                    "inline": true
+                  },
+                  {
+                    "name": "Commit",
+                    "value": "[`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})",
+                    "inline": false
+                  },
+                  {
+                    "name": "Release",
+                    "value": "[${{ github.repository }}/releases/tag/v${{ steps.semantic.outputs.new_release_version }}](${{ github.server_url }}/${{ github.repository }}/releases/tag/v${{ steps.semantic.outputs.new_release_version }})",
+                    "inline": false
+                  }
+                ],
+                "footer": {
+                  "text": "GitHub Actions • ${{ github.workflow }}"
+                },
+                "timestamp": "${{ github.event.head_commit.timestamp }}"
+              }]
+            }'
+
+      - name: Notify Discord — fallo en el pipeline
+        if: failure()
+        run: |
+          curl -fv -X POST "${{ secrets.DISCORD_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "embeds": [{
+                "title": "Error en el pipeline",
+                "description": "El workflow fallo antes de completar el despliegue.",
+                "color": 15158332,
+                "fields": [
+                  {
+                    "name": "Rama",
+                    "value": "`${{ github.ref_name }}`",
+                    "inline": true
+                  },
+                  {
+                    "name": "Ejecutado por",
+                    "value": "${{ github.actor }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Ver logs",
+                    "value": "[${{ github.workflow }} #${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+                    "inline": false
+                  }
+                ],
+                "footer": {
+                  "text": "GitHub Actions • ${{ github.workflow }}"
+                },
+                "timestamp": "${{ github.event.head_commit.timestamp }}"
+              }]
+            }'

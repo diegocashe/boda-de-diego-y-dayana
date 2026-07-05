@@ -1,0 +1,19 @@
+#!/bin/sh
+export PATH="/opt/homebrew/opt/php@8.3/bin:$HOME/.nvm/versions/node/v24.13.0/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+echo "Running pint..."
+vendor/bin/pint --parallel --test || exit 1
+
+echo "Running phpstan..."
+vendor/bin/phpstan analyse --no-progress || exit 1
+
+echo "Running eslint..."
+pnpm lint:check || exit 1
+
+echo "Running prettier..."
+pnpm format:check || exit 1
+
+echo "Running typecheck..."
+pnpm types:check || exit 1

@@ -18,9 +18,7 @@ const EmptyState = () => {
                 <KeyRound className="h-7 w-7 text-muted-foreground" />
             </div>
             <p className="font-medium">No passkeys yet</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-                Add a passkey to sign in without a password
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Add a passkey to sign in without a password</p>
         </div>
     );
 };
@@ -45,21 +43,11 @@ export default function ManagePasskeys(props: Props) {
 
     return (
         <div className="space-y-6">
-            <Heading
-                variant="small"
-                title="Passkeys"
-                description="Manage your passkeys for passwordless sign-in"
-            />
+            <Heading variant="small" title="Passkeys" description="Manage your passkeys for passwordless sign-in" />
 
             <div className="overflow-hidden rounded-lg border border-border">
                 {passkeys.length > 0 ? (
-                    passkeys.map((passkey) => (
-                        <PasskeyItem
-                            key={passkey.id}
-                            passkey={passkey}
-                            onDelete={handleDelete}
-                        />
-                    ))
+                    passkeys.map((passkey) => <PasskeyItem key={passkey.id} passkey={passkey} onDelete={handleDelete} />)
                 ) : (
                     <EmptyState />
                 )}
