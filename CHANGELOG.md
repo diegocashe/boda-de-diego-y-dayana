@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.0.0...v1.0.1) (2026-07-05)
+
+
+### Bug Fixes
+
+* update version in package.json to 1.0.1 ([3c64f53](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/3c64f53d38f60a48d166d3600b4a310a99a02dce))
+
 # 1.0.0 (2026-07-05)
 
 
