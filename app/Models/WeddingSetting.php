@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+
+/**
+ * @property string $groom_name
+ * @property string $bride_name
+ * @property Carbon $wedding_at
+ * @property string $city
+ */
+class WeddingSetting extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'groom_name',
+        'bride_name',
+        'wedding_at',
+        'city',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'wedding_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * The application manages a single wedding, so the settings live in one row
+     * that gets created with sensible defaults on first access.
+     */
+    public static function current(): self
+    {
+        return self::query()->first() ?? self::query()->create([
+            'groom_name' => 'Diego',
+            'bride_name' => 'Dayana',
+            'wedding_at' => '2026-10-17 17:00:00',
+            'city' => 'Ciudad de México',
+        ]);
+    }
+}

@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Usuario administrador único; re-seedear actualiza nombre/contraseña.
+        User::firstOrNew(['email' => 'admin@diegoydayana.com'])->forceFill([
+            'name' => 'Diego y Dayana',
+            'password' => config('app.admin_seed_password'),
+            'email_verified_at' => now(),
+        ])->save();
     }
 }
