@@ -2,8 +2,8 @@ import { ArrowRight, ChevronDown, Heart } from 'lucide-react';
 import CountdownPanel from '@/components/invitation/countdown-panel';
 import PhotoPlaceholder from '@/components/invitation/photo-placeholder';
 import WineButton from '@/components/invitation/wine-button';
-import { buildWeddingLabels  } from '@/lib/wedding';
-import type {WeddingLabels} from '@/lib/wedding';
+import { buildWeddingLabels } from '@/lib/wedding';
+import type { WeddingLabels } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
 import type { WeddingDetails } from '@/types/invitation';
 

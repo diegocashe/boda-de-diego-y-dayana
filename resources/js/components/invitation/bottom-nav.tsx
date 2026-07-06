@@ -1,5 +1,5 @@
-import { NAV_ITEMS  } from '@/components/invitation/nav-items';
-import type {NavProps} from '@/components/invitation/nav-items';
+import { NAV_ITEMS } from '@/components/invitation/nav-items';
+import type { NavProps } from '@/components/invitation/nav-items';
 import { cn } from '@/lib/utils';
 
 export default function BottomNav({ activeTab, onNavigate }: NavProps) {

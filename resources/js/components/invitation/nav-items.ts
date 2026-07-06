@@ -1,5 +1,5 @@
-import { ClipboardCheck, Heart, Home, MapPin  } from 'lucide-react';
-import type {LucideIcon} from 'lucide-react';
+import { ClipboardCheck, Heart, Home, MapPin } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import type { InvitationTab } from '@/types/invitation';
 
 export const NAV_ITEMS: { tab: InvitationTab; label: string; icon: LucideIcon }[] = [
