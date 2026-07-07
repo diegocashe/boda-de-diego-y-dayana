@@ -1,15 +1,16 @@
 import { ClipboardCheck, Heart, Home, MapPin } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import type { InvitationTab } from '@/types/invitation';
+import { home } from '@/routes';
+import { details, rsvp, story } from '@/routes/invitation';
+import type { RouteDefinition } from '@/wayfinder';
 
-export const NAV_ITEMS: { tab: InvitationTab; label: string; icon: LucideIcon }[] = [
-    { tab: 'home', label: 'Inicio', icon: Home },
-    { tab: 'story', label: 'Historia', icon: Heart },
-    { tab: 'rsvp', label: 'Asistencia', icon: ClipboardCheck },
-    { tab: 'details', label: 'Info', icon: MapPin },
+export const NAV_ITEMS: { href: RouteDefinition<'get'>; label: string; icon: LucideIcon }[] = [
+    { href: home(), label: 'Inicio', icon: Home },
+    { href: story(), label: 'Historia', icon: Heart },
+    { href: rsvp(), label: 'Asistencia', icon: ClipboardCheck },
+    { href: details(), label: 'Info', icon: MapPin },
 ];
 
-export interface NavProps {
-    activeTab: InvitationTab;
-    onNavigate: (tab: InvitationTab) => void;
+export function isActiveNavItem(currentUrl: string, href: RouteDefinition<'get'>): boolean {
+    return currentUrl.split('?')[0] === href.url;
 }

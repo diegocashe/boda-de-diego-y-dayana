@@ -1,11 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Gem, LayoutGrid } from 'lucide-react';
+import { BookOpen, FolderGit2, Gem, Heart, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as timelineIndex } from '@/routes/timeline';
 import { edit as weddingEdit } from '@/routes/wedding';
 import type { NavItem } from '@/types';
 
@@ -19,6 +20,11 @@ const mainNavItems: NavItem[] = [
         title: 'Datos de la boda',
         href: weddingEdit(),
         icon: Gem,
+    },
+    {
+        title: 'Nuestra historia',
+        href: timelineIndex(),
+        icon: Heart,
     },
 ];
 

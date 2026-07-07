@@ -1,85 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: home.url(options),
-    method: 'get',
-})
-
-home.definition = {
-    methods: ["get","head"],
-    url: '/',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-home.url = (options?: RouteQueryOptions) => {
-    return home.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: home.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: home.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: home.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: home.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\InvitationController::home
-* @see app/Http/Controllers/InvitationController.php:15
-* @route '/'
-*/
-homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: home.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-home.form = homeForm
-
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\InvitationController::story
 * @see app/Http/Controllers/InvitationController.php:25
@@ -323,6 +242,10 @@ detailsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 details.form = detailsForm
 
-const InvitationController = { home, story, rsvp, details }
+const invitation = {
+    story: Object.assign(story, story),
+    rsvp: Object.assign(rsvp, rsvp),
+    details: Object.assign(details, details),
+}
 
-export default InvitationController
+export default invitation

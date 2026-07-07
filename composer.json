@@ -53,6 +53,12 @@
             "Composer\\Config::disableProcessTimeout",
             "@php artisan dev"
         ],
+        "migrate": [
+            "@php artisan migrate"
+        ],
+        "check": [
+            "@test"
+        ],
         "lint": [
             "pint --parallel"
         ],

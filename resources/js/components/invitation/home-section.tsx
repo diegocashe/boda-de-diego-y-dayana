@@ -1,15 +1,18 @@
+import { router } from '@inertiajs/react';
 import { ArrowRight, ChevronDown, Heart } from 'lucide-react';
 import CountdownPanel from '@/components/invitation/countdown-panel';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- se usa en los bloques comentados del diseño anterior
 import PhotoPlaceholder from '@/components/invitation/photo-placeholder';
 import WineButton from '@/components/invitation/wine-button';
 import { buildWeddingLabels } from '@/lib/wedding';
 import type { WeddingLabels } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
+import { rsvp } from '@/routes/invitation';
 import type { WeddingDetails } from '@/types/invitation';
-
+import imageUrl from '../../../assets/upscalemedia-transformed.jpeg';
+import imageURL2 from '../../../assets/upscalemedia-transformed-2.jpeg';
 interface HomeSectionProps {
     wedding: WeddingDetails;
-    onConfirm: () => void;
 }
 
 interface WeddingSectionProps {
@@ -19,15 +22,15 @@ interface WeddingSectionProps {
 
 const snapClass = 'relative flex min-h-dvh snap-start snap-always flex-col justify-center';
 
-export default function HomeSection({ wedding, onConfirm }: HomeSectionProps) {
+export default function HomeSection({ wedding }: HomeSectionProps) {
     const labels = buildWeddingLabels(wedding);
 
     return (
         <div className="scrollbar-hidden h-dvh snap-y snap-mandatory overflow-x-hidden overflow-y-auto">
             <HeroSection wedding={wedding} labels={labels} />
-            <ArchSection wedding={wedding} labels={labels} />
             <CountdownSection wedding={wedding} labels={labels} />
-            <CtaSection onConfirm={onConfirm} />
+            <CtaSection />
+            {/* <ArchSection wedding={wedding} labels={labels} /> */}
         </div>
     );
 }
@@ -36,10 +39,11 @@ function HeroSection({ wedding, labels }: WeddingSectionProps) {
     return (
         <section className={cn(snapClass, 'overflow-hidden')}>
             <div className="absolute inset-0 overflow-hidden">
-                <div className="hero-parallax absolute inset-x-0 -inset-y-[12%]">
-                    <PhotoPlaceholder label="Foto de los novios" className="h-full w-full rounded-none border-none" />
+                <div className="hero-parallax absolute inset-x-0 -inset-y-[12%] bg-center bg-no-repeat">
+                    <img src={imageUrl} alt="" className="h-full w-full object-cover" />
+                    {/* <PhotoPlaceholder label="Foto de los novios" className="h-full w-full rounded-none border-none" /> */}
                 </div>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(36,23,21,0.5)_0%,rgba(36,23,21,0.12)_38%,rgba(36,23,21,0.35)_66%,rgba(36,23,21,0.82)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,14,12,0.72)_0%,rgba(24,14,12,0.7)_38%,rgba(24,14,12,0.66)_66%,rgba(24,14,12,0.92)_100%)]" />
             </div>
 
             <div className="relative z-[2] px-6 text-center text-cream">
@@ -69,16 +73,22 @@ function HeroSection({ wedding, labels }: WeddingSectionProps) {
 }
 
 // Sección conservada del diseño anterior: retrato en arco con los nombres y la fecha.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function ArchSection({ wedding, labels }: WeddingSectionProps) {
     return (
         <section className={cn(snapClass, 'bg-gradient-to-b from-white to-parchment py-20')}>
             <div className="mx-auto w-full max-w-[1120px] px-[22px] text-center">
                 <div className="reveal text-xs font-semibold tracking-[0.34em] text-wine uppercase">Nuestro gran día</div>
 
-                <PhotoPlaceholder
-                    label="FOTO · pareja"
+                <img
+                    src={imageURL2}
+                    alt="Foto de los novios"
                     className="reveal mx-auto mt-[22px] h-[clamp(238px,32vw,320px)] w-[clamp(190px,26vw,256px)] rounded-[160px_160px_16px_16px]"
                 />
+                {/* <PhotoPlaceholder
+                    label="FOTO · pareja"
+                    className="reveal mx-auto mt-[22px] h-[clamp(238px,32vw,320px)] w-[clamp(190px,26vw,256px)] rounded-[160px_160px_16px_16px]"
+                /> */}
 
                 <div className="reveal">
                     <h1 className="mt-[26px] font-serif text-[clamp(52px,7vw,76px)] leading-[0.94] font-semibold text-ink">{wedding.groomName}</h1>
@@ -114,7 +124,7 @@ function CountdownSection({ wedding, labels }: WeddingSectionProps) {
     );
 }
 
-function CtaSection({ onConfirm }: { onConfirm: () => void }) {
+function CtaSection() {
     return (
         <section className={cn(snapClass, 'bg-gradient-to-b from-parchment-light to-[#eae1cf] pt-24 pb-[118px]')}>
             <div className="mx-auto w-full max-w-[720px] px-[22px] text-center">
@@ -130,7 +140,7 @@ function CtaSection({ onConfirm }: { onConfirm: () => void }) {
                     Tu presencia hará de este día un recuerdo aún más especial. Con todo nuestro cariño, esperamos contar contigo.
                 </p>
                 <WineButton
-                    onClick={onConfirm}
+                    onClick={() => router.visit(rsvp())}
                     className="reveal mt-[30px] inline-flex w-auto rounded-full px-[30px] py-4 shadow-[0_18px_34px_-14px_var(--color-wine-deep)]"
                 >
                     Confirmar asistencia

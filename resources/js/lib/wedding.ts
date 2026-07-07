@@ -1,5 +1,5 @@
-import { Calendar, Church, Coffee, Gem, Home, MapPin, Plane } from 'lucide-react';
-import type { GiftRegistryEntry, TimelineMilestone, VenueDetail, WeddingDetails } from '@/types/invitation';
+import { Calendar, Church, MapPin } from 'lucide-react';
+import type { GiftRegistryEntry, VenueDetail, WeddingDetails } from '@/types/invitation';
 
 export interface WeddingLabels {
     dateLabel: string;
@@ -11,14 +11,14 @@ const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slic
 
 export function buildWeddingLabels(wedding: WeddingDetails): WeddingLabels {
     const date = new Date(wedding.weddingAt);
-    const weekday = capitalize(date.toLocaleDateString('es-MX', { weekday: 'long' }));
-    const month = capitalize(date.toLocaleDateString('es-MX', { month: 'long' }));
-    const day = date.getDate();
-    const year = date.getFullYear();
+    const weekday = capitalize(date.toLocaleDateString('es-MX', { weekday: 'long', timeZone: 'UTC' }));
+    const month = capitalize(date.toLocaleDateString('es-MX', { month: 'long', timeZone: 'UTC' }));
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
 
-    const suffix = date.getHours() >= 12 ? 'PM' : 'AM';
-    const hours = date.getHours() % 12 || 12;
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const suffix = date.getUTCHours() >= 12 ? 'PM' : 'AM';
+    const hours = date.getUTCHours() % 12 || 12;
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
 
     return {
         dateLabel: `${weekday}, ${day} de ${month} ${year}`,
@@ -26,35 +26,6 @@ export function buildWeddingLabels(wedding: WeddingDetails): WeddingLabels {
         countdownCaption: `${wedding.city} · ${day} de ${month} de ${year}`,
     };
 }
-
-export const TIMELINE_MILESTONES: TimelineMilestone[] = [
-    {
-        period: '2019',
-        title: 'Cómo nos conocimos',
-        description:
-            'Entre el vapor de dos cafés y una conversación que no queríamos que terminara, una tarde cualquiera se volvió el comienzo de todo.',
-        icon: Coffee,
-    },
-    {
-        period: 'Verano 2021',
-        title: 'Nuestro primer viaje',
-        description: 'Maletas ligeras y un mapa lleno de planes. Descubrimos que viajar juntos era, en realidad, viajar hacia el mismo lugar.',
-        icon: Plane,
-    },
-    {
-        period: '2023',
-        title: 'Nuestro primer hogar',
-        description: 'Cajas, plantas nuevas y un café por estrenar. Construimos un espacio donde todos los días se sienten como estar en casa.',
-        icon: Home,
-    },
-    {
-        period: 'Diciembre 2025',
-        title: 'La propuesta',
-        description: 'Bajo las luces de invierno, una rodilla en el suelo y un «sí» que nos trajo hasta aquí. Ahora queremos celebrarlo contigo.',
-        icon: Gem,
-        highlighted: true,
-    },
-];
 
 export const VENUES: VenueDetail[] = [
     {

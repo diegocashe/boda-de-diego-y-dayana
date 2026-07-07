@@ -1,18 +1,18 @@
 import PhotoPlaceholder from '@/components/invitation/photo-placeholder';
 import SectionHeader from '@/components/invitation/section-header';
-import { TIMELINE_MILESTONES } from '@/lib/wedding';
+import { TimelineIcon } from '@/lib/timeline-icons';
 import { cn } from '@/lib/utils';
 import type { TimelineMilestone } from '@/types/invitation';
 
-export default function StorySection() {
+export default function StorySection({ milestones }: { milestones: TimelineMilestone[] }) {
     return (
         <>
             <SectionHeader eyebrow="Nuestra historia" title="El camino a este día" className="mb-[clamp(30px,5vw,54px)]" />
 
             <div className="relative flex flex-col gap-[22px] desk:block desk:pt-3 desk:pb-2">
                 <div className="absolute top-0 bottom-0 left-1/2 hidden w-0.5 -translate-x-1/2 bg-gradient-to-b from-blush-line to-[#c7d0bc] desk:block" />
-                {TIMELINE_MILESTONES.map((milestone, index) => (
-                    <TimelineItem key={milestone.title} milestone={milestone} side={index % 2 === 0 ? 'left' : 'right'} />
+                {milestones.map((milestone, index) => (
+                    <TimelineItem key={milestone.id} milestone={milestone} side={index % 2 === 0 ? 'left' : 'right'} />
                 ))}
             </div>
         </>
@@ -20,8 +20,6 @@ export default function StorySection() {
 }
 
 function TimelineItem({ milestone, side }: { milestone: TimelineMilestone; side: 'left' | 'right' }) {
-    const Icon = milestone.icon;
-
     return (
         <div
             className={cn(
@@ -36,10 +34,18 @@ function TimelineItem({ milestone, side }: { milestone: TimelineMilestone; side:
                     side === 'right' ? '-left-14' : '-right-14',
                 )}
             />
-            <PhotoPlaceholder label="Foto de este momento" className="mb-[15px] h-[clamp(160px,26vw,220px)] w-full rounded-[15px]" />
+            {milestone.imageUrl ? (
+                <img
+                    src={milestone.imageUrl}
+                    alt={milestone.title}
+                    className="mb-[15px] h-[clamp(160px,26vw,220px)] w-full rounded-[15px] border border-ink/[0.08] object-cover"
+                />
+            ) : (
+                <PhotoPlaceholder label="Foto de este momento" className="mb-[15px] h-[clamp(160px,26vw,220px)] w-full rounded-[15px]" />
+            )}
             <div className="px-2">
                 <div className="inline-flex items-center gap-2 text-wine">
-                    <Icon className="size-4" strokeWidth={1.7} />
+                    <TimelineIcon name={milestone.icon} className="size-4" strokeWidth={1.7} />
                     <span className="text-[11px] font-bold tracking-[0.16em] uppercase">{milestone.period}</span>
                 </div>
                 <h3 className="mt-[5px] mb-[7px] font-serif text-[clamp(23px,3.4vw,29px)] font-semibold text-ink">{milestone.title}</h3>

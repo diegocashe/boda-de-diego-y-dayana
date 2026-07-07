@@ -1,7 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
 
-export type InvitationTab = 'home' | 'story' | 'rsvp' | 'details';
-
 export interface WeddingDetails {
     groomName: string;
     brideName: string;
@@ -17,11 +15,13 @@ export interface GuestInvitation {
 }
 
 export interface TimelineMilestone {
+    id: number;
     period: string;
     title: string;
     description: string;
-    icon: LucideIcon;
-    highlighted?: boolean;
+    icon: string;
+    highlighted: boolean;
+    imageUrl: string | null;
 }
 
 export interface VenueDetail {
