@@ -9,9 +9,12 @@ export interface WeddingDetails {
 
 export interface GuestInvitation {
     name: string;
+    code: string;
     maxPasses: number;
+    locked: boolean;
     videoUrl: string | null;
     videoMessage: string;
+    response: RsvpFormData | null;
 }
 
 export interface TimelineMilestone {

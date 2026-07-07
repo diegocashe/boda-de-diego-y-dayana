@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationController;
 use App\Http\Controllers\Dashboard\TimelineItemController;
 use App\Http\Controllers\Dashboard\WeddingSettingController;
 use App\Http\Controllers\InvitationController;
@@ -8,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [InvitationController::class, 'home'])->name('home');
 Route::get('historia', [InvitationController::class, 'story'])->name('invitation.story');
 Route::get('asistencia', [InvitationController::class, 'rsvp'])->name('invitation.rsvp');
+Route::get('asistencia/{invitation:code}', [InvitationController::class, 'rsvpShow'])->name('invitation.rsvp.show');
+Route::post('asistencia/{invitation:code}', [InvitationController::class, 'rsvpStore'])->name('invitation.rsvp.store');
 Route::get('detalles', [InvitationController::class, 'details'])->name('invitation.details');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -20,6 +23,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/timeline', [TimelineItemController::class, 'store'])->name('timeline.store');
     Route::put('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'update'])->name('timeline.update');
     Route::delete('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'destroy'])->name('timeline.destroy');
+
+    Route::get('dashboard/invitations', [DashboardInvitationController::class, 'index'])->name('invitations.index');
+    Route::post('dashboard/invitations', [DashboardInvitationController::class, 'store'])->name('invitations.store');
+    Route::put('dashboard/invitations/{invitation}', [DashboardInvitationController::class, 'update'])->name('invitations.update');
+    Route::delete('dashboard/invitations/{invitation}', [DashboardInvitationController::class, 'destroy'])->name('invitations.destroy');
+    Route::post('dashboard/invitations/{invitation}/send', [DashboardInvitationController::class, 'send'])->name('invitations.send');
+    Route::put('dashboard/invitations/{invitation}/lock', [DashboardInvitationController::class, 'toggleLock'])->name('invitations.lock');
 });
 
 require __DIR__.'/settings.php';

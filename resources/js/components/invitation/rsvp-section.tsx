@@ -1,4 +1,4 @@
-import { Check, ChevronDown, CircleCheckBig, LoaderCircle, Users, X } from 'lucide-react';
+import { Check, ChevronDown, CircleCheckBig, LoaderCircle, Lock, Users, X } from 'lucide-react';
 import SectionHeader from '@/components/invitation/section-header';
 import VideoCard from '@/components/invitation/video-card';
 import WineButton from '@/components/invitation/wine-button';
@@ -46,16 +46,26 @@ export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) 
 function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'>) {
     const { data, update, submit, canSubmit, submitting, submitted } = form;
     const guestOptions = Array.from({ length: guest.maxPasses }, (_, index) => index + 1);
+    const locked = guest.locked;
 
     return (
         <div>
-            {submitted && (
+            {locked ? (
                 <div className="mb-5 flex items-start gap-2.5 rounded-[14px] border border-[#e3c4c9] bg-[#f7eced] px-[15px] py-[13px]">
-                    <CircleCheckBig className="mt-px size-[18px] flex-none text-wine" strokeWidth={2.2} />
+                    <Lock className="mt-px size-[18px] flex-none text-wine" strokeWidth={2.2} />
                     <div className="text-[13px] leading-normal text-[#6e1c27]">
-                        Tu respuesta quedó registrada. Puedes actualizarla cuando quieras antes del evento.
+                        Tu respuesta quedó confirmada y ya no puede modificarse. Si necesitas cambiarla, contáctanos directamente.
                     </div>
                 </div>
+            ) : (
+                submitted && (
+                    <div className="mb-5 flex items-start gap-2.5 rounded-[14px] border border-[#e3c4c9] bg-[#f7eced] px-[15px] py-[13px]">
+                        <CircleCheckBig className="mt-px size-[18px] flex-none text-wine" strokeWidth={2.2} />
+                        <div className="text-[13px] leading-normal text-[#6e1c27]">
+                            Tu respuesta quedó registrada. Puedes actualizarla cuando quieras antes del evento.
+                        </div>
+                    </div>
+                )
             )}
 
             <div className="mb-[18px]">
@@ -64,6 +74,7 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                     <button
                         type="button"
                         onClick={() => update('attending', 'yes')}
+                        disabled={locked}
                         className={cn(
                             segmentClass,
                             data.attending === 'yes'
@@ -77,6 +88,7 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                     <button
                         type="button"
                         onClick={() => update('attending', 'no')}
+                        disabled={locked}
                         className={cn(
                             segmentClass,
                             data.attending === 'no' ? 'border-[#8a8272] bg-[#8a8272] text-cream' : 'border-ink/[0.18] bg-white text-ink',
@@ -98,6 +110,7 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                             <select
                                 value={data.guests}
                                 onChange={(event) => update('guests', Number(event.target.value))}
+                                disabled={locked}
                                 className={cn(fieldClass, 'cursor-pointer appearance-none pr-11 text-[14.5px]')}
                             >
                                 {guestOptions.map((count) => (
@@ -116,6 +129,8 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                             value={data.dietary}
                             onChange={(event) => update('dietary', event.target.value)}
                             rows={2}
+                            maxLength={500}
+                            disabled={locked}
                             placeholder="Ej. vegetariano, sin gluten, alergia a nueces…"
                             className={cn(fieldClass, 'resize-none')}
                         />
@@ -131,6 +146,8 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                     value={data.message}
                     onChange={(event) => update('message', event.target.value)}
                     rows={3}
+                    maxLength={1000}
+                    disabled={locked}
                     placeholder="Escríbeles unas palabras…"
                     className={cn(fieldClass, 'resize-none')}
                 />

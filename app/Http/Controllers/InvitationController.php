@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RsvpStoreRequest;
+use App\Models\Invitation;
 use App\Models\TimelineItem;
 use App\Models\WeddingSetting;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -38,20 +41,59 @@ class InvitationController extends Controller
     }
 
     /**
-     * Show the RSVP section.
+     * Show the RSVP section without a personal code; the page explains that
+     * the guest must use the link from their invitation email.
      */
     public function rsvp(): Response
     {
         return Inertia::render('invitation/rsvp', [
             'wedding' => $this->weddingProps(),
-            // Invitado de demostración; vendrá de la tabla de invitados en futuras versiones.
+            'guest' => null,
+        ]);
+    }
+
+    /**
+     * Show the RSVP section personalized for the invitation code.
+     */
+    public function rsvpShow(Invitation $invitation): Response
+    {
+        return Inertia::render('invitation/rsvp', [
+            'wedding' => $this->weddingProps(),
             'guest' => [
-                'name' => 'Familia Mendoza',
-                'maxPasses' => 4,
+                'name' => $invitation->guest_name,
+                'code' => $invitation->code,
+                'maxPasses' => $invitation->max_passes,
+                'locked' => $invitation->is_locked,
                 'videoUrl' => null,
                 'videoMessage' => 'Grabamos este video con todo nuestro cariño para invitarte de manera especial. ¡Esperamos verte para celebrar juntos!',
+                'response' => $invitation->responded_at ? [
+                    'attending' => $invitation->attending ? 'yes' : 'no',
+                    'guests' => $invitation->confirmed_passes ?? 1,
+                    'dietary' => $invitation->dietary ?? '',
+                    'message' => $invitation->message ?? '',
+                ] : null,
             ],
         ]);
+    }
+
+    /**
+     * Save the guest's response; it stays editable until the invitation is locked.
+     */
+    public function rsvpStore(RsvpStoreRequest $request, Invitation $invitation): RedirectResponse
+    {
+        abort_if($invitation->is_locked, 403);
+
+        $attending = $request->input('attending') === 'yes';
+
+        $invitation->update([
+            'attending' => $attending,
+            'confirmed_passes' => $attending ? $request->integer('guests') : null,
+            'dietary' => $attending ? $request->input('dietary') : null,
+            'message' => $request->input('message'),
+            'responded_at' => now(),
+        ]);
+
+        return back();
     }
 
     /**
