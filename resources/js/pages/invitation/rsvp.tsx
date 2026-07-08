@@ -18,7 +18,7 @@ interface InvitationRsvpProps {
 export default function InvitationRsvp({ guest, wedding }: InvitationRsvpProps) {
     return (
         <>
-            <Head title="Asistencia" />
+            <Head title={guest ? `Invitación para ${guest.name}` : 'Asistencia'} />
             <ScrollView className="max-w-[1040px]">{guest ? <GuestRsvp guest={guest} wedding={wedding} /> : <MissingCodeNotice />}</ScrollView>
         </>
     );

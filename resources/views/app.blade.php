@@ -7,6 +7,28 @@
             <meta name="robots" content="noindex, nofollow">
         @endunless
 
+        {{-- SEO / Open Graph tags; pages can override the defaults via Inertia view data ($meta) --}}
+        @php
+            $meta = $meta ?? [];
+            $metaTitle = $meta['title'] ?? config('app.name');
+            $metaDescription = $meta['description'] ?? 'Acompáñanos a celebrar nuestra boda. Haz clic para ver la invitación.';
+            $metaImage = $meta['image'] ?? asset('img/og-invitation.jpg');
+            $metaUrl = $meta['url'] ?? url()->current();
+        @endphp
+        <meta name="description" content="{{ $metaDescription }}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ config('app.name') }}">
+        <meta property="og:title" content="{{ $metaTitle }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
+        <meta property="og:image" content="{{ $metaImage }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:url" content="{{ $metaUrl }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $metaTitle }}">
+        <meta name="twitter:description" content="{{ $metaDescription }}">
+        <meta name="twitter:image" content="{{ $metaImage }}">
+
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {

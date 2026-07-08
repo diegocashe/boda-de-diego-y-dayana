@@ -27,6 +27,20 @@ class PublicRsvpTest extends TestCase
         $response->assertSee('Familia Mendoza');
     }
 
+    public function test_the_rsvp_page_includes_personalized_open_graph_tags()
+    {
+        $invitation = Invitation::factory()->create(['guest_name' => 'Familia Mendoza']);
+
+        $response = $this->get(route('invitation.rsvp.show', $invitation));
+
+        $response->assertOk();
+        $response->assertSee('property="og:title"', false);
+        $response->assertSee('Invitación para Familia Mendoza', false);
+        $response->assertSee('Haz clic aquí para confirmar tu asistencia', false);
+        $response->assertSee('img/og-invitation.jpg', false);
+        $response->assertSee(route('invitation.rsvp.show', $invitation), false);
+    }
+
     public function test_an_invalid_code_returns_a_404()
     {
         $response = $this->get('/asistencia/no-existe');

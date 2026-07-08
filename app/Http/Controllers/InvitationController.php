@@ -7,6 +7,7 @@ use App\Models\Invitation;
 use App\Models\TimelineItem;
 use App\Models\WeddingSetting;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -17,8 +18,14 @@ class InvitationController extends Controller
      */
     public function home(): Response
     {
+        $wedding = WeddingSetting::current();
+
         return Inertia::render('invitation/home', [
-            'wedding' => $this->weddingProps(),
+            'wedding' => $this->weddingProps($wedding),
+        ])->withViewData([
+            'meta' => [
+                'description' => "{$wedding->bride_name} y {$wedding->groom_name} se casan el {$this->weddingDate($wedding)} en {$wedding->city}. Te esperamos para celebrar juntos.",
+            ],
         ]);
     }
 
@@ -47,7 +54,7 @@ class InvitationController extends Controller
     public function rsvp(): Response
     {
         return Inertia::render('invitation/rsvp', [
-            'wedding' => $this->weddingProps(),
+            'wedding' => $this->weddingProps(WeddingSetting::current()),
             'guest' => null,
         ]);
     }
@@ -57,8 +64,10 @@ class InvitationController extends Controller
      */
     public function rsvpShow(Invitation $invitation): Response
     {
+        $wedding = WeddingSetting::current();
+
         return Inertia::render('invitation/rsvp', [
-            'wedding' => $this->weddingProps(),
+            'wedding' => $this->weddingProps($wedding),
             'guest' => [
                 'name' => $invitation->guest_name,
                 'code' => $invitation->code,
@@ -72,6 +81,12 @@ class InvitationController extends Controller
                     'dietary' => $invitation->dietary ?? '',
                     'message' => $invitation->message ?? '',
                 ] : null,
+            ],
+        ])->withViewData([
+            'meta' => [
+                'title' => "Invitación para {$invitation->guest_name} · {$wedding->bride_name} & {$wedding->groom_name}",
+                'description' => "{$invitation->guest_name}, {$wedding->bride_name} y {$wedding->groom_name} te invitan a su boda el {$this->weddingDate($wedding)} en {$wedding->city}. Haz clic aquí para confirmar tu asistencia.",
+                'url' => route('invitation.rsvp.show', $invitation),
             ],
         ]);
     }
@@ -109,15 +124,23 @@ class InvitationController extends Controller
      *
      * @return array<string, string>
      */
-    private function weddingProps(): array
+    private function weddingProps(WeddingSetting $wedding): array
     {
-        $wedding = WeddingSetting::current();
-
         return [
             'groomName' => $wedding->groom_name,
             'brideName' => $wedding->bride_name,
             'weddingAt' => $wedding->wedding_at->toIso8601String(),
             'city' => $wedding->city,
         ];
+    }
+
+    /**
+     * Wedding date written out in Spanish, e.g. "17 de octubre de 2026".
+     */
+    private function weddingDate(WeddingSetting $wedding): string
+    {
+        Carbon::setLocale('es');
+
+        return $wedding->wedding_at->isoFormat('D [de] MMMM [de] YYYY');
     }
 }
