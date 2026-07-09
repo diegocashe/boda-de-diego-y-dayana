@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RsvpStoreRequest;
 use App\Mail\RsvpNotificationMail;
+use App\Models\GiftRegistryEntry;
 use App\Models\Invitation;
 use App\Models\TimelineItem;
 use App\Models\Venue;
@@ -157,6 +158,8 @@ class InvitationController extends Controller
      */
     public function details(): Response
     {
+        $wedding = WeddingSetting::current();
+
         return Inertia::render('invitation/details', [
             'venues' => Venue::query()->ordered()->get()->map(fn (Venue $venue): array => [
                 'id' => $venue->id,
@@ -168,6 +171,14 @@ class InvitationController extends Controller
                 'icon' => $venue->icon,
                 'accent' => $venue->accent,
             ]),
+            'giftRegistry' => GiftRegistryEntry::query()->ordered()->get()->map(fn (GiftRegistryEntry $entry): array => [
+                'label' => $entry->label,
+                'value' => $entry->value,
+            ]),
+            'godparents' => [
+                'whatsappUrl' => $wedding->godparents_whatsapp ? "https://wa.me/{$wedding->godparents_whatsapp}" : null,
+                'phoneUrl' => $wedding->godparents_phone ? "tel:{$wedding->godparents_phone}" : null,
+            ],
         ]);
     }
 

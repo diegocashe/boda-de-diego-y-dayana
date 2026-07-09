@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $og_background_path
  * @property-read string|null $og_background_url
  * @property list<string> $notification_emails
+ * @property string|null $godparents_whatsapp
+ * @property string|null $godparents_phone
  * @property string $hero_eyebrow
  * @property string $hero_scroll_hint
  * @property string $countdown_eyebrow
@@ -36,6 +38,8 @@ class WeddingSetting extends Model
         'city',
         'og_background_path',
         'notification_emails',
+        'godparents_whatsapp',
+        'godparents_phone',
         'hero_eyebrow',
         'hero_scroll_hint',
         'countdown_eyebrow',

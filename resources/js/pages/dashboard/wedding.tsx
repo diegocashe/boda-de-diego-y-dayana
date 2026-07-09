@@ -18,6 +18,8 @@ interface WeddingSettingsProps {
         city: string;
         ogBackgroundUrl: string | null;
         notificationEmails: string;
+        godparentsWhatsapp: string | null;
+        godparentsPhone: string | null;
     };
 }
 
@@ -97,6 +99,31 @@ export default function WeddingSettings({ wedding }: WeddingSettingsProps) {
                                     confirmación de asistencia.
                                 </p>
                                 <InputError message={firstNotificationEmailError(errors)} />
+                            </div>
+
+                            <div className="grid gap-4 md:grid-cols-2">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="godparents_whatsapp">WhatsApp de los padrinos</Label>
+                                    <Input
+                                        id="godparents_whatsapp"
+                                        name="godparents_whatsapp"
+                                        defaultValue={wedding.godparentsWhatsapp ?? ''}
+                                        placeholder="525512345678"
+                                    />
+                                    <p className="text-xs text-muted-foreground">Número con código de país, sin espacios ni signos (ej. 5255...).</p>
+                                    <InputError message={errors.godparents_whatsapp} />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="godparents_phone">Teléfono de los padrinos</Label>
+                                    <Input
+                                        id="godparents_phone"
+                                        name="godparents_phone"
+                                        defaultValue={wedding.godparentsPhone ?? ''}
+                                        placeholder="+525512345678"
+                                    />
+                                    <InputError message={errors.godparents_phone} />
+                                </div>
                             </div>
 
                             <Button disabled={processing}>Guardar cambios</Button>

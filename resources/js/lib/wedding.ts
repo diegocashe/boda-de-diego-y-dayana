@@ -1,4 +1,4 @@
-import type { GiftRegistryEntry, WeddingDetails } from '@/types/invitation';
+import type { WeddingDetails } from '@/types/invitation';
 
 export interface WeddingLabels {
     dateLabel: string;
@@ -25,13 +25,3 @@ export function buildWeddingLabels(wedding: WeddingDetails): WeddingLabels {
         countdownCaption: `${wedding.city} · ${day} de ${month} de ${year}`,
     };
 }
-
-export const GIFT_REGISTRY: GiftRegistryEntry[] = [
-    { label: 'Liverpool · Código', value: '51820394' },
-    { label: 'CLABE (BBVA)', value: '012 180 0154 0392 18' },
-];
-
-export const GODPARENTS_CONTACT = {
-    whatsappUrl: 'https://wa.me/525512345678',
-    phoneUrl: 'tel:+525512345678',
-} as const;

@@ -37,6 +37,8 @@ class WeddingSettingUpdateRequest extends FormRequest
             'og_background' => ['nullable', 'image', 'max:4096'],
             'notification_emails' => ['array'],
             'notification_emails.*' => ['email:rfc', 'max:255'],
+            'godparents_whatsapp' => ['nullable', 'string', 'max:20'],
+            'godparents_phone' => ['nullable', 'string', 'max:20'],
         ];
     }
 

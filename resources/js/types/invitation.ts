@@ -51,6 +51,11 @@ export interface GiftRegistryEntry {
     value: string;
 }
 
+export interface GodparentsContact {
+    whatsappUrl: string | null;
+    phoneUrl: string | null;
+}
+
 export type RsvpAttendance = 'yes' | 'no';
 
 export interface RsvpFormData {

@@ -2,9 +2,8 @@ import { Gift, MapPin, MessageCircle, Phone } from 'lucide-react';
 import SectionHeader from '@/components/invitation/section-header';
 import VenueMap from '@/components/invitation/venue-map';
 import { VenueIcon } from '@/lib/venue-icons';
-import { GIFT_REGISTRY, GODPARENTS_CONTACT } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
-import type { VenueDetail } from '@/types/invitation';
+import type { GiftRegistryEntry, GodparentsContact, VenueDetail } from '@/types/invitation';
 
 const cardClass = 'reveal rounded-[20px] border border-ink/[0.08] bg-white p-5 shadow-[0_22px_44px_-32px_rgba(58,52,43,0.7)]';
 
@@ -22,9 +21,11 @@ const desktopGridCols = {
 
 interface DetailsSectionProps {
     venues: VenueDetail[];
+    giftRegistry: GiftRegistryEntry[];
+    godparents: GodparentsContact;
 }
 
-export default function DetailsSection({ venues }: DetailsSectionProps) {
+export default function DetailsSection({ venues, giftRegistry, godparents }: DetailsSectionProps) {
     const columns = Math.min(venues.length, 3) as 1 | 2 | 3;
 
     return (
@@ -54,7 +55,7 @@ export default function DetailsSection({ venues }: DetailsSectionProps) {
                         </div>
                     </div>
                     <div className="mt-[15px] grid grid-cols-1 gap-2">
-                        {GIFT_REGISTRY.map((entry) => (
+                        {giftRegistry.map((entry) => (
                             <div key={entry.label} className="flex items-center justify-between rounded-xl bg-[#f7f3ea] px-[15px] py-3 text-[13px]">
                                 <span className="text-ink-muted">{entry.label}</span>
                                 <span className="font-mono font-bold tracking-[0.05em] text-ink">{entry.value}</span>
@@ -67,22 +68,26 @@ export default function DetailsSection({ venues }: DetailsSectionProps) {
                     <div className="text-[11px] font-bold tracking-[0.14em] uppercase opacity-70">¿Tienes dudas?</div>
                     <div className="mt-[3px] mb-3.5 font-serif text-[23px] font-semibold">Escríbele a los padrinos</div>
                     <div className="grid max-w-[460px] grid-cols-2 gap-2.5">
-                        <a
-                            href={GODPARENTS_CONTACT.whatsappUrl}
-                            target="_blank"
-                            rel="noopener"
-                            className="flex items-center justify-center gap-2 rounded-xl bg-sage p-3 text-[13px] font-semibold text-white"
-                        >
-                            <MessageCircle className="size-4" strokeWidth={1.9} />
-                            WhatsApp
-                        </a>
-                        <a
-                            href={GODPARENTS_CONTACT.phoneUrl}
-                            className="flex items-center justify-center gap-2 rounded-xl bg-cream/12 p-3 text-[13px] font-semibold text-cream"
-                        >
-                            <Phone className="size-4" strokeWidth={1.9} />
-                            Llamar
-                        </a>
+                        {godparents.whatsappUrl && (
+                            <a
+                                href={godparents.whatsappUrl}
+                                target="_blank"
+                                rel="noopener"
+                                className="flex items-center justify-center gap-2 rounded-xl bg-sage p-3 text-[13px] font-semibold text-white"
+                            >
+                                <MessageCircle className="size-4" strokeWidth={1.9} />
+                                WhatsApp
+                            </a>
+                        )}
+                        {godparents.phoneUrl && (
+                            <a
+                                href={godparents.phoneUrl}
+                                className="flex items-center justify-center gap-2 rounded-xl bg-cream/12 p-3 text-[13px] font-semibold text-cream"
+                            >
+                                <Phone className="size-4" strokeWidth={1.9} />
+                                Llamar
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>

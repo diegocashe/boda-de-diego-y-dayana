@@ -28,6 +28,8 @@ class WeddingSettingController extends Controller
                 'city' => $wedding->city,
                 'ogBackgroundUrl' => $wedding->og_background_url,
                 'notificationEmails' => implode("\n", $wedding->notification_emails ?? []),
+                'godparentsWhatsapp' => $wedding->godparents_whatsapp,
+                'godparentsPhone' => $wedding->godparents_phone,
             ],
         ]);
     }

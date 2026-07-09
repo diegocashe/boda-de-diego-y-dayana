@@ -1,11 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Gem, Heart, LayoutGrid, Mail, MapPin, NotebookText } from 'lucide-react';
+import { BookOpen, FolderGit2, Gem, Gift, Heart, LayoutGrid, Mail, MapPin, NotebookText } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as giftRegistryIndex } from '@/routes/gift-registry';
 import { edit as homeContentEdit } from '@/routes/home-content';
 import { index as invitationsIndex } from '@/routes/invitations';
 import { index as timelineIndex } from '@/routes/timeline';
@@ -43,6 +44,11 @@ const mainNavItems: NavItem[] = [
         title: 'Ubicaciones',
         href: venuesIndex(),
         icon: MapPin,
+    },
+    {
+        title: 'Mesa de regalos',
+        href: giftRegistryIndex(),
+        icon: Gift,
     },
 ];
 

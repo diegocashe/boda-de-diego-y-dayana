@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\GiftRegistryEntryController;
 use App\Http\Controllers\Dashboard\HomeContentController;
 use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationController;
 use App\Http\Controllers\Dashboard\TimelineItemController;
@@ -17,7 +19,7 @@ Route::get('asistencia/{invitation:code}/og.jpg', [InvitationController::class, 
 Route::get('detalles', [InvitationController::class, 'details'])->name('invitation.details');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('dashboard/wedding', [WeddingSettingController::class, 'edit'])->name('wedding.edit');
     Route::put('dashboard/wedding', [WeddingSettingController::class, 'update'])->name('wedding.update');
@@ -43,6 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/venues', [VenueController::class, 'store'])->name('venues.store');
     Route::put('dashboard/venues/{venue}', [VenueController::class, 'update'])->name('venues.update');
     Route::delete('dashboard/venues/{venue}', [VenueController::class, 'destroy'])->name('venues.destroy');
+
+    Route::get('dashboard/gift-registry', [GiftRegistryEntryController::class, 'index'])->name('gift-registry.index');
+    Route::post('dashboard/gift-registry', [GiftRegistryEntryController::class, 'store'])->name('gift-registry.store');
+    Route::put('dashboard/gift-registry/{giftRegistryEntry}', [GiftRegistryEntryController::class, 'update'])->name('gift-registry.update');
+    Route::delete('dashboard/gift-registry/{giftRegistryEntry}', [GiftRegistryEntryController::class, 'destroy'])->name('gift-registry.destroy');
 });
 
 require __DIR__.'/settings.php';
