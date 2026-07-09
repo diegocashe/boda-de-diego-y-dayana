@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class InvitationController extends Controller
 {
@@ -39,6 +40,56 @@ class InvitationController extends Controller
                 'ogImageUrl' => route('invitation.og-image', $invitation).'?v='.$invitation->updated_at->timestamp,
             ]),
         ]);
+    }
+
+    /**
+     * Export every guest's RSVP response as a downloadable CSV.
+     */
+    public function export(): StreamedResponse
+    {
+        $filename = 'invitaciones-'.now()->format('Y-m-d').'.csv';
+
+        return response()->streamDownload(function (): void {
+            $handle = fopen('php://output', 'w');
+
+            if ($handle === false) {
+                return;
+            }
+
+            fputcsv($handle, [
+                'Invitado',
+                'Email',
+                'Código',
+                'Pases máximos',
+                'Asistencia',
+                'Pases confirmados',
+                'Restricción alimentaria',
+                'Mensaje',
+                'Respondido el',
+                'Enviado el',
+            ]);
+
+            Invitation::query()->latest()->each(function (Invitation $invitation) use ($handle): void {
+                fputcsv($handle, [
+                    $invitation->guest_name,
+                    $invitation->email,
+                    $invitation->code,
+                    $invitation->max_passes,
+                    match ($invitation->attending) {
+                        true => 'Sí',
+                        false => 'No',
+                        default => 'Sin responder',
+                    },
+                    $invitation->confirmed_passes,
+                    $invitation->dietary,
+                    $invitation->message,
+                    $invitation->responded_at?->format('Y-m-d H:i'),
+                    $invitation->sent_at?->format('Y-m-d H:i'),
+                ]);
+            });
+
+            fclose($handle);
+        }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     /**

@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'destroy'])->name('timeline.destroy');
 
     Route::get('dashboard/invitations', [DashboardInvitationController::class, 'index'])->name('invitations.index');
+    Route::get('dashboard/invitations/export', [DashboardInvitationController::class, 'export'])->name('invitations.export');
     Route::post('dashboard/invitations', [DashboardInvitationController::class, 'store'])->name('invitations.store');
     Route::put('dashboard/invitations/{invitation}', [DashboardInvitationController::class, 'update'])->name('invitations.update');
     Route::delete('dashboard/invitations/{invitation}', [DashboardInvitationController::class, 'destroy'])->name('invitations.destroy');

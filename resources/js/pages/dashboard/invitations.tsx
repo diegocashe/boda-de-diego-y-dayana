@@ -1,5 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
-import { Check, Copy, Lock, LockOpen, RefreshCw, Send, Trash2 } from 'lucide-react';
+import { Check, Copy, Download, Lock, LockOpen, RefreshCw, Send, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import InvitationController from '@/actions/App/Http/Controllers/Dashboard/InvitationController';
@@ -70,8 +70,14 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                 </Card>
 
                 <Card>
-                    <CardHeader>
+                    <CardHeader className="flex-row items-center justify-between">
                         <CardTitle>Lista de invitaciones</CardTitle>
+                        <Button variant="outline" size="sm" asChild>
+                            <a href={InvitationController.export().url} download>
+                                <Download />
+                                Exportar CSV
+                            </a>
+                        </Button>
                     </CardHeader>
                     <CardContent>
                         <Table>

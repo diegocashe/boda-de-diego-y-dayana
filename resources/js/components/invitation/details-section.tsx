@@ -13,20 +13,31 @@ const venueAccents = {
     sage: { chip: 'bg-sage-tint text-sage', pin: 'text-sage' },
 } as const;
 
+// Tailwind necesita clases literales; no se puede interpolar el número de columnas.
+const desktopGridCols = {
+    1: 'desk:grid-cols-1',
+    2: 'desk:grid-cols-2',
+    3: 'desk:grid-cols-3',
+} as const;
+
 interface DetailsSectionProps {
     venues: VenueDetail[];
 }
 
 export default function DetailsSection({ venues }: DetailsSectionProps) {
+    const columns = Math.min(venues.length, 3) as 1 | 2 | 3;
+
     return (
         <>
             <SectionHeader title="Detalles del evento" className="mb-[clamp(26px,4vw,46px)]" />
 
-            <div className="mb-5 grid grid-cols-1 gap-3.5 desk:grid-cols-3 desk:items-stretch desk:gap-5">
-                {venues.map((venue) => (
-                    <VenueCard key={venue.id} venue={venue} />
-                ))}
-            </div>
+            {venues.length > 0 && (
+                <div className={cn('mb-5 grid grid-cols-1 gap-3.5 desk:items-stretch desk:gap-5', desktopGridCols[columns])}>
+                    {venues.map((venue) => (
+                        <VenueCard key={venue.id} venue={venue} />
+                    ))}
+                </div>
+            )}
 
             <div className="grid grid-cols-1 gap-3.5 desk:gap-5">
                 <div className={cn(cardClass, 'p-[22px]')}>
