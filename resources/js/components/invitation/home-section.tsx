@@ -9,8 +9,8 @@ import type { WeddingLabels } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
 import { rsvp } from '@/routes/invitation';
 import type { HomeContent, WeddingDetails } from '@/types/invitation';
-import imageUrl from '../../../assets/upscalemedia-transformed.jpeg';
-import imageURL2 from '../../../assets/upscalemedia-transformed-2.jpeg';
+import imageUrl from '../../../assets/upscalemedia-transformed.webp';
+import imageURL2 from '../../../assets/upscalemedia-transformed-2.webp';
 interface HomeSectionProps {
     wedding: WeddingDetails;
     content: HomeContent;
