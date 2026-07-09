@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dashboard\HomeContentController;
 use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationController;
 use App\Http\Controllers\Dashboard\TimelineItemController;
+use App\Http\Controllers\Dashboard\VenueController;
 use App\Http\Controllers\Dashboard\WeddingSettingController;
 use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/wedding', [WeddingSettingController::class, 'edit'])->name('wedding.edit');
     Route::put('dashboard/wedding', [WeddingSettingController::class, 'update'])->name('wedding.update');
 
+    Route::get('dashboard/home-content', [HomeContentController::class, 'edit'])->name('home-content.edit');
+    Route::put('dashboard/home-content', [HomeContentController::class, 'update'])->name('home-content.update');
+
     Route::get('dashboard/timeline', [TimelineItemController::class, 'index'])->name('timeline.index');
     Route::post('dashboard/timeline', [TimelineItemController::class, 'store'])->name('timeline.store');
     Route::put('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'update'])->name('timeline.update');
@@ -32,6 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/invitations/{invitation}/send', [DashboardInvitationController::class, 'send'])->name('invitations.send');
     Route::put('dashboard/invitations/{invitation}/lock', [DashboardInvitationController::class, 'toggleLock'])->name('invitations.lock');
     Route::post('dashboard/invitations/{invitation}/og-regenerate', [DashboardInvitationController::class, 'regenerateOgImage'])->name('invitations.og-regenerate');
+
+    Route::get('dashboard/venues', [VenueController::class, 'index'])->name('venues.index');
+    Route::post('dashboard/venues', [VenueController::class, 'store'])->name('venues.store');
+    Route::put('dashboard/venues/{venue}', [VenueController::class, 'update'])->name('venues.update');
+    Route::delete('dashboard/venues/{venue}', [VenueController::class, 'destroy'])->name('venues.destroy');
 });
 
 require __DIR__.'/settings.php';

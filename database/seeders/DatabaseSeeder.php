@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\TimelineItem;
 use App\Models\User;
+use App\Models\Venue;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         ])->save();
 
         $this->seedTimeline();
+        $this->seedVenues();
     }
 
     /**
@@ -66,6 +68,51 @@ class DatabaseSeeder extends Seeder
 
         foreach ($milestones as $milestone) {
             TimelineItem::firstOrCreate(['title' => $milestone['title']], $milestone);
+        }
+    }
+
+    /**
+     * Ubicaciones iniciales del evento; re-seedear no pisa los cambios hechos
+     * desde el dashboard porque busca por nombre. Las coordenadas son un
+     * punto de partida aproximado que se debe ajustar desde el dashboard.
+     */
+    private function seedVenues(): void
+    {
+        $venues = [
+            [
+                'label' => 'Ceremonia religiosa',
+                'name' => 'Parroquia de San Miguel',
+                'schedule' => 'Av. Reforma 210, Col. Centro · 5:00 PM',
+                'lat' => 19.4326,
+                'lng' => -99.1332,
+                'icon' => 'church',
+                'accent' => 'wine',
+                'sort_order' => 1,
+            ],
+            [
+                'label' => 'Registro civil',
+                'name' => 'Salón Art Nouveau',
+                'schedule' => 'Av. Juárez 88, Centro · 6:15 PM',
+                'lat' => 19.4342,
+                'lng' => -99.1401,
+                'icon' => 'calendar',
+                'accent' => 'sage',
+                'sort_order' => 2,
+            ],
+            [
+                'label' => 'Recepción',
+                'name' => 'Jardín Los Olivos',
+                'schedule' => 'Camino Real 45, Valle Verde · 7:00 PM',
+                'lat' => 19.4189,
+                'lng' => -99.1616,
+                'icon' => 'map-pin',
+                'accent' => 'wine',
+                'sort_order' => 3,
+            ],
+        ];
+
+        foreach ($venues as $venue) {
+            Venue::firstOrCreate(['name' => $venue['name']], $venue);
         }
     }
 }

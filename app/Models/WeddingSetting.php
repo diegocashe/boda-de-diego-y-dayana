@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $og_background_path
  * @property-read string|null $og_background_url
  * @property list<string> $notification_emails
+ * @property string $hero_eyebrow
+ * @property string $hero_scroll_hint
+ * @property string $countdown_eyebrow
+ * @property string $countdown_heading
+ * @property string $cta_heading
+ * @property string $cta_paragraph
+ * @property string $cta_button_label
  */
 class WeddingSetting extends Model
 {
@@ -29,6 +36,13 @@ class WeddingSetting extends Model
         'city',
         'og_background_path',
         'notification_emails',
+        'hero_eyebrow',
+        'hero_scroll_hint',
+        'countdown_eyebrow',
+        'countdown_heading',
+        'cta_heading',
+        'cta_paragraph',
+        'cta_button_label',
     ];
 
     /**

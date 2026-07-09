@@ -1,5 +1,4 @@
-import { Calendar, Church, MapPin } from 'lucide-react';
-import type { GiftRegistryEntry, VenueDetail, WeddingDetails } from '@/types/invitation';
+import type { GiftRegistryEntry, WeddingDetails } from '@/types/invitation';
 
 export interface WeddingLabels {
     dateLabel: string;
@@ -26,33 +25,6 @@ export function buildWeddingLabels(wedding: WeddingDetails): WeddingLabels {
         countdownCaption: `${wedding.city} · ${day} de ${month} de ${year}`,
     };
 }
-
-export const VENUES: VenueDetail[] = [
-    {
-        label: 'Ceremonia religiosa',
-        name: 'Parroquia de San Miguel',
-        schedule: 'Av. Reforma 210, Col. Centro · 5:00 PM',
-        mapsUrl: 'https://maps.google.com/?q=Parroquia+San+Miguel+CDMX',
-        icon: Church,
-        accent: 'wine',
-    },
-    {
-        label: 'Registro civil',
-        name: 'Salón Art Nouveau',
-        schedule: 'Av. Juárez 88, Centro · 6:15 PM',
-        mapsUrl: 'https://maps.google.com/?q=Salon+Art+Nouveau+CDMX',
-        icon: Calendar,
-        accent: 'sage',
-    },
-    {
-        label: 'Recepción',
-        name: 'Jardín Los Olivos',
-        schedule: 'Camino Real 45, Valle Verde · 7:00 PM',
-        mapsUrl: 'https://maps.google.com/?q=Jardin+Los+Olivos',
-        icon: MapPin,
-        accent: 'wine',
-    },
-];
 
 export const GIFT_REGISTRY: GiftRegistryEntry[] = [
     { label: 'Liverpool · Código', value: '51820394' },

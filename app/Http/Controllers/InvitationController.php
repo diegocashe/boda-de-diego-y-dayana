@@ -6,6 +6,7 @@ use App\Http\Requests\RsvpStoreRequest;
 use App\Mail\RsvpNotificationMail;
 use App\Models\Invitation;
 use App\Models\TimelineItem;
+use App\Models\Venue;
 use App\Models\WeddingSetting;
 use App\Services\InvitationOgImageService;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +28,15 @@ class InvitationController extends Controller
 
         return Inertia::render('invitation/home', [
             'wedding' => $this->weddingProps($wedding),
+            'content' => [
+                'heroEyebrow' => $wedding->hero_eyebrow,
+                'heroScrollHint' => $wedding->hero_scroll_hint,
+                'countdownEyebrow' => $wedding->countdown_eyebrow,
+                'countdownHeading' => $wedding->countdown_heading,
+                'ctaHeading' => $wedding->cta_heading,
+                'ctaParagraph' => $wedding->cta_paragraph,
+                'ctaButtonLabel' => $wedding->cta_button_label,
+            ],
         ])->withViewData([
             'meta' => [
                 'description' => "{$wedding->bride_name} y {$wedding->groom_name} se casan el {$this->weddingDate($wedding)} en {$wedding->city}. Te esperamos para celebrar juntos.",
@@ -147,7 +157,18 @@ class InvitationController extends Controller
      */
     public function details(): Response
     {
-        return Inertia::render('invitation/details');
+        return Inertia::render('invitation/details', [
+            'venues' => Venue::query()->ordered()->get()->map(fn (Venue $venue): array => [
+                'id' => $venue->id,
+                'label' => $venue->label,
+                'name' => $venue->name,
+                'schedule' => $venue->schedule,
+                'lat' => $venue->lat,
+                'lng' => $venue->lng,
+                'icon' => $venue->icon,
+                'accent' => $venue->accent,
+            ]),
+        ]);
     }
 
     /**

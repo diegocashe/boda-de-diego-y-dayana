@@ -1,6 +1,8 @@
 import { Gift, MapPin, MessageCircle, Phone } from 'lucide-react';
 import SectionHeader from '@/components/invitation/section-header';
-import { GIFT_REGISTRY, GODPARENTS_CONTACT, VENUES } from '@/lib/wedding';
+import VenueMap from '@/components/invitation/venue-map';
+import { VenueIcon } from '@/lib/venue-icons';
+import { GIFT_REGISTRY, GODPARENTS_CONTACT } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
 import type { VenueDetail } from '@/types/invitation';
 
@@ -11,14 +13,18 @@ const venueAccents = {
     sage: { chip: 'bg-sage-tint text-sage', pin: 'text-sage' },
 } as const;
 
-export default function DetailsSection() {
+interface DetailsSectionProps {
+    venues: VenueDetail[];
+}
+
+export default function DetailsSection({ venues }: DetailsSectionProps) {
     return (
         <>
-            <SectionHeader eyebrow="Información útil" title="Detalles del evento" className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader title="Detalles del evento" className="mb-[clamp(26px,4vw,46px)]" />
 
             <div className="mb-5 grid grid-cols-1 gap-3.5 desk:grid-cols-3 desk:items-stretch desk:gap-5">
-                {VENUES.map((venue) => (
-                    <VenueCard key={venue.name} venue={venue} />
+                {venues.map((venue) => (
+                    <VenueCard key={venue.id} venue={venue} />
                 ))}
             </div>
 
@@ -74,14 +80,15 @@ export default function DetailsSection() {
 }
 
 function VenueCard({ venue }: { venue: VenueDetail }) {
-    const Icon = venue.icon;
     const accent = venueAccents[venue.accent];
+    const hasLocation = venue.lat !== null && venue.lng !== null;
+    const mapsUrl = hasLocation ? `https://maps.google.com/?q=${venue.lat},${venue.lng}` : null;
 
     return (
         <div className={cn(cardClass, 'flex flex-col')}>
             <div className="flex flex-1 items-start gap-[13px]">
                 <span className={cn('grid size-10 flex-none place-items-center rounded-xl', accent.chip)}>
-                    <Icon className="size-5" strokeWidth={1.7} />
+                    <VenueIcon name={venue.icon} className="size-5" strokeWidth={1.7} />
                 </span>
                 <div>
                     <div className="text-[11px] font-bold tracking-[0.14em] text-ink-faint uppercase">{venue.label}</div>
@@ -89,15 +96,24 @@ function VenueCard({ venue }: { venue: VenueDetail }) {
                     <div className="text-[13px] leading-normal text-ink-soft">{venue.schedule}</div>
                 </div>
             </div>
-            <a
-                href={venue.mapsUrl}
-                target="_blank"
-                rel="noopener"
-                className="mt-[15px] flex items-center justify-center gap-2 rounded-xl border border-ink/10 bg-[#f7f3ea] p-[11px] text-[13px] font-semibold text-ink"
-            >
-                <MapPin className={cn('size-[15px]', accent.pin)} strokeWidth={1.9} />
-                Google Maps
-            </a>
+
+            {hasLocation && (
+                <div className="mt-[15px] h-[160px] overflow-hidden rounded-xl border border-ink/10">
+                    <VenueMap lat={venue.lat as number} lng={venue.lng as number} name={venue.name} />
+                </div>
+            )}
+
+            {mapsUrl && (
+                <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener"
+                    className="mt-[10px] flex items-center justify-center gap-2 rounded-xl border border-ink/10 bg-[#f7f3ea] p-[11px] text-[13px] font-semibold text-ink"
+                >
+                    <MapPin className={cn('size-[15px]', accent.pin)} strokeWidth={1.9} />
+                    Google Maps
+                </a>
+            )}
         </div>
     );
 }

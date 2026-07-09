@@ -1,13 +1,15 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Gem, Heart, LayoutGrid, Mail } from 'lucide-react';
+import { BookOpen, FolderGit2, Gem, Heart, LayoutGrid, Mail, MapPin, NotebookText } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { edit as homeContentEdit } from '@/routes/home-content';
 import { index as invitationsIndex } from '@/routes/invitations';
 import { index as timelineIndex } from '@/routes/timeline';
+import { index as venuesIndex } from '@/routes/venues';
 import { edit as weddingEdit } from '@/routes/wedding';
 import type { NavItem } from '@/types';
 
@@ -23,6 +25,11 @@ const mainNavItems: NavItem[] = [
         icon: Gem,
     },
     {
+        title: 'Textos de inicio',
+        href: homeContentEdit(),
+        icon: NotebookText,
+    },
+    {
         title: 'Nuestra historia',
         href: timelineIndex(),
         icon: Heart,
@@ -31,6 +38,11 @@ const mainNavItems: NavItem[] = [
         title: 'Invitaciones',
         href: invitationsIndex(),
         icon: Mail,
+    },
+    {
+        title: 'Ubicaciones',
+        href: venuesIndex(),
+        icon: MapPin,
     },
 ];
 

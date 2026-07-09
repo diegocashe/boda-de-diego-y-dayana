@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 interface SectionHeaderProps {
-    eyebrow: string | undefined;
+    eyebrow?: string;
     title: string;
     className?: string;
 }

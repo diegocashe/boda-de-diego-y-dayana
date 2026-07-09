@@ -1,10 +1,18 @@
-import type { LucideIcon } from 'lucide-react';
-
 export interface WeddingDetails {
     groomName: string;
     brideName: string;
     weddingAt: string;
     city: string;
+}
+
+export interface HomeContent {
+    heroEyebrow: string;
+    heroScrollHint: string;
+    countdownEyebrow: string;
+    countdownHeading: string;
+    ctaHeading: string;
+    ctaParagraph: string;
+    ctaButtonLabel: string;
 }
 
 export interface GuestInvitation {
@@ -28,11 +36,13 @@ export interface TimelineMilestone {
 }
 
 export interface VenueDetail {
+    id: number;
     label: string;
     name: string;
     schedule: string;
-    mapsUrl: string;
-    icon: LucideIcon;
+    lat: number | null;
+    lng: number | null;
+    icon: string;
     accent: 'wine' | 'sage';
 }
 
