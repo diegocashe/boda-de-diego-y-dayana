@@ -12,6 +12,7 @@ use App\Models\WeddingSetting;
 use App\Services\InvitationOgImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -42,6 +43,7 @@ class InvitationController extends Controller
             'meta' => [
                 'description' => "{$wedding->bride_name} y {$wedding->groom_name} se casan el {$this->weddingDate($wedding)} en {$wedding->city}. Te esperamos para celebrar juntos.",
             ],
+            'schema' => $this->weddingSchema($wedding),
         ]);
     }
 
@@ -50,6 +52,8 @@ class InvitationController extends Controller
      */
     public function story(): Response
     {
+        $wedding = WeddingSetting::current();
+
         return Inertia::render('invitation/story', [
             'milestones' => TimelineItem::query()->ordered()->get()->map(fn (TimelineItem $item): array => [
                 'id' => $item->id,
@@ -60,6 +64,11 @@ class InvitationController extends Controller
                 'highlighted' => $item->highlighted,
                 'imageUrl' => $item->image_url,
             ]),
+        ])->withViewData([
+            'meta' => [
+                'title' => "Nuestra historia · {$wedding->bride_name} & {$wedding->groom_name}",
+                'description' => "Conoce la historia de {$wedding->bride_name} y {$wedding->groom_name}, desde cómo se conocieron hasta el día en que decidieron casarse.",
+            ],
         ]);
     }
 
@@ -104,6 +113,7 @@ class InvitationController extends Controller
                 'image' => route('invitation.og-image', $invitation),
                 'url' => route('invitation.rsvp.show', $invitation),
             ],
+            'schema' => $this->weddingSchema($wedding),
         ]);
     }
 
@@ -159,9 +169,10 @@ class InvitationController extends Controller
     public function details(): Response
     {
         $wedding = WeddingSetting::current();
+        $venues = Venue::query()->ordered()->get();
 
         return Inertia::render('invitation/details', [
-            'venues' => Venue::query()->ordered()->get()->map(fn (Venue $venue): array => [
+            'venues' => $venues->map(fn (Venue $venue): array => [
                 'id' => $venue->id,
                 'label' => $venue->label,
                 'name' => $venue->name,
@@ -179,6 +190,12 @@ class InvitationController extends Controller
                 'whatsappUrl' => $wedding->godparents_whatsapp ? "https://wa.me/{$wedding->godparents_whatsapp}" : null,
                 'phoneUrl' => $wedding->godparents_phone ? "tel:{$wedding->godparents_phone}" : null,
             ],
+        ])->withViewData([
+            'meta' => [
+                'title' => "Detalles y regalos · {$wedding->bride_name} & {$wedding->groom_name}",
+                'description' => "Encuentra la ubicación, el horario y la mesa de regalos para la boda de {$wedding->bride_name} y {$wedding->groom_name} el {$this->weddingDate($wedding)} en {$wedding->city}.",
+            ],
+            'schema' => $this->weddingSchema($wedding, $venues),
         ]);
     }
 
@@ -205,5 +222,57 @@ class InvitationController extends Controller
         Carbon::setLocale('es');
 
         return $wedding->wedding_at->isoFormat('D [de] MMMM [de] YYYY');
+    }
+
+    /**
+     * Build the schema.org Event structured data shared by the public pages,
+     * optionally attaching real venue locations when they're known.
+     *
+     * @param  Collection<int, Venue>|null  $venues
+     * @return array<string, mixed>
+     */
+    private function weddingSchema(WeddingSetting $wedding, ?Collection $venues = null): array
+    {
+        $locations = $venues?->filter(fn (Venue $venue): bool => $venue->lat !== null && $venue->lng !== null)
+            ->map(fn (Venue $venue): array => [
+                '@type' => 'Place',
+                'name' => $venue->name,
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'addressLocality' => $wedding->city,
+                ],
+                'geo' => [
+                    '@type' => 'GeoCoordinates',
+                    'latitude' => $venue->lat,
+                    'longitude' => $venue->lng,
+                ],
+            ])
+            ->values()
+            ->all();
+
+        $location = ! empty($locations) ? (count($locations) === 1 ? $locations[0] : $locations) : [
+            '@type' => 'Place',
+            'name' => $wedding->city,
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => $wedding->city,
+            ],
+        ];
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'Event',
+            'name' => "Boda de {$wedding->bride_name} y {$wedding->groom_name}",
+            'startDate' => $wedding->wedding_at->toIso8601String(),
+            'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+            'eventStatus' => 'https://schema.org/EventScheduled',
+            'location' => $location,
+            'image' => [asset('img/og-invitation.jpg')],
+            'description' => "{$wedding->bride_name} y {$wedding->groom_name} se casan el {$this->weddingDate($wedding)} en {$wedding->city}.",
+            'organizer' => [
+                '@type' => 'Person',
+                'name' => "{$wedding->bride_name} & {$wedding->groom_name}",
+            ],
+        ];
     }
 }

@@ -28,6 +28,11 @@
         <meta name="twitter:title" content="{{ $metaTitle }}">
         <meta name="twitter:description" content="{{ $metaDescription }}">
         <meta name="twitter:image" content="{{ $metaImage }}">
+        <link rel="canonical" href="{{ $metaUrl }}">
+
+        @isset($schema)
+            <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+        @endisset
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
