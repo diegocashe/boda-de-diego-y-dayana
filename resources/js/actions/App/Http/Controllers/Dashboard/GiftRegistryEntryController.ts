@@ -141,7 +141,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:45
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-export const update = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -156,7 +156,7 @@ update.definition = {
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:45
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-update.url = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { giftRegistryEntry: args }
     }
@@ -189,7 +189,7 @@ update.url = (args: { giftRegistryEntry: string | number | { id: string | number
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:45
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-update.put = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -199,7 +199,7 @@ update.put = (args: { giftRegistryEntry: string | number | { id: string | number
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:45
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-const updateForm = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateForm = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -214,7 +214,7 @@ const updateForm = (args: { giftRegistryEntry: string | number | { id: string | 
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:45
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-updateForm.put = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateForm.put = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: update.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PUT',
@@ -231,7 +231,7 @@ update.form = updateForm
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:57
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-export const destroy = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -246,7 +246,7 @@ destroy.definition = {
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:57
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-destroy.url = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { giftRegistryEntry: args }
     }
@@ -279,7 +279,7 @@ destroy.url = (args: { giftRegistryEntry: string | number | { id: string | numbe
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:57
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-destroy.delete = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -289,7 +289,7 @@ destroy.delete = (args: { giftRegistryEntry: string | number | { id: string | nu
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:57
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-const destroyForm = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const destroyForm = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',
@@ -304,7 +304,7 @@ const destroyForm = (args: { giftRegistryEntry: string | number | { id: string |
 * @see app/Http/Controllers/Dashboard/GiftRegistryEntryController.php:57
 * @route '/dashboard/gift-registry/{giftRegistryEntry}'
 */
-destroyForm.delete = (args: { giftRegistryEntry: string | number | { id: string | number } } | [giftRegistryEntry: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+destroyForm.delete = (args: { giftRegistryEntry: number | { id: number } } | [giftRegistryEntry: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: destroy.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'DELETE',

@@ -163,7 +163,7 @@ exportMethod.form = exportMethodForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::store
-* @see app/Http/Controllers/Dashboard/InvitationController.php:98
+* @see app/Http/Controllers/Dashboard/InvitationController.php:115
 * @route '/dashboard/invitations'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::store
-* @see app/Http/Controllers/Dashboard/InvitationController.php:98
+* @see app/Http/Controllers/Dashboard/InvitationController.php:115
 * @route '/dashboard/invitations'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::store
-* @see app/Http/Controllers/Dashboard/InvitationController.php:98
+* @see app/Http/Controllers/Dashboard/InvitationController.php:115
 * @route '/dashboard/invitations'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::store
-* @see app/Http/Controllers/Dashboard/InvitationController.php:98
+* @see app/Http/Controllers/Dashboard/InvitationController.php:115
 * @route '/dashboard/invitations'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::store
-* @see app/Http/Controllers/Dashboard/InvitationController.php:98
+* @see app/Http/Controllers/Dashboard/InvitationController.php:115
 * @route '/dashboard/invitations'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::update
-* @see app/Http/Controllers/Dashboard/InvitationController.php:110
+* @see app/Http/Controllers/Dashboard/InvitationController.php:127
 * @route '/dashboard/invitations/{invitation}'
 */
 export const update = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -234,7 +234,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::update
-* @see app/Http/Controllers/Dashboard/InvitationController.php:110
+* @see app/Http/Controllers/Dashboard/InvitationController.php:127
 * @route '/dashboard/invitations/{invitation}'
 */
 update.url = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ update.url = (args: { invitation: number | { id: number } } | [invitation: numbe
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::update
-* @see app/Http/Controllers/Dashboard/InvitationController.php:110
+* @see app/Http/Controllers/Dashboard/InvitationController.php:127
 * @route '/dashboard/invitations/{invitation}'
 */
 update.put = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -277,7 +277,7 @@ update.put = (args: { invitation: number | { id: number } } | [invitation: numbe
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::update
-* @see app/Http/Controllers/Dashboard/InvitationController.php:110
+* @see app/Http/Controllers/Dashboard/InvitationController.php:127
 * @route '/dashboard/invitations/{invitation}'
 */
 const updateForm = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -292,7 +292,7 @@ const updateForm = (args: { invitation: number | { id: number } } | [invitation:
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::update
-* @see app/Http/Controllers/Dashboard/InvitationController.php:110
+* @see app/Http/Controllers/Dashboard/InvitationController.php:127
 * @route '/dashboard/invitations/{invitation}'
 */
 updateForm.put = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -309,7 +309,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::destroy
-* @see app/Http/Controllers/Dashboard/InvitationController.php:125
+* @see app/Http/Controllers/Dashboard/InvitationController.php:142
 * @route '/dashboard/invitations/{invitation}'
 */
 export const destroy = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -324,7 +324,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::destroy
-* @see app/Http/Controllers/Dashboard/InvitationController.php:125
+* @see app/Http/Controllers/Dashboard/InvitationController.php:142
 * @route '/dashboard/invitations/{invitation}'
 */
 destroy.url = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -357,7 +357,7 @@ destroy.url = (args: { invitation: number | { id: number } } | [invitation: numb
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::destroy
-* @see app/Http/Controllers/Dashboard/InvitationController.php:125
+* @see app/Http/Controllers/Dashboard/InvitationController.php:142
 * @route '/dashboard/invitations/{invitation}'
 */
 destroy.delete = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -367,7 +367,7 @@ destroy.delete = (args: { invitation: number | { id: number } } | [invitation: n
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::destroy
-* @see app/Http/Controllers/Dashboard/InvitationController.php:125
+* @see app/Http/Controllers/Dashboard/InvitationController.php:142
 * @route '/dashboard/invitations/{invitation}'
 */
 const destroyForm = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -382,7 +382,7 @@ const destroyForm = (args: { invitation: number | { id: number } } | [invitation
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::destroy
-* @see app/Http/Controllers/Dashboard/InvitationController.php:125
+* @see app/Http/Controllers/Dashboard/InvitationController.php:142
 * @route '/dashboard/invitations/{invitation}'
 */
 destroyForm.delete = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -399,7 +399,7 @@ destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::send
-* @see app/Http/Controllers/Dashboard/InvitationController.php:139
+* @see app/Http/Controllers/Dashboard/InvitationController.php:156
 * @route '/dashboard/invitations/{invitation}/send'
 */
 export const send = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -414,7 +414,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::send
-* @see app/Http/Controllers/Dashboard/InvitationController.php:139
+* @see app/Http/Controllers/Dashboard/InvitationController.php:156
 * @route '/dashboard/invitations/{invitation}/send'
 */
 send.url = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -447,7 +447,7 @@ send.url = (args: { invitation: number | { id: number } } | [invitation: number 
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::send
-* @see app/Http/Controllers/Dashboard/InvitationController.php:139
+* @see app/Http/Controllers/Dashboard/InvitationController.php:156
 * @route '/dashboard/invitations/{invitation}/send'
 */
 send.post = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -457,7 +457,7 @@ send.post = (args: { invitation: number | { id: number } } | [invitation: number
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::send
-* @see app/Http/Controllers/Dashboard/InvitationController.php:139
+* @see app/Http/Controllers/Dashboard/InvitationController.php:156
 * @route '/dashboard/invitations/{invitation}/send'
 */
 const sendForm = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -467,7 +467,7 @@ const sendForm = (args: { invitation: number | { id: number } } | [invitation: n
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::send
-* @see app/Http/Controllers/Dashboard/InvitationController.php:139
+* @see app/Http/Controllers/Dashboard/InvitationController.php:156
 * @route '/dashboard/invitations/{invitation}/send'
 */
 sendForm.post = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -479,7 +479,7 @@ send.form = sendForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::lock
-* @see app/Http/Controllers/Dashboard/InvitationController.php:159
+* @see app/Http/Controllers/Dashboard/InvitationController.php:176
 * @route '/dashboard/invitations/{invitation}/lock'
 */
 export const lock = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -494,7 +494,7 @@ lock.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::lock
-* @see app/Http/Controllers/Dashboard/InvitationController.php:159
+* @see app/Http/Controllers/Dashboard/InvitationController.php:176
 * @route '/dashboard/invitations/{invitation}/lock'
 */
 lock.url = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -527,7 +527,7 @@ lock.url = (args: { invitation: number | { id: number } } | [invitation: number 
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::lock
-* @see app/Http/Controllers/Dashboard/InvitationController.php:159
+* @see app/Http/Controllers/Dashboard/InvitationController.php:176
 * @route '/dashboard/invitations/{invitation}/lock'
 */
 lock.put = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -537,7 +537,7 @@ lock.put = (args: { invitation: number | { id: number } } | [invitation: number 
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::lock
-* @see app/Http/Controllers/Dashboard/InvitationController.php:159
+* @see app/Http/Controllers/Dashboard/InvitationController.php:176
 * @route '/dashboard/invitations/{invitation}/lock'
 */
 const lockForm = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -552,7 +552,7 @@ const lockForm = (args: { invitation: number | { id: number } } | [invitation: n
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::lock
-* @see app/Http/Controllers/Dashboard/InvitationController.php:159
+* @see app/Http/Controllers/Dashboard/InvitationController.php:176
 * @route '/dashboard/invitations/{invitation}/lock'
 */
 lockForm.put = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -569,7 +569,7 @@ lock.form = lockForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::ogRegenerate
-* @see app/Http/Controllers/Dashboard/InvitationController.php:174
+* @see app/Http/Controllers/Dashboard/InvitationController.php:191
 * @route '/dashboard/invitations/{invitation}/og-regenerate'
 */
 export const ogRegenerate = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -584,7 +584,7 @@ ogRegenerate.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::ogRegenerate
-* @see app/Http/Controllers/Dashboard/InvitationController.php:174
+* @see app/Http/Controllers/Dashboard/InvitationController.php:191
 * @route '/dashboard/invitations/{invitation}/og-regenerate'
 */
 ogRegenerate.url = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -617,7 +617,7 @@ ogRegenerate.url = (args: { invitation: number | { id: number } } | [invitation:
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::ogRegenerate
-* @see app/Http/Controllers/Dashboard/InvitationController.php:174
+* @see app/Http/Controllers/Dashboard/InvitationController.php:191
 * @route '/dashboard/invitations/{invitation}/og-regenerate'
 */
 ogRegenerate.post = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -627,7 +627,7 @@ ogRegenerate.post = (args: { invitation: number | { id: number } } | [invitation
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::ogRegenerate
-* @see app/Http/Controllers/Dashboard/InvitationController.php:174
+* @see app/Http/Controllers/Dashboard/InvitationController.php:191
 * @route '/dashboard/invitations/{invitation}/og-regenerate'
 */
 const ogRegenerateForm = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -637,7 +637,7 @@ const ogRegenerateForm = (args: { invitation: number | { id: number } } | [invit
 
 /**
 * @see \App\Http\Controllers\Dashboard\InvitationController::ogRegenerate
-* @see app/Http/Controllers/Dashboard/InvitationController.php:174
+* @see app/Http/Controllers/Dashboard/InvitationController.php:191
 * @route '/dashboard/invitations/{invitation}/og-regenerate'
 */
 ogRegenerateForm.post = (args: { invitation: number | { id: number } } | [invitation: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

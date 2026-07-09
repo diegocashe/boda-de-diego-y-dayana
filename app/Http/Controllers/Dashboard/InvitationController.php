@@ -71,8 +71,8 @@ class InvitationController extends Controller
 
             Invitation::query()->latest()->each(function (Invitation $invitation) use ($handle): void {
                 fputcsv($handle, [
-                    $invitation->guest_name,
-                    $invitation->email,
+                    self::sanitizeCsvCell($invitation->guest_name),
+                    self::sanitizeCsvCell($invitation->email),
                     $invitation->code,
                     $invitation->max_passes,
                     match ($invitation->attending) {
@@ -81,8 +81,8 @@ class InvitationController extends Controller
                         default => 'Sin responder',
                     },
                     $invitation->confirmed_passes,
-                    $invitation->dietary,
-                    $invitation->message,
+                    self::sanitizeCsvCell($invitation->dietary),
+                    self::sanitizeCsvCell($invitation->message),
                     $invitation->responded_at?->format('Y-m-d H:i'),
                     $invitation->sent_at?->format('Y-m-d H:i'),
                 ]);
@@ -90,6 +90,23 @@ class InvitationController extends Controller
 
             fclose($handle);
         }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
+    /**
+     * Prevent CSV formula injection by neutralizing leading characters that
+     * spreadsheet apps (Excel, Sheets) interpret as formula/DDE triggers.
+     */
+    private static function sanitizeCsvCell(?string $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return $value;
+        }
+
+        if (preg_match('/^[=+\-@\t\r]/', $value) === 1) {
+            return "'".$value;
+        }
+
+        return $value;
     }
 
     /**
