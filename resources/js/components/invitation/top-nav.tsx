@@ -6,7 +6,7 @@ export default function TopNav() {
     const { url } = usePage();
 
     return (
-        <nav className="fixed top-5 left-1/2 z-50 hidden -translate-x-1/2 items-center gap-[26px] rounded-full border border-ink/10 bg-[#f8f4eb]/80 py-[11px] pr-3 pl-6 shadow-[0_18px_44px_-22px_rgba(58,52,43,0.5)] backdrop-blur-2xl desk:flex">
+        <nav className="fixed top-5 left-1/2 z-50 hidden w-max min-w-[485px] -translate-x-1/2 items-center gap-[26px] rounded-full border border-ink/10 bg-[#f8f4eb]/80 py-[11px] pr-3 pl-6 shadow-[0_18px_44px_-22px_rgba(58,52,43,0.5)] backdrop-blur-2xl desk:flex">
             <div className="pr-2 font-serif text-[22px] font-bold tracking-[0.02em] text-wine">
                 D <span className="text-gold-deep italic">&amp;</span> D
             </div>
