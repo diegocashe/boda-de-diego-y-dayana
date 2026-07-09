@@ -33,6 +33,8 @@ export interface TimelineMilestone {
     icon: string;
     highlighted: boolean;
     imageUrl: string | null;
+    videoUrl: string | null;
+    videoPosterUrl: string | null;
 }
 
 export interface VenueDetail {

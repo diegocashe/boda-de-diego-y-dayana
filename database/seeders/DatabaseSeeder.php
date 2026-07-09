@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
         $this->seedTimeline();
         $this->seedVenues();
+        $this->call(InvitationSeeder::class);
     }
 
     /**

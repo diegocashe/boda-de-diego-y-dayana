@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\WeddingSettingUpdateRequest;
 use App\Models\WeddingSetting;
 use App\Services\InvitationOgImageService;
+use App\Services\UploadedImageProcessor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -37,7 +38,7 @@ class WeddingSettingController extends Controller
     /**
      * Update the wedding settings, replacing the OG background photo when a new one is uploaded.
      */
-    public function update(WeddingSettingUpdateRequest $request, InvitationOgImageService $ogImages): RedirectResponse
+    public function update(WeddingSettingUpdateRequest $request, InvitationOgImageService $ogImages, UploadedImageProcessor $images): RedirectResponse
     {
         $wedding = WeddingSetting::current();
         $data = $request->safe()->except('og_background');
@@ -47,7 +48,7 @@ class WeddingSettingController extends Controller
                 Storage::disk('public')->delete($wedding->og_background_path);
             }
 
-            $data['og_background_path'] = $file->store('wedding', 'public');
+            $data['og_background_path'] = $images->store($file, 'wedding');
             $ogImages->invalidateAll();
         }
 

@@ -1,5 +1,6 @@
 import PhotoPlaceholder from '@/components/invitation/photo-placeholder';
 import SectionHeader from '@/components/invitation/section-header';
+import TimelineVideo from '@/components/invitation/timeline-video';
 import { TimelineIcon } from '@/lib/timeline-icons';
 import { cn } from '@/lib/utils';
 import type { TimelineMilestone } from '@/types/invitation';
@@ -36,10 +37,14 @@ function TimelineItem({ milestone, side }: { milestone: TimelineMilestone; side:
             />
             <span className="absolute top-[6px] left-0 block size-[11px] rounded-full border-[3px] border-parchment bg-wine shadow-[0_0_0_3px_rgba(122,31,43,0.18)] desk:hidden" />
 
-            {milestone.imageUrl ? (
+            {milestone.videoUrl ? (
+                <TimelineVideo src={milestone.videoUrl} poster={milestone.videoPosterUrl} />
+            ) : milestone.imageUrl ? (
                 <img
                     src={milestone.imageUrl}
                     alt={milestone.title}
+                    loading="lazy"
+                    decoding="async"
                     className="block h-auto max-h-[50vh] w-auto max-w-[50vw] border border-ink/[0.08]"
                 />
             ) : (

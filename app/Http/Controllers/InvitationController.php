@@ -63,6 +63,8 @@ class InvitationController extends Controller
                 'icon' => $item->icon,
                 'highlighted' => $item->highlighted,
                 'imageUrl' => $item->image_url,
+                'videoUrl' => $item->video_url,
+                'videoPosterUrl' => $item->video_poster_url,
             ]),
         ])->withViewData([
             'meta' => [

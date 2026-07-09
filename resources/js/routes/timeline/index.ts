@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::index
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:19
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:22
 * @route '/dashboard/timeline'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::store
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:39
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:46
 * @route '/dashboard/timeline'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::store
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:39
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:46
 * @route '/dashboard/timeline'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::store
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:39
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:46
 * @route '/dashboard/timeline'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::store
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:39
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:46
 * @route '/dashboard/timeline'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::store
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:39
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:46
 * @route '/dashboard/timeline'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -137,8 +137,74 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
+* @see \App\Http\Controllers\Dashboard\TimelineItemController::reorder
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:66
+* @route '/dashboard/timeline/reorder'
+*/
+export const reorder = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: reorder.url(options),
+    method: 'patch',
+})
+
+reorder.definition = {
+    methods: ["patch"],
+    url: '/dashboard/timeline/reorder',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\Dashboard\TimelineItemController::reorder
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:66
+* @route '/dashboard/timeline/reorder'
+*/
+reorder.url = (options?: RouteQueryOptions) => {
+    return reorder.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Dashboard\TimelineItemController::reorder
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:66
+* @route '/dashboard/timeline/reorder'
+*/
+reorder.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: reorder.url(options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\Dashboard\TimelineItemController::reorder
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:66
+* @route '/dashboard/timeline/reorder'
+*/
+const reorderForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: reorder.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Dashboard\TimelineItemController::reorder
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:66
+* @route '/dashboard/timeline/reorder'
+*/
+reorderForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: reorder.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+reorder.form = reorderForm
+
+/**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::update
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:56
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:83
 * @route '/dashboard/timeline/{timelineItem}'
 */
 export const update = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -153,7 +219,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::update
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:56
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:83
 * @route '/dashboard/timeline/{timelineItem}'
 */
 update.url = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +252,7 @@ update.url = (args: { timelineItem: number | { id: number } } | [timelineItem: n
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::update
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:56
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:83
 * @route '/dashboard/timeline/{timelineItem}'
 */
 update.put = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -196,7 +262,7 @@ update.put = (args: { timelineItem: number | { id: number } } | [timelineItem: n
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::update
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:56
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:83
 * @route '/dashboard/timeline/{timelineItem}'
 */
 const updateForm = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +277,7 @@ const updateForm = (args: { timelineItem: number | { id: number } } | [timelineI
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::update
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:56
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:83
 * @route '/dashboard/timeline/{timelineItem}'
 */
 updateForm.put = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -228,7 +294,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::destroy
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:76
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:116
 * @route '/dashboard/timeline/{timelineItem}'
 */
 export const destroy = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -243,7 +309,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::destroy
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:76
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:116
 * @route '/dashboard/timeline/{timelineItem}'
 */
 destroy.url = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -276,7 +342,7 @@ destroy.url = (args: { timelineItem: number | { id: number } } | [timelineItem: 
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::destroy
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:76
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:116
 * @route '/dashboard/timeline/{timelineItem}'
 */
 destroy.delete = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -286,7 +352,7 @@ destroy.delete = (args: { timelineItem: number | { id: number } } | [timelineIte
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::destroy
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:76
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:116
 * @route '/dashboard/timeline/{timelineItem}'
 */
 const destroyForm = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -301,7 +367,7 @@ const destroyForm = (args: { timelineItem: number | { id: number } } | [timeline
 
 /**
 * @see \App\Http\Controllers\Dashboard\TimelineItemController::destroy
-* @see app/Http/Controllers/Dashboard/TimelineItemController.php:76
+* @see app/Http/Controllers/Dashboard/TimelineItemController.php:116
 * @route '/dashboard/timeline/{timelineItem}'
 */
 destroyForm.delete = (args: { timelineItem: number | { id: number } } | [timelineItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -319,6 +385,7 @@ destroy.form = destroyForm
 const timeline = {
     index: Object.assign(index, index),
     store: Object.assign(store, store),
+    reorder: Object.assign(reorder, reorder),
     update: Object.assign(update, update),
     destroy: Object.assign(destroy, destroy),
 }

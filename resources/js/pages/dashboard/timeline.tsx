@@ -1,5 +1,9 @@
-import { Form, Head } from '@inertiajs/react';
-import { ImageOff, Trash2 } from 'lucide-react';
+import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
+import type { DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { Form, Head, router } from '@inertiajs/react';
+import { GripVertical, ImageOff, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import TimelineItemController from '@/actions/App/Http/Controllers/Dashboard/TimelineItemController';
 import Heading from '@/components/heading';
@@ -16,7 +20,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { TIMELINE_ICON_LABELS, TimelineIcon } from '@/lib/timeline-icons';
 import { dashboard } from '@/routes';
-import { index as timelineIndex } from '@/routes/timeline';
+import { optimize } from '@/routes/images';
+import { index as timelineIndex, reorder } from '@/routes/timeline';
 
 interface TimelineItemData {
     id: number;
@@ -27,6 +32,8 @@ interface TimelineItemData {
     highlighted: boolean;
     sortOrder: number;
     imageUrl: string | null;
+    videoUrl: string | null;
+    videoPosterUrl: string | null;
 }
 
 interface TimelineAdminProps {
@@ -36,19 +43,69 @@ interface TimelineAdminProps {
 
 export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
     const [selectedId, setSelectedId] = useState<number | null>(null);
-    const selected = items.find((item) => item.id === selectedId) ?? null;
+    const [prevItems, setPrevItems] = useState(items);
+    const [orderedItems, setOrderedItems] = useState(items);
+    const [isOptimizing, setIsOptimizing] = useState(false);
 
-    const nextOrder = items.reduce((max, item) => Math.max(max, item.sortOrder), 0) + 1;
+    if (items !== prevItems) {
+        setPrevItems(items);
+        setOrderedItems(items);
+    }
+
+    const handleOptimizeImages = () => {
+        router.post(
+            optimize.url(),
+            {},
+            {
+                preserveScroll: true,
+                onStart: () => setIsOptimizing(true),
+                onFinish: () => setIsOptimizing(false),
+            },
+        );
+    };
+
+    const selected = orderedItems.find((item) => item.id === selectedId) ?? null;
+
+    const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) {
+            return;
+        }
+
+        const oldIndex = orderedItems.findIndex((item) => item.id === active.id);
+        const newIndex = orderedItems.findIndex((item) => item.id === over.id);
+        const newOrder = arrayMove(orderedItems, oldIndex, newIndex);
+
+        setOrderedItems(newOrder);
+
+        router.patch(
+            reorder.url(),
+            { ids: newOrder.map((item) => item.id) },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onError: () => setOrderedItems(items),
+            },
+        );
+    };
 
     return (
         <>
             <Head title="Nuestra historia" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-4">
-                <Heading
-                    title="Nuestra historia"
-                    description="Los momentos del timeline que se muestran en la sección «Historia» de la invitación, con su foto."
-                />
+                <div className="flex items-start justify-between gap-4">
+                    <Heading
+                        title="Nuestra historia"
+                        description="Los momentos del timeline que se muestran en la sección «Historia» de la invitación, con su foto."
+                    />
+                    <Button variant="outline" onClick={handleOptimizeImages} disabled={isOptimizing}>
+                        {isOptimizing ? 'Optimizando…' : 'Optimizar imágenes'}
+                    </Button>
+                </div>
 
                 <Card className="max-w-3xl">
                     <CardHeader>
@@ -58,7 +115,7 @@ export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
                         <Form {...TimelineItemController.store.form()} options={{ preserveScroll: true }} resetOnSuccess className="space-y-5">
                             {({ processing, errors }) => (
                                 <>
-                                    <ItemFields icons={icons} errors={errors} idPrefix="new" defaults={{ sortOrder: nextOrder }} />
+                                    <ItemFields icons={icons} errors={errors} idPrefix="new" />
                                     <Button disabled={processing}>Agregar momento</Button>
                                 </>
                             )}
@@ -75,47 +132,33 @@ export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-0">
+                                        <span className="sr-only">Arrastrar</span>
+                                    </TableHead>
+                                    <TableHead className="w-0">
                                         <span className="sr-only">Imagen</span>
                                     </TableHead>
                                     <TableHead>Periodo</TableHead>
                                     <TableHead>Título</TableHead>
                                     <TableHead>Icono</TableHead>
-                                    <TableHead className="text-center">Orden</TableHead>
                                     <TableHead>Destacado</TableHead>
                                 </TableRow>
                             </TableHeader>
-                            <TableBody>
-                                {items.map((item) => (
-                                    <TableRow key={item.id} className="cursor-pointer" onClick={() => setSelectedId(item.id)}>
-                                        <TableCell>
-                                            {item.imageUrl ? (
-                                                <img src={item.imageUrl} alt={item.title} className="size-10 rounded-md border object-cover" />
-                                            ) : (
-                                                <div className="flex size-10 items-center justify-center rounded-md border border-dashed text-muted-foreground">
-                                                    <ImageOff className="size-4" />
-                                                </div>
-                                            )}
-                                        </TableCell>
-                                        <TableCell>{item.period}</TableCell>
-                                        <TableCell className="font-medium">{item.title}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2">
-                                                <TimelineIcon name={item.icon} className="size-4" />
-                                                {TIMELINE_ICON_LABELS[item.icon] ?? item.icon}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className="text-center tabular-nums">{item.sortOrder}</TableCell>
-                                        <TableCell>{item.highlighted ? <Badge>Destacado</Badge> : <Badge variant="outline">Normal</Badge>}</TableCell>
-                                    </TableRow>
-                                ))}
-                                {items.length === 0 && (
-                                    <TableRow>
-                                        <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
-                                            Aún no hay momentos en la historia; agrega el primero arriba.
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
+                            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                                <SortableContext items={orderedItems.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+                                    <TableBody>
+                                        {orderedItems.map((item) => (
+                                            <SortableRow key={item.id} item={item} onSelect={() => setSelectedId(item.id)} />
+                                        ))}
+                                        {orderedItems.length === 0 && (
+                                            <TableRow>
+                                                <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
+                                                    Aún no hay momentos en la historia; agrega el primero arriba.
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </SortableContext>
+                            </DndContext>
                         </Table>
                     </CardContent>
                 </Card>
@@ -125,6 +168,59 @@ export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
                 {selected && <ItemDetail item={selected} icons={icons} />}
             </Dialog>
         </>
+    );
+}
+
+function SortableRow({ item, onSelect }: { item: TimelineItemData; onSelect: () => void }) {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+
+    return (
+        <TableRow
+            ref={setNodeRef}
+            style={{ transform: CSS.Transform.toString(transform), transition }}
+            className={isDragging ? 'relative z-10 cursor-grabbing bg-muted' : 'cursor-pointer'}
+            onClick={onSelect}
+        >
+            <TableCell onClick={(event) => event.stopPropagation()}>
+                <button
+                    type="button"
+                    {...attributes}
+                    {...listeners}
+                    className="flex cursor-grab touch-none items-center justify-center text-muted-foreground active:cursor-grabbing"
+                    aria-label="Arrastrar para reordenar"
+                >
+                    <GripVertical className="size-4" />
+                </button>
+            </TableCell>
+            <TableCell>
+                {item.videoUrl ? (
+                    <video
+                        src={item.videoUrl}
+                        poster={item.videoPosterUrl ?? undefined}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        className="size-10 rounded-md border object-cover"
+                    />
+                ) : item.imageUrl ? (
+                    <img src={item.imageUrl} alt={item.title} className="size-10 rounded-md border object-cover" />
+                ) : (
+                    <div className="flex size-10 items-center justify-center rounded-md border border-dashed text-muted-foreground">
+                        <ImageOff className="size-4" />
+                    </div>
+                )}
+            </TableCell>
+            <TableCell>{item.period}</TableCell>
+            <TableCell className="font-medium">{item.title}</TableCell>
+            <TableCell>
+                <div className="flex items-center gap-2">
+                    <TimelineIcon name={item.icon} className="size-4" />
+                    {TIMELINE_ICON_LABELS[item.icon] ?? item.icon}
+                </div>
+            </TableCell>
+            <TableCell>{item.highlighted ? <Badge>Destacado</Badge> : <Badge variant="outline">Normal</Badge>}</TableCell>
+        </TableRow>
     );
 }
 
@@ -141,12 +237,22 @@ function ItemDetail({ item, icons }: { item: TimelineItemData; icons: string[] }
             </DialogHeader>
 
             <div className="space-y-5">
-                {item.imageUrl ? (
+                {item.videoUrl ? (
+                    <video
+                        src={item.videoUrl}
+                        poster={item.videoPosterUrl ?? undefined}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        className="h-48 w-full rounded-lg border object-cover"
+                    />
+                ) : item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.title} className="h-48 w-full rounded-lg border object-cover" />
                 ) : (
                     <div className="flex h-48 w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed text-muted-foreground">
                         <ImageOff className="size-5" />
-                        <span className="text-xs">Sin imagen</span>
+                        <span className="text-xs">Sin imagen o video</span>
                     </div>
                 )}
 
@@ -167,7 +273,7 @@ function ItemDetail({ item, icons }: { item: TimelineItemData; icons: string[] }
                                 size="sm"
                                 disabled={processing}
                                 onClick={(event) => {
-                                    if (!confirm('¿Eliminar este momento de la historia? Su imagen también se borrará.')) {
+                                    if (!confirm('¿Eliminar este momento de la historia? Su imagen o video también se borrará.')) {
                                         event.preventDefault();
                                     }
                                 }}
@@ -219,7 +325,7 @@ function ItemFields({ icons, errors, idPrefix, defaults = {} }: ItemFieldsProps)
                 <InputError message={errors.description} />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
                 <div className="grid gap-2">
                     <Label htmlFor={`${idPrefix}-icon`}>Icono</Label>
                     <Select name="icon" defaultValue={defaults.icon ?? 'heart'}>
@@ -239,12 +345,6 @@ function ItemFields({ icons, errors, idPrefix, defaults = {} }: ItemFieldsProps)
                 </div>
 
                 <div className="grid gap-2">
-                    <Label htmlFor={`${idPrefix}-sort-order`}>Orden</Label>
-                    <Input id={`${idPrefix}-sort-order`} type="number" name="sort_order" defaultValue={defaults.sortOrder ?? 0} min={0} required />
-                    <InputError message={errors.sort_order} />
-                </div>
-
-                <div className="grid gap-2">
                     <Label htmlFor={`${idPrefix}-highlighted`} className="mt-1 flex items-center gap-2">
                         <Checkbox id={`${idPrefix}-highlighted`} name="highlighted" value="1" defaultChecked={defaults.highlighted} />
                         Momento destacado
@@ -257,6 +357,22 @@ function ItemFields({ icons, errors, idPrefix, defaults = {} }: ItemFieldsProps)
                 <Label htmlFor={`${idPrefix}-image`}>{defaults.id ? 'Reemplazar imagen' : 'Imagen'}</Label>
                 <Input id={`${idPrefix}-image`} type="file" name="image" accept="image/*" />
                 <InputError message={errors.image} />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-2">
+                    <Label htmlFor={`${idPrefix}-video`}>{defaults.id ? 'Reemplazar video' : 'Video'}</Label>
+                    <Input id={`${idPrefix}-video`} type="file" name="video" accept="video/*" />
+                    <p className="text-xs text-muted-foreground">Opcional, hasta 20 MB. Subir un video reemplaza a la imagen del momento.</p>
+                    <InputError message={errors.video} />
+                </div>
+
+                <div className="grid gap-2">
+                    <Label htmlFor={`${idPrefix}-video-poster`}>Portada del video</Label>
+                    <Input id={`${idPrefix}-video-poster`} type="file" name="video_poster" accept="image/*" />
+                    <p className="text-xs text-muted-foreground">Opcional. Solo aplica si el momento tiene un video.</p>
+                    <InputError message={errors.video_poster} />
+                </div>
             </div>
         </>
     );

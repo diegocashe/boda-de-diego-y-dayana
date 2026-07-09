@@ -4,6 +4,7 @@ import HomeContentController from './HomeContentController'
 import TimelineItemController from './TimelineItemController'
 import InvitationController from './InvitationController'
 import VenueController from './VenueController'
+import ImageOptimizationController from './ImageOptimizationController'
 import GiftRegistryEntryController from './GiftRegistryEntryController'
 
 const Dashboard = {
@@ -13,6 +14,7 @@ const Dashboard = {
     TimelineItemController: Object.assign(TimelineItemController, TimelineItemController),
     InvitationController: Object.assign(InvitationController, InvitationController),
     VenueController: Object.assign(VenueController, VenueController),
+    ImageOptimizationController: Object.assign(ImageOptimizationController, ImageOptimizationController),
     GiftRegistryEntryController: Object.assign(GiftRegistryEntryController, GiftRegistryEntryController),
 }
 

@@ -11,11 +11,13 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $guest_name
+ * @property string|null $relationship
  * @property string|null $email
  * @property string $code
  * @property int $max_passes
  * @property bool|null $attending
  * @property int|null $confirmed_passes
+ * @property int|null $table_number
  * @property string|null $dietary
  * @property string|null $message
  * @property Carbon|null $responded_at
@@ -34,11 +36,13 @@ class Invitation extends Model
      */
     protected $fillable = [
         'guest_name',
+        'relationship',
         'email',
         'code',
         'max_passes',
         'attending',
         'confirmed_passes',
+        'table_number',
         'dietary',
         'message',
         'responded_at',
@@ -57,6 +61,7 @@ class Invitation extends Model
             'max_passes' => 'integer',
             'attending' => 'boolean',
             'confirmed_passes' => 'integer',
+            'table_number' => 'integer',
             'responded_at' => 'datetime',
             'sent_at' => 'datetime',
             'is_locked' => 'boolean',

@@ -22,8 +22,30 @@ class TimelineItemStoreRequest extends FormRequest
             'description' => ['required', 'string', 'max:1000'],
             'icon' => ['required', 'string', Rule::in(TimelineItem::ICONS)],
             'highlighted' => ['boolean'],
-            'sort_order' => ['required', 'integer', 'min:0', 'max:1000'],
-            'image' => ['nullable', 'image', 'max:4096'],
+            'image' => ['nullable', 'image', 'max:4096', Rule::prohibitedIf(fn () => $this->hasFile('video'))],
+            'video' => [
+                'nullable',
+                'file',
+                'mimetypes:video/mp4,video/quicktime,video/webm',
+                'max:20480',
+                Rule::prohibitedIf(fn () => $this->hasFile('image')),
+            ],
+            'video_poster' => [
+                'nullable',
+                'image',
+                'max:4096',
+                Rule::prohibitedIf(fn () => ! $this->hasFile('video') && ! $this->existingTimelineItem()?->video_path),
+            ],
         ];
+    }
+
+    /**
+     * The timeline item being updated, if this request is bound to one (edit forms).
+     */
+    protected function existingTimelineItem(): ?TimelineItem
+    {
+        $item = $this->route('timelineItem');
+
+        return $item instanceof TimelineItem ? $item : null;
     }
 }

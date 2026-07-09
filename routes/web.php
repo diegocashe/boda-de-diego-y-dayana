@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\GiftRegistryEntryController;
 use App\Http\Controllers\Dashboard\HomeContentController;
+use App\Http\Controllers\Dashboard\ImageOptimizationController;
 use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationController;
 use App\Http\Controllers\Dashboard\TimelineItemController;
 use App\Http\Controllers\Dashboard\VenueController;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('dashboard/timeline', [TimelineItemController::class, 'index'])->name('timeline.index');
     Route::post('dashboard/timeline', [TimelineItemController::class, 'store'])->name('timeline.store');
+    Route::patch('dashboard/timeline/reorder', [TimelineItemController::class, 'reorder'])->name('timeline.reorder');
     Route::put('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'update'])->name('timeline.update');
     Route::delete('dashboard/timeline/{timelineItem}', [TimelineItemController::class, 'destroy'])->name('timeline.destroy');
 
@@ -45,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/venues', [VenueController::class, 'store'])->name('venues.store');
     Route::put('dashboard/venues/{venue}', [VenueController::class, 'update'])->name('venues.update');
     Route::delete('dashboard/venues/{venue}', [VenueController::class, 'destroy'])->name('venues.destroy');
+
+    Route::post('dashboard/images/optimize', [ImageOptimizationController::class, 'optimize'])->name('images.optimize');
 
     Route::get('dashboard/gift-registry', [GiftRegistryEntryController::class, 'index'])->name('gift-registry.index');
     Route::post('dashboard/gift-registry', [GiftRegistryEntryController::class, 'store'])->name('gift-registry.store');

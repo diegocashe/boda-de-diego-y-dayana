@@ -1,11 +1,8 @@
-import { router } from '@inertiajs/react';
-import { ArrowRight, ChevronDown, Heart } from 'lucide-react';
+import { ChevronDown, Heart } from 'lucide-react';
 import CountdownPanel from '@/components/invitation/countdown-panel';
-import WineButton from '@/components/invitation/wine-button';
 import { buildWeddingLabels } from '@/lib/wedding';
 import type { WeddingLabels } from '@/lib/wedding';
 import { cn } from '@/lib/utils';
-import { rsvp } from '@/routes/invitation';
 import type { HomeContent, WeddingDetails } from '@/types/invitation';
 import imageUrl from '../../../assets/upscalemedia-transformed.webp';
 interface HomeSectionProps {
@@ -95,13 +92,6 @@ function CtaSection({ content }: { content: HomeContent }) {
                 <p className="reveal mx-auto mt-[22px] max-w-[520px] text-[clamp(14px,2.2vw,16.5px)] leading-[1.75] text-ink-soft">
                     {content.ctaParagraph}
                 </p>
-                <WineButton
-                    onClick={() => router.visit(rsvp())}
-                    className="reveal mt-[30px] inline-flex w-auto rounded-full px-[30px] py-4 shadow-[0_18px_34px_-14px_var(--color-wine-deep)]"
-                >
-                    {content.ctaButtonLabel}
-                    <ArrowRight className="size-[17px]" strokeWidth={2} />
-                </WineButton>
             </div>
         </section>
     );
