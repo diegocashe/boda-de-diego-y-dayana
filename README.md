@@ -92,6 +92,10 @@ resources/js/wayfinder/   # Rutas tipadas generadas por Wayfinder
 database/             # Migraciones, factories y seeders
 ```
 
+### RSVP
+
+**RSVP** viene del francés *"Répondez s'il vous plaît"* ("responda por favor"), una sigla clásica y muy usada en invitaciones formales (bodas, eventos) para pedir confirmación de asistencia. En esta app es el flujo donde el invitado abre su invitación y confirma si asistirá o no: [`InvitationController`](app/Http/Controllers/InvitationController.php) y [`resources/js/pages/invitation/rsvp.tsx`](resources/js/pages/invitation/rsvp.tsx).
+
 ## Licencia
 
 [MIT](LICENSE)

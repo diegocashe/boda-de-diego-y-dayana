@@ -56,6 +56,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin Seed Password
+    |--------------------------------------------------------------------------
+    |
+    | Password assigned to the seeded admin user. Override it in production
+    | before running the seeder so the default value never reaches a live
+    | environment.
+    |
+    */
+
+    'admin_seed_password' => env('ADMIN_SEED_PASSWORD', 'password'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |

@@ -10,6 +10,31 @@
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+    --font-body: 'Mulish', ui-sans-serif, system-ui, sans-serif;
+
+    /* Paleta de la invitación de boda */
+    --color-wine: #7a1f2b;
+    --color-wine-deep: #5e1620;
+    --color-wine-bright: #9e2b3a;
+    --color-blush-line: #d8b4ba;
+    --color-blush-tint: #f6eced;
+    --color-gold: #e7c6a8;
+    --color-gold-deep: #a98a5b;
+    --color-sage: #6e7d68;
+    --color-sage-tint: #ebf0e6;
+    --color-ink: #3a342b;
+    --color-ink-soft: #6e6555;
+    --color-ink-muted: #777063;
+    --color-ink-faint: #9a9080;
+    --color-cream: #f7f1e7;
+    --color-parchment: #f4efe4;
+    --color-parchment-light: #fbf8f0;
+    --color-sand: #ede7d9;
+    --color-cocoa: #241715;
+
+    /* La navegación cambia de barra inferior (móvil) a píldora superior (desktop) */
+    --breakpoint-desk: 900px;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -137,5 +162,103 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@utility scrollbar-hidden {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
+/* Animaciones del sitio de la boda: entradas del hero y reveals ligados al scroll.
+   `animation-timeline` aún no es expresable con utilidades de Tailwind. */
+@layer components {
+    @keyframes hero-fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes reveal-up {
+        from {
+            opacity: 0;
+            transform: translateY(34px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes hero-parallax-drift {
+        from {
+            transform: translateY(-7%) scale(1.2);
+        }
+        to {
+            transform: translateY(11%) scale(1.2);
+        }
+    }
+
+    @keyframes scroll-cue-bounce {
+        0%,
+        100% {
+            transform: translateY(0);
+            opacity: 0.45;
+        }
+        50% {
+            transform: translateY(8px);
+            opacity: 1;
+        }
+    }
+
+    .hero-fade {
+        animation: hero-fade-up 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .hero-fade-d1 {
+        animation-delay: 0.12s;
+    }
+
+    .hero-fade-d2 {
+        animation-delay: 0.24s;
+    }
+
+    .hero-fade-d3 {
+        animation-delay: 0.36s;
+    }
+
+    .reveal {
+        animation: reveal-up linear both;
+        animation-timeline: view();
+        animation-range: entry 3% cover 32%;
+    }
+
+    .hero-parallax {
+        animation: hero-parallax-drift linear both;
+        animation-timeline: scroll(nearest);
+        will-change: transform;
+    }
+
+    .scroll-cue {
+        animation: scroll-cue-bounce 1.8s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-fade,
+        .reveal,
+        .hero-parallax,
+        .scroll-cue {
+            animation: none;
+        }
     }
 }
