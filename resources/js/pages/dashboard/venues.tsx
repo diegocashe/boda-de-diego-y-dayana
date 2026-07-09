@@ -5,11 +5,14 @@ import VenueController from '@/actions/App/Http/Controllers/Dashboard/VenueContr
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import VenueMap from '@/components/invitation/venue-map';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { VENUE_ICON_LABELS, VenueIcon } from '@/lib/venue-icons';
 import { dashboard } from '@/routes';
 import { index as venuesIndex } from '@/routes/venues';
@@ -33,6 +36,9 @@ interface VenuesAdminProps {
 }
 
 export default function VenuesAdmin({ venues, icons, accents }: VenuesAdminProps) {
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const selected = venues.find((venue) => venue.id === selectedId) ?? null;
+
     const nextOrder = venues.reduce((max, venue) => Math.max(max, venue.sortOrder), 0) + 1;
 
     return (
@@ -61,46 +67,71 @@ export default function VenuesAdmin({ venues, icons, accents }: VenuesAdminProps
                     </CardContent>
                 </Card>
 
-                <div className="flex max-w-3xl flex-col gap-4">
-                    {venues.map((venue) => (
-                        <VenueCard key={venue.id} venue={venue} icons={icons} accents={accents} />
-                    ))}
-                    {venues.length === 0 && (
-                        <p className="text-sm text-muted-foreground">Aún no hay ubicaciones registradas; agrega la primera arriba.</p>
-                    )}
-                </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Lista de ubicaciones</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Etiqueta</TableHead>
+                                    <TableHead>Nombre</TableHead>
+                                    <TableHead>Icono</TableHead>
+                                    <TableHead>Color</TableHead>
+                                    <TableHead className="text-center">Orden</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {venues.map((venue) => (
+                                    <TableRow key={venue.id} className="cursor-pointer" onClick={() => setSelectedId(venue.id)}>
+                                        <TableCell className="font-medium">{venue.label}</TableCell>
+                                        <TableCell>{venue.name}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                <VenueIcon name={venue.icon} className="size-4" />
+                                                {VENUE_ICON_LABELS[venue.icon] ?? venue.icon}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge variant="outline">{venue.accent === 'wine' ? 'Vino' : 'Salvia'}</Badge>
+                                        </TableCell>
+                                        <TableCell className="text-center tabular-nums">{venue.sortOrder}</TableCell>
+                                    </TableRow>
+                                ))}
+                                {venues.length === 0 && (
+                                    <TableRow>
+                                        <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">
+                                            Aún no hay ubicaciones registradas; agrega la primera arriba.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
             </div>
+
+            <Dialog open={selected !== null} onOpenChange={(open) => !open && setSelectedId(null)}>
+                {selected && <VenueDetail venue={selected} icons={icons} accents={accents} />}
+            </Dialog>
         </>
     );
 }
 
-function VenueCard({ venue, icons, accents }: { venue: VenueData; icons: string[]; accents: string[] }) {
+function VenueDetail({ venue, icons, accents }: { venue: VenueData; icons: string[]; accents: string[] }) {
     return (
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-base">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+            <DialogHeader>
+                <DialogTitle className="flex flex-wrap items-center gap-2">
                     <VenueIcon name={venue.icon} className="size-4" />
                     {venue.name}
-                </CardTitle>
-                <Form {...VenueController.destroy.form(venue.id)} options={{ preserveScroll: true }}>
-                    {({ processing }) => (
-                        <Button
-                            variant="destructive"
-                            size="sm"
-                            disabled={processing}
-                            onClick={(event) => {
-                                if (!confirm('¿Eliminar esta ubicación?')) {
-                                    event.preventDefault();
-                                }
-                            }}
-                        >
-                            <Trash2 className="size-4" />
-                            Eliminar
-                        </Button>
-                    )}
-                </Form>
-            </CardHeader>
-            <CardContent>
+                    <Badge variant="outline">{venue.accent === 'wine' ? 'Vino' : 'Salvia'}</Badge>
+                </DialogTitle>
+                <DialogDescription>Detalles y edición de la ubicación.</DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-5">
                 <Form {...VenueController.update.form(venue.id)} options={{ preserveScroll: true }} className="space-y-5">
                     {({ processing, errors }) => (
                         <>
@@ -109,8 +140,28 @@ function VenueCard({ venue, icons, accents }: { venue: VenueData; icons: string[
                         </>
                     )}
                 </Form>
-            </CardContent>
-        </Card>
+
+                <div className="flex border-t pt-4">
+                    <Form {...VenueController.destroy.form(venue.id)} options={{ preserveScroll: true }} className="ml-auto">
+                        {({ processing }) => (
+                            <Button
+                                variant="destructive"
+                                size="sm"
+                                disabled={processing}
+                                onClick={(event) => {
+                                    if (!confirm('¿Eliminar esta ubicación?')) {
+                                        event.preventDefault();
+                                    }
+                                }}
+                            >
+                                <Trash2 className="size-4" />
+                                Eliminar
+                            </Button>
+                        )}
+                    </Form>
+                </div>
+            </div>
+        </DialogContent>
     );
 }
 
