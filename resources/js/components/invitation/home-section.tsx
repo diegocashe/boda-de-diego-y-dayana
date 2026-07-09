@@ -1,8 +1,6 @@
 import { router } from '@inertiajs/react';
 import { ArrowRight, ChevronDown, Heart } from 'lucide-react';
 import CountdownPanel from '@/components/invitation/countdown-panel';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- se usa en los bloques comentados del diseño anterior
-import PhotoPlaceholder from '@/components/invitation/photo-placeholder';
 import WineButton from '@/components/invitation/wine-button';
 import { buildWeddingLabels } from '@/lib/wedding';
 import type { WeddingLabels } from '@/lib/wedding';
@@ -10,7 +8,6 @@ import { cn } from '@/lib/utils';
 import { rsvp } from '@/routes/invitation';
 import type { HomeContent, WeddingDetails } from '@/types/invitation';
 import imageUrl from '../../../assets/upscalemedia-transformed.webp';
-import imageURL2 from '../../../assets/upscalemedia-transformed-2.webp';
 interface HomeSectionProps {
     wedding: WeddingDetails;
     content: HomeContent;
@@ -32,7 +29,6 @@ export default function HomeSection({ wedding, content }: HomeSectionProps) {
             <HeroSection wedding={wedding} labels={labels} content={content} />
             <CountdownSection wedding={wedding} labels={labels} content={content} />
             <CtaSection content={content} />
-            {/* <ArchSection wedding={wedding} labels={labels} /> */}
         </div>
     );
 }
@@ -43,7 +39,6 @@ function HeroSection({ wedding, labels, content }: WeddingSectionProps) {
             <div className="absolute inset-0 overflow-hidden">
                 <div className="hero-parallax absolute inset-x-0 -inset-y-[12%] bg-center bg-no-repeat">
                     <img src={imageUrl} alt="" className="h-full w-full object-cover" />
-                    {/* <PhotoPlaceholder label="Foto de los novios" className="h-full w-full rounded-none border-none" /> */}
                 </div>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,14,12,0.72)_0%,rgba(24,14,12,0.7)_38%,rgba(24,14,12,0.66)_66%,rgba(24,14,12,0.92)_100%)]" />
             </div>
@@ -69,45 +64,6 @@ function HeroSection({ wedding, labels, content }: WeddingSectionProps) {
             <div className="absolute right-0 bottom-[clamp(96px,12vh,120px)] left-0 z-[2] flex flex-col items-center gap-[7px] text-cream/85">
                 <span className="text-[10px] tracking-[0.28em] uppercase">{content.heroScrollHint}</span>
                 <ChevronDown className="scroll-cue size-5" strokeWidth={1.6} />
-            </div>
-        </section>
-    );
-}
-
-// Sección conservada del diseño anterior: retrato en arco con los nombres y la fecha.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function ArchSection({ wedding, labels }: WeddingSectionProps) {
-    return (
-        <section className={cn(snapClass, 'bg-gradient-to-b from-white to-parchment py-20')}>
-            <div className="mx-auto w-full max-w-[1120px] px-[22px] text-center">
-                <div className="reveal text-xs font-semibold tracking-[0.34em] text-wine uppercase">Nuestro gran día</div>
-
-                <img
-                    src={imageURL2}
-                    alt="Foto de los novios"
-                    className="reveal mx-auto mt-[22px] h-[clamp(238px,32vw,320px)] w-[clamp(190px,26vw,256px)] rounded-[160px_160px_16px_16px]"
-                />
-                {/* <PhotoPlaceholder
-                    label="FOTO · pareja"
-                    className="reveal mx-auto mt-[22px] h-[clamp(238px,32vw,320px)] w-[clamp(190px,26vw,256px)] rounded-[160px_160px_16px_16px]"
-                /> */}
-
-                <div className="reveal">
-                    <h1 className="mt-[26px] font-serif text-[clamp(52px,7vw,76px)] leading-[0.94] font-semibold text-ink">{wedding.groomName}</h1>
-                    <div className="my-0.5 font-serif text-[clamp(30px,4vw,42px)] text-wine italic">&amp;</div>
-                    <h1 className="font-serif text-[clamp(52px,7vw,76px)] leading-[0.94] font-semibold text-ink">{wedding.brideName}</h1>
-                </div>
-
-                <div className="reveal mt-6 mb-1 flex items-center justify-center gap-3">
-                    <span className="h-px w-11 bg-gradient-to-r from-transparent to-gold" />
-                    <span className="size-[7px] rotate-45 bg-wine" />
-                    <span className="h-px w-11 bg-gradient-to-r from-gold to-transparent" />
-                </div>
-
-                <div className="reveal">
-                    <div className="font-serif text-[clamp(22px,3vw,28px)] font-medium text-ink">{labels.dateLabel}</div>
-                    <div className="mt-[5px] text-[13px] tracking-[0.02em] text-ink-muted">{labels.placeLabel}</div>
-                </div>
             </div>
         </section>
     );
