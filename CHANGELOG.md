@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.3.0...v1.4.0) (2026-07-09)
+
+
+### Features
+
+* enhance StorySection layout and styling for timeline items ([eaa9e55](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/eaa9e55c5025f25782f119a7d64743e8ea09db22))
+* update .gitignore to include macOS specific files and add new image asset ([89ac031](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/89ac0312f454417577f8c01dbafb00a0e1d008d5))
+
 # [1.3.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.2.0...v1.3.0) (2026-07-09)
 
 
