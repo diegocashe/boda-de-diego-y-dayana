@@ -1,5 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
-import { Check, Copy, Lock, LockOpen, Send, Trash2 } from 'lucide-react';
+import { Check, Copy, Lock, LockOpen, RefreshCw, Send, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import InvitationController from '@/actions/App/Http/Controllers/Dashboard/InvitationController';
@@ -29,6 +29,7 @@ interface InvitationData {
     sentAt: string | null;
     isLocked: boolean;
     rsvpUrl: string;
+    ogImageUrl: string;
 }
 
 interface InvitationsAdminProps {
@@ -198,6 +199,24 @@ function InvitationDetail({ invitation }: { invitation: InvitationData }) {
                 <div className="flex items-center gap-2">
                     <Input readOnly value={invitation.rsvpUrl} className="font-mono text-xs" onFocus={(event) => event.target.select()} />
                     <CopyLinkButton url={invitation.rsvpUrl} />
+                </div>
+
+                <div className="space-y-2">
+                    <p className="text-sm font-medium">Imagen para compartir (WhatsApp / redes)</p>
+                    <img
+                        src={invitation.ogImageUrl}
+                        alt={`Vista previa para compartir de ${invitation.guestName}`}
+                        className="w-full max-w-md rounded-lg border object-cover"
+                        style={{ aspectRatio: '1200 / 630' }}
+                    />
+                    <Form {...InvitationController.regenerateOgImage.form(invitation.id)} options={{ preserveScroll: true }}>
+                        {({ processing }) => (
+                            <Button type="submit" variant="outline" size="sm" disabled={processing}>
+                                <RefreshCw className="size-4" />
+                                Regenerar imagen
+                            </Button>
+                        )}
+                    </Form>
                 </div>
 
                 <Form {...InvitationController.update.form(invitation.id)} options={{ preserveScroll: true }} className="space-y-5">

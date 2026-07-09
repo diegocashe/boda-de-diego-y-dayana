@@ -7,8 +7,10 @@ use App\Http\Requests\Dashboard\InvitationStoreRequest;
 use App\Http\Requests\Dashboard\InvitationUpdateRequest;
 use App\Mail\InvitationMail;
 use App\Models\Invitation;
+use App\Services\InvitationOgImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -34,6 +36,7 @@ class InvitationController extends Controller
                 'sentAt' => $invitation->sent_at?->toIso8601String(),
                 'isLocked' => $invitation->is_locked,
                 'rsvpUrl' => route('invitation.rsvp.show', $invitation),
+                'ogImageUrl' => route('invitation.og-image', $invitation).'?v='.$invitation->updated_at->timestamp,
             ]),
         ]);
     }
@@ -57,6 +60,9 @@ class InvitationController extends Controller
     {
         $invitation->update($request->validated());
 
+        // El nombre pudo cambiar; la imagen compartible se regenera en el próximo request.
+        Storage::disk('public')->delete("og/{$invitation->code}.jpg");
+
         Inertia::flash('toast', ['type' => 'success', 'message' => 'Invitación actualizada.']);
 
         return to_route('invitations.index');
@@ -67,6 +73,7 @@ class InvitationController extends Controller
      */
     public function destroy(Invitation $invitation): RedirectResponse
     {
+        Storage::disk('public')->delete("og/{$invitation->code}.jpg");
         $invitation->delete();
 
         Inertia::flash('toast', ['type' => 'success', 'message' => 'Invitación eliminada.']);
@@ -106,6 +113,19 @@ class InvitationController extends Controller
             'type' => 'success',
             'message' => $invitation->is_locked ? 'Respuesta bloqueada.' : 'Respuesta desbloqueada.',
         ]);
+
+        return to_route('invitations.index');
+    }
+
+    /**
+     * Regenerate the shareable OG image for an invitation on demand.
+     */
+    public function regenerateOgImage(Invitation $invitation, InvitationOgImageService $ogImages): RedirectResponse
+    {
+        $ogImages->regenerate($invitation);
+        $invitation->touch();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Imagen regenerada.']);
 
         return to_route('invitations.index');
     }

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RsvpStoreRequest;
+use App\Mail\RsvpNotificationMail;
 use App\Models\Invitation;
 use App\Models\TimelineItem;
 use App\Models\WeddingSetting;
+use App\Services\InvitationOgImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class InvitationController extends Controller
 {
@@ -74,7 +79,6 @@ class InvitationController extends Controller
                 'maxPasses' => $invitation->max_passes,
                 'locked' => $invitation->is_locked,
                 'videoUrl' => null,
-                'videoMessage' => 'Grabamos este video con todo nuestro cariño para invitarte de manera especial. ¡Esperamos verte para celebrar juntos!',
                 'response' => $invitation->responded_at ? [
                     'attending' => $invitation->attending ? 'yes' : 'no',
                     'guests' => $invitation->confirmed_passes ?? 1,
@@ -86,9 +90,24 @@ class InvitationController extends Controller
             'meta' => [
                 'title' => "Invitación para {$invitation->guest_name} · {$wedding->bride_name} & {$wedding->groom_name}",
                 'description' => "{$invitation->guest_name}, {$wedding->bride_name} y {$wedding->groom_name} te invitan a su boda el {$this->weddingDate($wedding)} en {$wedding->city}. Haz clic aquí para confirmar tu asistencia.",
+                'image' => route('invitation.og-image', $invitation),
                 'url' => route('invitation.rsvp.show', $invitation),
             ],
         ]);
+    }
+
+    /**
+     * Serve the dynamically generated Open Graph image for this invitation,
+     * generating and caching it on first request.
+     */
+    public function ogImage(Invitation $invitation, InvitationOgImageService $ogImages): BinaryFileResponse
+    {
+        $ogImages->ensureGenerated($invitation);
+
+        return response()->file(
+            Storage::disk('public')->path("og/{$invitation->code}.jpg"),
+            ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=86400'],
+        );
     }
 
     /**
@@ -108,7 +127,19 @@ class InvitationController extends Controller
             'responded_at' => now(),
         ]);
 
+        $this->notifyRsvpResponse($invitation);
+
         return back();
+    }
+
+    /**
+     * Alert the configured admin emails whenever a guest responds to their RSVP.
+     */
+    private function notifyRsvpResponse(Invitation $invitation): void
+    {
+        foreach (WeddingSetting::current()->notification_emails ?? [] as $email) {
+            Mail::to($email)->queue(new RsvpNotificationMail($invitation));
+        }
     }
 
     /**

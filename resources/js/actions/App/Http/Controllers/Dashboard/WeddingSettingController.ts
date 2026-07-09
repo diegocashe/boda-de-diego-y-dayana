@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 edit.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ edit.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::edit
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:17
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:19
 * @route '/dashboard/wedding'
 */
 editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::update
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:34
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:38
 * @route '/dashboard/wedding'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -97,7 +97,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::update
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:34
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:38
 * @route '/dashboard/wedding'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::update
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:34
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:38
 * @route '/dashboard/wedding'
 */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -116,7 +116,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::update
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:34
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:38
 * @route '/dashboard/wedding'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -131,7 +131,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Dashboard\WeddingSettingController::update
-* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:34
+* @see app/Http/Controllers/Dashboard/WeddingSettingController.php:38
 * @route '/dashboard/wedding'
 */
 updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

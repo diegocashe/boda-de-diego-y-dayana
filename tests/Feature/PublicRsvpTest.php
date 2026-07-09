@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Mail\RsvpNotificationMail;
 use App\Models\Invitation;
+use App\Models\WeddingSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class PublicRsvpTest extends TestCase
@@ -37,7 +40,7 @@ class PublicRsvpTest extends TestCase
         $response->assertSee('property="og:title"', false);
         $response->assertSee('Invitación para Familia Mendoza', false);
         $response->assertSee('Haz clic aquí para confirmar tu asistencia', false);
-        $response->assertSee('img/og-invitation.jpg', false);
+        $response->assertSee(route('invitation.og-image', $invitation), false);
         $response->assertSee(route('invitation.rsvp.show', $invitation), false);
     }
 
@@ -87,6 +90,24 @@ class PublicRsvpTest extends TestCase
         $this->assertNotNull($invitation->responded_at);
     }
 
+    public function test_declining_ignores_the_guests_field()
+    {
+        // Regresión: el formulario siempre envía "guests"; al declinar no debe
+        // validarse contra los pases de la invitación.
+        $invitation = Invitation::factory()->create(['max_passes' => 1]);
+
+        $response = $this->post(route('invitation.rsvp.store', $invitation), [
+            'attending' => 'no',
+            'guests' => 2,
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $invitation->refresh();
+        $this->assertFalse($invitation->attending);
+        $this->assertNull($invitation->confirmed_passes);
+    }
+
     public function test_confirmed_passes_cannot_exceed_the_max_passes()
     {
         $invitation = Invitation::factory()->create(['max_passes' => 2]);
@@ -125,5 +146,38 @@ class PublicRsvpTest extends TestCase
 
         $response->assertForbidden();
         $this->assertTrue($invitation->refresh()->attending);
+    }
+
+    public function test_responding_notifies_the_configured_admin_emails()
+    {
+        Mail::fake();
+
+        WeddingSetting::current()->update([
+            'notification_emails' => ['pareja@correo.com', 'mama@correo.com'],
+        ]);
+
+        $invitation = Invitation::factory()->create(['max_passes' => 2]);
+
+        $this->post(route('invitation.rsvp.store', $invitation), [
+            'attending' => 'yes',
+            'guests' => 2,
+        ]);
+
+        Mail::assertQueued(RsvpNotificationMail::class, 2);
+        Mail::assertQueued(RsvpNotificationMail::class, fn ($mail) => $mail->hasTo('pareja@correo.com'));
+        Mail::assertQueued(RsvpNotificationMail::class, fn ($mail) => $mail->hasTo('mama@correo.com'));
+    }
+
+    public function test_responding_without_configured_emails_sends_nothing()
+    {
+        Mail::fake();
+
+        $invitation = Invitation::factory()->create();
+
+        $this->post(route('invitation.rsvp.store', $invitation), [
+            'attending' => 'no',
+        ]);
+
+        Mail::assertNothingQueued();
     }
 }

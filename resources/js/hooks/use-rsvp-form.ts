@@ -10,12 +10,17 @@ export interface RsvpForm {
     canSubmit: boolean;
     submitting: boolean;
     submitted: boolean;
+    errors: Record<string, string>;
 }
 
 export function useRsvpForm(guest: GuestInvitation, onSubmitted: () => void): RsvpForm {
-    const [data, setData] = useState<RsvpFormData>(guest.response ?? { attending: null, guests: 2, dietary: '', message: '' });
+    // El valor inicial de pases no puede exceder los pases de la invitación.
+    const [data, setData] = useState<RsvpFormData>(
+        guest.response ?? { attending: null, guests: Math.min(2, guest.maxPasses), dietary: '', message: '' },
+    );
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(guest.response !== null);
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const update: RsvpForm['update'] = (field, value) => setData((current) => ({ ...current, [field]: value }));
 
@@ -34,12 +39,14 @@ export function useRsvpForm(guest: GuestInvitation, onSubmitted: () => void): Rs
                 onStart: () => setSubmitting(true),
                 onFinish: () => setSubmitting(false),
                 onSuccess: () => {
+                    setErrors({});
                     setSubmitted(true);
                     onSubmitted();
                 },
+                onError: (formErrors) => setErrors(formErrors),
             },
         );
     };
 
-    return { data, update, submit, canSubmit, submitting, submitted };
+    return { data, update, submit, canSubmit, submitting, submitted, errors };
 }

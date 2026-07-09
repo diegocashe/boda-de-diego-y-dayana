@@ -68,4 +68,39 @@ class WeddingSettingsTest extends TestCase
         $response->assertOk();
         $response->assertSee('Monterrey');
     }
+
+    public function test_notification_emails_are_parsed_from_a_multiline_textarea()
+    {
+        $this->actingAs(User::factory()->create());
+
+        $response = $this->put(route('wedding.update'), [
+            'groom_name' => 'Diego',
+            'bride_name' => 'Dayana',
+            'wedding_at' => '2026-10-17T18:30',
+            'city' => 'Guadalajara',
+            'notification_emails' => "pareja@correo.com\nmama@correo.com, papa@correo.com",
+        ]);
+
+        $response->assertRedirect(route('wedding.edit'));
+
+        $this->assertSame(
+            ['pareja@correo.com', 'mama@correo.com', 'papa@correo.com'],
+            WeddingSetting::current()->notification_emails,
+        );
+    }
+
+    public function test_invalid_notification_emails_are_rejected()
+    {
+        $this->actingAs(User::factory()->create());
+
+        $response = $this->put(route('wedding.update'), [
+            'groom_name' => 'Diego',
+            'bride_name' => 'Dayana',
+            'wedding_at' => '2026-10-17T18:30',
+            'city' => 'Guadalajara',
+            'notification_emails' => 'no-es-un-correo',
+        ]);
+
+        $response->assertSessionHasErrors(['notification_emails.0']);
+    }
 }

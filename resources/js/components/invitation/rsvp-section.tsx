@@ -20,14 +20,11 @@ const segmentClass =
 export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) {
     return (
         <>
-            <SectionHeader eyebrow="Confirma tu asistencia" title="R.S.V.P." className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader eyebrow="" title="Confirma tu asistencia" className="mb-[clamp(26px,4vw,46px)]" />
 
             <div className="grid grid-cols-1 gap-[22px] desk:grid-cols-2 desk:items-start desk:gap-[38px]">
                 <div>
-                    <VideoCard videoUrl={guest.videoUrl} wedding={wedding} />
-                    <p className="mx-1 mt-3.5 text-center font-serif text-[17px] leading-[1.55] text-ink-soft italic">{guest.videoMessage}</p>
-
-                    <div className="mt-[18px] rounded-[18px] bg-gradient-to-br from-wine to-wine-deep px-5 py-[18px] text-cream">
+                    <div className="mb-[18px] rounded-[18px] bg-gradient-to-br from-wine to-wine-deep px-5 py-[18px] text-cream">
                         <div className="text-xs tracking-[0.04em] opacity-80">Invitación reservada para</div>
                         <div className="mt-0.5 mb-2 font-serif text-[27px] font-semibold">{guest.name}</div>
                         <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
@@ -35,6 +32,7 @@ export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) 
                             {guest.maxPasses} lugares disponibles
                         </div>
                     </div>
+                    <VideoCard videoUrl={guest.videoUrl} wedding={wedding} />
                 </div>
 
                 <RsvpFormFields guest={guest} form={form} />
@@ -44,9 +42,10 @@ export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) 
 }
 
 function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'>) {
-    const { data, update, submit, canSubmit, submitting, submitted } = form;
+    const { data, update, submit, canSubmit, submitting, submitted, errors } = form;
     const guestOptions = Array.from({ length: guest.maxPasses }, (_, index) => index + 1);
     const locked = guest.locked;
+    const errorMessages = Object.values(errors);
 
     return (
         <div>
@@ -122,19 +121,6 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                             <ChevronDown className="pointer-events-none absolute top-1/2 right-[15px] size-[18px] -translate-y-1/2 text-ink-faint" />
                         </div>
                     </div>
-
-                    <div className="mb-[18px]">
-                        <label className={labelClass}>Restricciones alimentarias o alergias</label>
-                        <textarea
-                            value={data.dietary}
-                            onChange={(event) => update('dietary', event.target.value)}
-                            rows={2}
-                            maxLength={500}
-                            disabled={locked}
-                            placeholder="Ej. vegetariano, sin gluten, alergia a nueces…"
-                            className={cn(fieldClass, 'resize-none')}
-                        />
-                    </div>
                 </>
             )}
 
@@ -152,6 +138,14 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                     className={cn(fieldClass, 'resize-none')}
                 />
             </div>
+
+            {errorMessages.length > 0 && (
+                <div className="mb-[18px] rounded-[14px] border border-[#e0b4b4] bg-[#fdf3f3] px-[15px] py-[13px] text-[13px] leading-normal text-[#8a2c2c]">
+                    {errorMessages.map((message) => (
+                        <p key={message}>{message}</p>
+                    ))}
+                </div>
+            )}
 
             <WineButton onClick={submit} disabled={!canSubmit} className="hover:translate-y-0">
                 {submitting ? (

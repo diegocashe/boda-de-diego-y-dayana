@@ -11,6 +11,7 @@ Route::get('historia', [InvitationController::class, 'story'])->name('invitation
 Route::get('asistencia', [InvitationController::class, 'rsvp'])->name('invitation.rsvp');
 Route::get('asistencia/{invitation:code}', [InvitationController::class, 'rsvpShow'])->name('invitation.rsvp.show');
 Route::post('asistencia/{invitation:code}', [InvitationController::class, 'rsvpStore'])->name('invitation.rsvp.store');
+Route::get('asistencia/{invitation:code}/og.jpg', [InvitationController::class, 'ogImage'])->name('invitation.og-image');
 Route::get('detalles', [InvitationController::class, 'details'])->name('invitation.details');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('dashboard/invitations/{invitation}', [DashboardInvitationController::class, 'destroy'])->name('invitations.destroy');
     Route::post('dashboard/invitations/{invitation}/send', [DashboardInvitationController::class, 'send'])->name('invitations.send');
     Route::put('dashboard/invitations/{invitation}/lock', [DashboardInvitationController::class, 'toggleLock'])->name('invitations.lock');
+    Route::post('dashboard/invitations/{invitation}/og-regenerate', [DashboardInvitationController::class, 'regenerateOgImage'])->name('invitations.og-regenerate');
 });
 
 require __DIR__.'/settings.php';

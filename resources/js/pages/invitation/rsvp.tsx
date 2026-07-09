@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { MailOpen } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import RsvpSection from '@/components/invitation/rsvp-section';
@@ -6,9 +6,11 @@ import RsvpToast from '@/components/invitation/rsvp-toast';
 import ScrollView from '@/components/invitation/scroll-view';
 import SectionHeader from '@/components/invitation/section-header';
 import { useRsvpForm } from '@/hooks/use-rsvp-form';
+import { home } from '@/routes';
 import type { GuestInvitation, WeddingDetails } from '@/types/invitation';
 
-const TOAST_VISIBLE_MS = 4200;
+// Tiempo que el invitado ve la confirmación antes de volver al inicio.
+const REDIRECT_AFTER_MS = 2800;
 
 interface InvitationRsvpProps {
     guest: GuestInvitation | null;
@@ -33,7 +35,7 @@ function GuestRsvp({ guest, wedding }: { guest: GuestInvitation; wedding: Weddin
     const rsvpForm = useRsvpForm(guest, () => {
         setToastVisible(true);
         clearTimeout(toastTimer.current);
-        toastTimer.current = setTimeout(() => setToastVisible(false), TOAST_VISIBLE_MS);
+        toastTimer.current = setTimeout(() => router.visit(home()), REDIRECT_AFTER_MS);
     });
 
     return (
@@ -47,7 +49,7 @@ function GuestRsvp({ guest, wedding }: { guest: GuestInvitation; wedding: Weddin
 function MissingCodeNotice() {
     return (
         <>
-            <SectionHeader eyebrow="Confirma tu asistencia" title="R.S.V.P." className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader eyebrow="Confirma tu asistencia" title="Enlace personal requerido" className="mb-[clamp(26px,4vw,46px)]" />
             <div className="mx-auto max-w-[460px] rounded-[18px] border border-ink/[0.12] bg-white px-6 py-9 text-center">
                 <MailOpen className="mx-auto mb-4 size-9 text-wine" strokeWidth={1.6} />
                 <p className="font-serif text-[21px] leading-snug text-ink">Esta sección es personal</p>

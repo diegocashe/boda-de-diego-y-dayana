@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property string $groom_name
  * @property string $bride_name
  * @property Carbon $wedding_at
  * @property string $city
+ * @property string|null $og_background_path
+ * @property-read string|null $og_background_url
+ * @property list<string> $notification_emails
  */
 class WeddingSetting extends Model
 {
@@ -23,6 +27,8 @@ class WeddingSetting extends Model
         'bride_name',
         'wedding_at',
         'city',
+        'og_background_path',
+        'notification_emails',
     ];
 
     /**
@@ -34,6 +40,7 @@ class WeddingSetting extends Model
     {
         return [
             'wedding_at' => 'datetime',
+            'notification_emails' => 'array',
         ];
     }
 
@@ -49,5 +56,13 @@ class WeddingSetting extends Model
             'wedding_at' => '2026-10-17 17:00:00',
             'city' => 'Ciudad de México',
         ]);
+    }
+
+    /**
+     * Public URL of the background photo used for the shareable OG images, if uploaded.
+     */
+    public function getOgBackgroundUrlAttribute(): ?string
+    {
+        return $this->og_background_path ? Storage::disk('public')->url($this->og_background_path) : null;
     }
 }

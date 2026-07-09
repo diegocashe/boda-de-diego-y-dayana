@@ -21,7 +21,8 @@ class RsvpStoreRequest extends FormRequest
 
         return [
             'attending' => ['required', Rule::in(['yes', 'no'])],
-            'guests' => ['required_if:attending,yes', 'integer', 'min:1', 'max:'.$invitation->max_passes],
+            // Si el invitado declina, los pases que viajen en la petición se ignoran.
+            'guests' => ['exclude_unless:attending,yes', 'required', 'integer', 'min:1', 'max:'.$invitation->max_passes],
             'dietary' => ['nullable', 'string', 'max:500'],
             'message' => ['nullable', 'string', 'max:1000'],
         ];
