@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.2.0...v1.3.0) (2026-07-09)
+
+
+### Features
+
+* add error page component and update routing for InvitationController ([f2ae936](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/f2ae9366b05f6cbb143d41ec1693673530a0ce74))
+
 # [1.2.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.1.0...v1.2.0) (2026-07-09)
 
 
