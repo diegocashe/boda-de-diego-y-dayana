@@ -1,14 +1,18 @@
 import { Form, Head } from '@inertiajs/react';
 import { ImageOff, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import TimelineItemController from '@/actions/App/Http/Controllers/Dashboard/TimelineItemController';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
 import { TIMELINE_ICON_LABELS, TimelineIcon } from '@/lib/timeline-icons';
 import { dashboard } from '@/routes';
@@ -31,6 +35,9 @@ interface TimelineAdminProps {
 }
 
 export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+    const selected = items.find((item) => item.id === selectedId) ?? null;
+
     const nextOrder = items.reduce((max, item) => Math.max(max, item.sortOrder), 0) + 1;
 
     return (
@@ -59,56 +66,91 @@ export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
                     </CardContent>
                 </Card>
 
-                <div className="flex max-w-3xl flex-col gap-4">
-                    {items.map((item) => (
-                        <ItemCard key={item.id} item={item} icons={icons} />
-                    ))}
-                    {items.length === 0 && (
-                        <p className="text-sm text-muted-foreground">Aún no hay momentos en la historia; agrega el primero arriba.</p>
-                    )}
-                </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Momentos de la historia</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-0">
+                                        <span className="sr-only">Imagen</span>
+                                    </TableHead>
+                                    <TableHead>Periodo</TableHead>
+                                    <TableHead>Título</TableHead>
+                                    <TableHead>Icono</TableHead>
+                                    <TableHead className="text-center">Orden</TableHead>
+                                    <TableHead>Destacado</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {items.map((item) => (
+                                    <TableRow key={item.id} className="cursor-pointer" onClick={() => setSelectedId(item.id)}>
+                                        <TableCell>
+                                            {item.imageUrl ? (
+                                                <img src={item.imageUrl} alt={item.title} className="size-10 rounded-md border object-cover" />
+                                            ) : (
+                                                <div className="flex size-10 items-center justify-center rounded-md border border-dashed text-muted-foreground">
+                                                    <ImageOff className="size-4" />
+                                                </div>
+                                            )}
+                                        </TableCell>
+                                        <TableCell>{item.period}</TableCell>
+                                        <TableCell className="font-medium">{item.title}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-2">
+                                                <TimelineIcon name={item.icon} className="size-4" />
+                                                {TIMELINE_ICON_LABELS[item.icon] ?? item.icon}
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="text-center tabular-nums">{item.sortOrder}</TableCell>
+                                        <TableCell>{item.highlighted ? <Badge>Destacado</Badge> : <Badge variant="outline">Normal</Badge>}</TableCell>
+                                    </TableRow>
+                                ))}
+                                {items.length === 0 && (
+                                    <TableRow>
+                                        <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
+                                            Aún no hay momentos en la historia; agrega el primero arriba.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
             </div>
+
+            <Dialog open={selected !== null} onOpenChange={(open) => !open && setSelectedId(null)}>
+                {selected && <ItemDetail item={selected} icons={icons} />}
+            </Dialog>
         </>
     );
 }
 
-function ItemCard({ item, icons }: { item: TimelineItemData; icons: string[] }) {
+function ItemDetail({ item, icons }: { item: TimelineItemData; icons: string[] }) {
     return (
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between gap-3">
-                <CardTitle className="flex items-center gap-2 text-base">
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+            <DialogHeader>
+                <DialogTitle className="flex flex-wrap items-center gap-2">
                     <TimelineIcon name={item.icon} className="size-4" />
                     {item.title}
-                </CardTitle>
-                <Form {...TimelineItemController.destroy.form(item.id)} options={{ preserveScroll: true }}>
-                    {({ processing }) => (
-                        <Button
-                            variant="destructive"
-                            size="sm"
-                            disabled={processing}
-                            onClick={(event) => {
-                                if (!confirm('¿Eliminar este momento de la historia? Su imagen también se borrará.')) {
-                                    event.preventDefault();
-                                }
-                            }}
-                        >
-                            <Trash2 className="size-4" />
-                            Eliminar
-                        </Button>
-                    )}
-                </Form>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-5 md:flex-row">
+                    {item.highlighted && <Badge>Destacado</Badge>}
+                </DialogTitle>
+                <DialogDescription>Detalles y edición del momento de la historia.</DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-5">
                 {item.imageUrl ? (
-                    <img src={item.imageUrl} alt={item.title} className="h-36 w-full shrink-0 rounded-lg border object-cover md:w-48" />
+                    <img src={item.imageUrl} alt={item.title} className="h-48 w-full rounded-lg border object-cover" />
                 ) : (
-                    <div className="flex h-36 w-full shrink-0 flex-col items-center justify-center gap-2 rounded-lg border border-dashed text-muted-foreground md:w-48">
+                    <div className="flex h-48 w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed text-muted-foreground">
                         <ImageOff className="size-5" />
                         <span className="text-xs">Sin imagen</span>
                     </div>
                 )}
 
-                <Form {...TimelineItemController.update.form(item.id)} options={{ preserveScroll: true }} className="flex-1 space-y-5">
+                <Form {...TimelineItemController.update.form(item.id)} options={{ preserveScroll: true }} className="space-y-5">
                     {({ processing, errors }) => (
                         <>
                             <ItemFields icons={icons} errors={errors} idPrefix={`item-${item.id}`} defaults={item} />
@@ -116,8 +158,28 @@ function ItemCard({ item, icons }: { item: TimelineItemData; icons: string[] }) 
                         </>
                     )}
                 </Form>
-            </CardContent>
-        </Card>
+
+                <div className="flex border-t pt-4">
+                    <Form {...TimelineItemController.destroy.form(item.id)} options={{ preserveScroll: true }} className="ml-auto">
+                        {({ processing }) => (
+                            <Button
+                                variant="destructive"
+                                size="sm"
+                                disabled={processing}
+                                onClick={(event) => {
+                                    if (!confirm('¿Eliminar este momento de la historia? Su imagen también se borrará.')) {
+                                        event.preventDefault();
+                                    }
+                                }}
+                            >
+                                <Trash2 className="size-4" />
+                                Eliminar
+                            </Button>
+                        )}
+                    </Form>
+                </div>
+            </div>
+        </DialogContent>
     );
 }
 
