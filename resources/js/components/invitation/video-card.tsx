@@ -1,6 +1,8 @@
-import { Pause, Play, Video } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { WeddingDetails } from '@/types/invitation';
+import placeholderVideoUrl from '../../../assets/video-placeholder.mp4';
+import videoPosterUrl from '../../../assets/upscalemedia-transformed-2.webp';
 
 interface VideoCardProps {
     videoUrl: string | null;
@@ -10,6 +12,7 @@ interface VideoCardProps {
 export default function VideoCard({ videoUrl, wedding }: VideoCardProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playing, setPlaying] = useState(false);
+    const resolvedVideoUrl = videoUrl ?? placeholderVideoUrl;
 
     const toggleVideo = () => {
         const video = videoRef.current;
@@ -29,16 +32,15 @@ export default function VideoCard({ videoUrl, wedding }: VideoCardProps) {
 
     return (
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[22px] bg-[#1b1210] shadow-[0_26px_54px_-30px_rgba(0,0,0,0.6)]">
-            {videoUrl ? (
-                <video ref={videoRef} src={videoUrl} playsInline loop preload="metadata" className="absolute inset-0 h-full w-full object-cover" />
-            ) : (
-                <div className="pointer-events-none absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(135deg,#221614_0_14px,#291b18_14px_28px)]">
-                    <div className="text-center text-cream/50">
-                        <Video className="mx-auto size-[34px]" strokeWidth={1.4} />
-                        <div className="mt-2 font-mono text-[10px] tracking-[0.14em]">VIDEO · invitación</div>
-                    </div>
-                </div>
-            )}
+            <video
+                ref={videoRef}
+                src={resolvedVideoUrl}
+                poster={videoPosterUrl}
+                playsInline
+                loop
+                preload="metadata"
+                className="absolute inset-0 h-full w-full object-cover"
+            />
             <div className="pointer-events-none absolute top-0 right-0 left-0 h-[34%] bg-gradient-to-b from-[#140d0b]/70 to-transparent" />
             <div className="absolute top-4 right-[18px] left-[18px] z-[2]">
                 <div className="text-[10px] font-semibold tracking-[0.32em] text-cream/72 uppercase">Un mensaje para ti</div>
