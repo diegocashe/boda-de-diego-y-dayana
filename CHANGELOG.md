@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.6.0...v1.7.0) (2026-07-10)
+
+
+### Features
+
+* enhance site performance with caching and correct MIME types in .htaccess ([4629b02](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/4629b0234b527f7da7f73aadd7a1416a9676a59b))
+
 # [1.6.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.5.0...v1.6.0) (2026-07-10)
 
 
