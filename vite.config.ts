@@ -19,9 +19,11 @@ export default defineConfig({
                     preload: [{ weight: 400, style: 'normal' }],
                 }),
                 bunny('Cormorant Garamond', {
-                    weights: [400, 600, 700] as const, // 500 no se usa con font-serif en el código
+                    weights: [400, 500, 600, 700] as const,
                     styles: ['normal', 'italic'],
-                    preload: [{ weight: 400, style: 'italic' }], // la variante del hero
+                    // El hero usa font-semibold (600 normal) para los nombres,
+                    // que es el texto más grande above-the-fold
+                    preload: [{ weight: 600, style: 'normal' }],
                 }),
                 bunny('Mulish', {
                     weights: [400, 500, 600, 700] as const, // 300 (font-light) no se usa

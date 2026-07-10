@@ -35,7 +35,7 @@ function HeroSection({ wedding, labels, content }: WeddingSectionProps) {
         <section className={cn(snapClass, 'overflow-hidden')}>
             <div className="absolute inset-0 overflow-hidden">
                 <div className="hero-parallax absolute inset-x-0 -inset-y-[12%] bg-center bg-no-repeat">
-                    <img src={imageUrl} alt="" className="h-full w-full object-cover" />
+                    <img src={imageUrl} alt="" fetchPriority="high" className="h-full w-full object-cover" />
                 </div>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,14,12,0.72)_0%,rgba(24,14,12,0.7)_38%,rgba(24,14,12,0.66)_66%,rgba(24,14,12,0.92)_100%)]" />
             </div>
