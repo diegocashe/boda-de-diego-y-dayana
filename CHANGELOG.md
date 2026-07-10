@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.7.0...v1.8.0) (2026-07-10)
+
+
+### Features
+
+* add predis/predis dependency for Redis support ([fc11491](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/fc114914307723a09f828e215c49ee27c7c237b6))
+
 # [1.7.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.6.0...v1.7.0) (2026-07-10)
 
 
