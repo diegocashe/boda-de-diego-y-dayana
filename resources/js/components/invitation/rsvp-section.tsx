@@ -1,4 +1,5 @@
 import { Check, ChevronDown, CircleCheckBig, LoaderCircle, Lock, Users, Video, X } from 'lucide-react';
+import RsvpReactionVideo from '@/components/invitation/rsvp-reaction-video';
 import SectionHeader from '@/components/invitation/section-header';
 import VideoCard from '@/components/invitation/video-card';
 import WineButton from '@/components/invitation/wine-button';
@@ -106,6 +107,8 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                     </button>
                 </div>
             </div>
+
+            <RsvpReactionVideo attending={data.attending} />
 
             {data.attending === 'yes' && guest.mode === 'online' && (
                 <div className="mb-[18px] flex items-start gap-2.5 rounded-[14px] border border-ink/[0.12] bg-[#f7f4ee] px-[15px] py-[13px]">
