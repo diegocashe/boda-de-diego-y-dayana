@@ -13,14 +13,19 @@ export default defineConfig({
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
+                    weights: [400, 500, 600] as const,
+                    // Precargar solo el peso base — el browser descarga el resto
+                    // vía unicode-range cuando los necesita
+                    preload: [{ weight: 400, style: 'normal' }],
                 }),
                 bunny('Cormorant Garamond', {
-                    weights: [400, 500, 600, 700],
+                    weights: [400, 600, 700] as const, // 500 no se usa con font-serif en el código
                     styles: ['normal', 'italic'],
+                    preload: [{ weight: 400, style: 'italic' }], // la variante del hero
                 }),
                 bunny('Mulish', {
-                    weights: [300, 400, 500, 600, 700],
+                    weights: [400, 500, 600, 700] as const, // 300 (font-light) no se usa
+                    preload: false, // no es crítica above-the-fold
                 }),
             ],
         }),

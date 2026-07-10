@@ -60,6 +60,8 @@
             }
         </style>
 
+        <link rel="preconnect" href="{{ config('app.url') }}">
+
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
