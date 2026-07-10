@@ -1,7 +1,2 @@
-# Sitio en construcción: bloqueado para todos los crawlers.
-# Al lanzar la versión estable, revertir a:
-#   User-agent: *
-#   Disallow:
-# (y poner APP_INDEXABLE=true en el .env del servidor — ver docs/deploy.md)
 User-agent: *
-Disallow: /
+Disallow:
