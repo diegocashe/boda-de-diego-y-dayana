@@ -1,3 +1,14 @@
+# [1.5.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.4.0...v1.5.0) (2026-07-10)
+
+
+### Features
+
+* add rsvp reaction video component and selection logic ([98cba93](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/98cba93b038c38f92afb022c489105fcf1d08351))
+* implement tabbed interface for managing invitations by attendance mode ([c76e597](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c76e5970a9eef59cb5f92bd4de662762fa1615c6))
+* refactor invitation routes and update controller references ([88cd368](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/88cd3680f573c10c64424528579a429da4dd4cf1))
+* update robots.txt to allow crawling by removing disallow directive ([c9fb070](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c9fb070468fd3fd16e85c4eeef95a8a6c1f669de))
+* update video card to use webm format and adjust styles ([b061bcc](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/b061bcc16697224e7563e1970d7d89a2cca27bcc))
+
 # [1.4.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.3.0...v1.4.0) (2026-07-09)
 
 
