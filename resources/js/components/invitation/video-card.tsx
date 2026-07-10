@@ -1,7 +1,7 @@
 import { Pause, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { WeddingDetails } from '@/types/invitation';
-import placeholderVideoUrl from '../../../assets/video-placeholder.webm';
+import placeholderVideoUrl from '../../../assets/video-placeholder-new.mp4';
 import videoPosterUrl from '../../../assets/upscalemedia-transformed-2.webp';
 
 interface VideoCardProps {
