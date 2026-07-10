@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.5.0...v1.6.0) (2026-07-10)
+
+
+### Features
+
+* optimize font loading and add preconnect for improved site performance ([04fcab2](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/04fcab2ab82bd54b2897ca7ab85915ebc1bd0114))
+
 # [1.5.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.4.0...v1.5.0) (2026-07-10)
 
 
