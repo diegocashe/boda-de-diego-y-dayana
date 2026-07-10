@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.8.0...v1.8.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* replace webm cr7 videos with mp4 and update video paths ([236a91d](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/236a91db5f1fd03f6d8e193f4a770474814eb01d))
+
 # [1.8.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.7.0...v1.8.0) (2026-07-10)
 
 
