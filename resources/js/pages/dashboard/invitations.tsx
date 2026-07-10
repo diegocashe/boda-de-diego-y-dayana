@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { dashboard } from '@/routes';
 import { index as invitationsIndex } from '@/routes/invitations';
 
@@ -39,21 +40,18 @@ interface InvitationsAdminProps {
     invitations: InvitationData[];
 }
 
-type ModeFilter = 'all' | AttendanceMode;
-
 export default function InvitationsAdmin({ invitations }: InvitationsAdminProps) {
     const [selectedId, setSelectedId] = useState<number | null>(null);
-    const [modeFilter, setModeFilter] = useState<ModeFilter>('all');
+    const [modeFilter, setModeFilter] = useState<AttendanceMode>('in_person');
     const selected = invitations.find((invitation) => invitation.id === selectedId) ?? null;
 
     const confirmedGuests = invitations.reduce((total, invitation) => total + (invitation.confirmedPasses ?? 0), 0);
     const pending = invitations.filter((invitation) => invitation.attending === null).length;
     const onlineCount = invitations.filter((invitation) => invitation.attendanceMode === 'online').length;
+    const inPersonCount = invitations.length - onlineCount;
 
-    const visibleInvitations = useMemo(
-        () => invitations.filter((invitation) => modeFilter === 'all' || invitation.attendanceMode === modeFilter),
-        [invitations, modeFilter],
-    );
+    const inPersonInvitations = useMemo(() => invitations.filter((invitation) => invitation.attendanceMode === 'in_person'), [invitations]);
+    const onlineInvitations = useMemo(() => invitations.filter((invitation) => invitation.attendanceMode === 'online'), [invitations]);
 
     return (
         <>
@@ -92,86 +90,27 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                         </Button>
                     </CardHeader>
                     <CardContent>
-                        <div className="mb-4 flex flex-wrap gap-2">
-                            <Button
-                                type="button"
-                                variant={modeFilter === 'all' ? 'default' : 'outline'}
-                                size="sm"
-                                onClick={() => setModeFilter('all')}
-                            >
-                                Todas ({invitations.length})
-                            </Button>
-                            <Button
-                                type="button"
-                                variant={modeFilter === 'in_person' ? 'default' : 'outline'}
-                                size="sm"
-                                onClick={() => setModeFilter('in_person')}
-                            >
-                                Presenciales ({invitations.length - onlineCount})
-                            </Button>
-                            <Button
-                                type="button"
-                                variant={modeFilter === 'online' ? 'default' : 'outline'}
-                                size="sm"
-                                onClick={() => setModeFilter('online')}
-                            >
-                                Online ({onlineCount})
-                            </Button>
-                        </div>
+                        <Tabs value={modeFilter} onValueChange={(value) => setModeFilter(value as AttendanceMode)}>
+                            <TabsList className="mb-4">
+                                <TabsTrigger value="in_person">Presenciales ({inPersonCount})</TabsTrigger>
+                                <TabsTrigger value="online">Online ({onlineCount})</TabsTrigger>
+                            </TabsList>
 
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Invitado</TableHead>
-                                    <TableHead>Modalidad</TableHead>
-                                    <TableHead>Estado</TableHead>
-                                    <TableHead className="text-center">Pases</TableHead>
-                                    <TableHead>Invitación</TableHead>
-                                    <TableHead className="w-0">
-                                        <span className="sr-only">Copiar enlace</span>
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {visibleInvitations.map((invitation) => (
-                                    <TableRow key={invitation.id} className="cursor-pointer" onClick={() => setSelectedId(invitation.id)}>
-                                        <TableCell>
-                                            <div className="flex items-center gap-2 font-medium">
-                                                {invitation.isLocked && <Lock className="size-3.5 shrink-0 text-muted-foreground" />}
-                                                {invitation.guestName}
-                                            </div>
-                                            {invitation.email && <p className="text-xs text-muted-foreground">{invitation.email}</p>}
-                                        </TableCell>
-                                        <TableCell>
-                                            <ModeBadge mode={invitation.attendanceMode} />
-                                        </TableCell>
-                                        <TableCell>
-                                            <StatusBadge invitation={invitation} />
-                                        </TableCell>
-                                        <TableCell className="text-center tabular-nums">
-                                            {invitation.attending ? `${invitation.confirmedPasses} / ${invitation.maxPasses}` : invitation.maxPasses}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="outline">
-                                                {invitation.sentAt ? `Enviada ${formatDate(invitation.sentAt)}` : 'Sin enviar'}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell onClick={(event) => event.stopPropagation()}>
-                                            <CopyLinkButton url={invitation.rsvpUrl} iconOnly />
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {visibleInvitations.length === 0 && (
-                                    <TableRow>
-                                        <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
-                                            {invitations.length === 0
-                                                ? 'Aún no hay invitaciones; agrega la primera arriba.'
-                                                : 'No hay invitaciones en esta modalidad.'}
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                            <TabsContent value="in_person">
+                                <InvitationsTable
+                                    invitations={inPersonInvitations}
+                                    hasAnyInvitations={invitations.length > 0}
+                                    onSelect={setSelectedId}
+                                />
+                            </TabsContent>
+                            <TabsContent value="online">
+                                <InvitationsTable
+                                    invitations={onlineInvitations}
+                                    hasAnyInvitations={invitations.length > 0}
+                                    onSelect={setSelectedId}
+                                />
+                            </TabsContent>
+                        </Tabs>
                     </CardContent>
                 </Card>
             </div>
@@ -180,6 +119,66 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                 {selected && <InvitationDetail invitation={selected} />}
             </Dialog>
         </>
+    );
+}
+
+interface InvitationsTableProps {
+    invitations: InvitationData[];
+    hasAnyInvitations: boolean;
+    onSelect: (id: number) => void;
+}
+
+function InvitationsTable({ invitations, hasAnyInvitations, onSelect }: InvitationsTableProps) {
+    return (
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Invitado</TableHead>
+                    <TableHead>Modalidad</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="text-center">Pases</TableHead>
+                    <TableHead>Invitación</TableHead>
+                    <TableHead className="w-0">
+                        <span className="sr-only">Copiar enlace</span>
+                    </TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {invitations.map((invitation) => (
+                    <TableRow key={invitation.id} className="cursor-pointer" onClick={() => onSelect(invitation.id)}>
+                        <TableCell>
+                            <div className="flex items-center gap-2 font-medium">
+                                {invitation.isLocked && <Lock className="size-3.5 shrink-0 text-muted-foreground" />}
+                                {invitation.guestName}
+                            </div>
+                            {invitation.email && <p className="text-xs text-muted-foreground">{invitation.email}</p>}
+                        </TableCell>
+                        <TableCell>
+                            <ModeBadge mode={invitation.attendanceMode} />
+                        </TableCell>
+                        <TableCell>
+                            <StatusBadge invitation={invitation} />
+                        </TableCell>
+                        <TableCell className="text-center tabular-nums">
+                            {invitation.attending ? `${invitation.confirmedPasses} / ${invitation.maxPasses}` : invitation.maxPasses}
+                        </TableCell>
+                        <TableCell>
+                            <Badge variant="outline">{invitation.sentAt ? `Enviada ${formatDate(invitation.sentAt)}` : 'Sin enviar'}</Badge>
+                        </TableCell>
+                        <TableCell onClick={(event) => event.stopPropagation()}>
+                            <CopyLinkButton url={invitation.rsvpUrl} iconOnly />
+                        </TableCell>
+                    </TableRow>
+                ))}
+                {invitations.length === 0 && (
+                    <TableRow>
+                        <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
+                            {hasAnyInvitations ? 'No hay invitaciones en esta modalidad.' : 'Aún no hay invitaciones; agrega la primera arriba.'}
+                        </TableCell>
+                    </TableRow>
+                )}
+            </TableBody>
+        </Table>
     );
 }
 
