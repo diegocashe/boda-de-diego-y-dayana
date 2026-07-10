@@ -15,10 +15,14 @@ export interface HomeContent {
     ctaButtonLabel: string;
 }
 
+export type AttendanceMode = 'in_person' | 'online';
+
 export interface GuestInvitation {
     name: string;
     code: string;
     maxPasses: number;
+    mode: AttendanceMode;
+    meetingUrl: string | null;
     locked: boolean;
     videoUrl: string | null;
     videoMessage: string;

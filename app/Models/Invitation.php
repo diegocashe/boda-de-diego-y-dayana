@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
  * @property string|null $email
  * @property string $code
  * @property int $max_passes
+ * @property string $attendance_mode
  * @property bool|null $attending
  * @property int|null $confirmed_passes
  * @property int|null $table_number
@@ -40,6 +41,7 @@ class Invitation extends Model
         'email',
         'code',
         'max_passes',
+        'attendance_mode',
         'attending',
         'confirmed_passes',
         'table_number',

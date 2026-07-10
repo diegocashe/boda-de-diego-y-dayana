@@ -106,7 +106,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:139
+* @see app/Http/Controllers/InvitationController.php:141
 * @route '/asistencia/{invitation}'
 */
 export const store = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -121,7 +121,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:139
+* @see app/Http/Controllers/InvitationController.php:141
 * @route '/asistencia/{invitation}'
 */
 store.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ store.url = (args: { invitation: string | { code: string } } | [invitation: stri
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:139
+* @see app/Http/Controllers/InvitationController.php:141
 * @route '/asistencia/{invitation}'
 */
 store.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -164,7 +164,7 @@ store.post = (args: { invitation: string | { code: string } } | [invitation: str
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:139
+* @see app/Http/Controllers/InvitationController.php:141
 * @route '/asistencia/{invitation}'
 */
 const storeForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -174,7 +174,7 @@ const storeForm = (args: { invitation: string | { code: string } } | [invitation
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:139
+* @see app/Http/Controllers/InvitationController.php:141
 * @route '/asistencia/{invitation}'
 */
 storeForm.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

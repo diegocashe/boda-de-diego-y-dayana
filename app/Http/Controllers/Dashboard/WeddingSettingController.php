@@ -31,6 +31,7 @@ class WeddingSettingController extends Controller
                 'notificationEmails' => implode("\n", $wedding->notification_emails ?? []),
                 'godparentsWhatsapp' => $wedding->godparents_whatsapp,
                 'godparentsPhone' => $wedding->godparents_phone,
+                'onlineMeetingUrl' => $wedding->online_meeting_url,
             ],
         ]);
     }

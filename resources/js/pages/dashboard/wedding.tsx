@@ -20,6 +20,7 @@ interface WeddingSettingsProps {
         notificationEmails: string;
         godparentsWhatsapp: string | null;
         godparentsPhone: string | null;
+        onlineMeetingUrl: string | null;
     };
 }
 
@@ -124,6 +125,21 @@ export default function WeddingSettings({ wedding }: WeddingSettingsProps) {
                                     />
                                     <InputError message={errors.godparents_phone} />
                                 </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="online_meeting_url">Enlace de videollamada (Meet, Zoom, etc.)</Label>
+                                <Input
+                                    id="online_meeting_url"
+                                    type="url"
+                                    name="online_meeting_url"
+                                    defaultValue={wedding.onlineMeetingUrl ?? ''}
+                                    placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                                />
+                                <p className="text-xs text-muted-foreground">
+                                    Se muestra a los invitados marcados como "Online" cuando confirman su asistencia.
+                                </p>
+                                <InputError message={errors.online_meeting_url} />
                             </div>
 
                             <Button disabled={processing}>Guardar cambios</Button>

@@ -164,7 +164,7 @@ rsvp.form = rsvpForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 export const ogImage = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -179,7 +179,7 @@ ogImage.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -212,7 +212,7 @@ ogImage.url = (args: { invitation: string | { code: string } } | [invitation: st
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -222,7 +222,7 @@ ogImage.get = (args: { invitation: string | { code: string } } | [invitation: st
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -232,7 +232,7 @@ ogImage.head = (args: { invitation: string | { code: string } } | [invitation: s
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 const ogImageForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -242,7 +242,7 @@ const ogImageForm = (args: { invitation: string | { code: string } } | [invitati
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImageForm.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -252,7 +252,7 @@ ogImageForm.get = (args: { invitation: string | { code: string } } | [invitation
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:126
+* @see app/Http/Controllers/InvitationController.php:128
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImageForm.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -269,7 +269,7 @@ ogImage.form = ogImageForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 export const details = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -284,7 +284,7 @@ details.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 details.url = (options?: RouteQueryOptions) => {
@@ -293,7 +293,7 @@ details.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 details.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -303,7 +303,7 @@ details.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 details.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -313,7 +313,7 @@ details.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 const detailsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -323,7 +323,7 @@ const detailsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 detailsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -333,7 +333,7 @@ detailsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:171
+* @see app/Http/Controllers/InvitationController.php:173
 * @route '/detalles'
 */
 detailsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

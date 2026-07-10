@@ -1,6 +1,6 @@
 import { Form, Head } from '@inertiajs/react';
 import { Check, Copy, Download, Lock, LockOpen, RefreshCw, Send, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import InvitationController from '@/actions/App/Http/Controllers/Dashboard/InvitationController';
 import Heading from '@/components/heading';
@@ -15,12 +15,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { dashboard } from '@/routes';
 import { index as invitationsIndex } from '@/routes/invitations';
 
+type AttendanceMode = 'in_person' | 'online';
+
 interface InvitationData {
     id: number;
     guestName: string;
     email: string | null;
     code: string;
     maxPasses: number;
+    attendanceMode: AttendanceMode;
     attending: boolean | null;
     confirmedPasses: number | null;
     dietary: string | null;
@@ -36,12 +39,21 @@ interface InvitationsAdminProps {
     invitations: InvitationData[];
 }
 
+type ModeFilter = 'all' | AttendanceMode;
+
 export default function InvitationsAdmin({ invitations }: InvitationsAdminProps) {
     const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [modeFilter, setModeFilter] = useState<ModeFilter>('all');
     const selected = invitations.find((invitation) => invitation.id === selectedId) ?? null;
 
     const confirmedGuests = invitations.reduce((total, invitation) => total + (invitation.confirmedPasses ?? 0), 0);
     const pending = invitations.filter((invitation) => invitation.attending === null).length;
+    const onlineCount = invitations.filter((invitation) => invitation.attendanceMode === 'online').length;
+
+    const visibleInvitations = useMemo(
+        () => invitations.filter((invitation) => modeFilter === 'all' || invitation.attendanceMode === modeFilter),
+        [invitations, modeFilter],
+    );
 
     return (
         <>
@@ -80,10 +92,38 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                         </Button>
                     </CardHeader>
                     <CardContent>
+                        <div className="mb-4 flex flex-wrap gap-2">
+                            <Button
+                                type="button"
+                                variant={modeFilter === 'all' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setModeFilter('all')}
+                            >
+                                Todas ({invitations.length})
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={modeFilter === 'in_person' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setModeFilter('in_person')}
+                            >
+                                Presenciales ({invitations.length - onlineCount})
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={modeFilter === 'online' ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setModeFilter('online')}
+                            >
+                                Online ({onlineCount})
+                            </Button>
+                        </div>
+
                         <Table>
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Invitado</TableHead>
+                                    <TableHead>Modalidad</TableHead>
                                     <TableHead>Estado</TableHead>
                                     <TableHead className="text-center">Pases</TableHead>
                                     <TableHead>Invitación</TableHead>
@@ -93,7 +133,7 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {invitations.map((invitation) => (
+                                {visibleInvitations.map((invitation) => (
                                     <TableRow key={invitation.id} className="cursor-pointer" onClick={() => setSelectedId(invitation.id)}>
                                         <TableCell>
                                             <div className="flex items-center gap-2 font-medium">
@@ -101,6 +141,9 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                                                 {invitation.guestName}
                                             </div>
                                             {invitation.email && <p className="text-xs text-muted-foreground">{invitation.email}</p>}
+                                        </TableCell>
+                                        <TableCell>
+                                            <ModeBadge mode={invitation.attendanceMode} />
                                         </TableCell>
                                         <TableCell>
                                             <StatusBadge invitation={invitation} />
@@ -118,10 +161,12 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
                                         </TableCell>
                                     </TableRow>
                                 ))}
-                                {invitations.length === 0 && (
+                                {visibleInvitations.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">
-                                            Aún no hay invitaciones; agrega la primera arriba.
+                                        <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
+                                            {invitations.length === 0
+                                                ? 'Aún no hay invitaciones; agrega la primera arriba.'
+                                                : 'No hay invitaciones en esta modalidad.'}
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -136,6 +181,10 @@ export default function InvitationsAdmin({ invitations }: InvitationsAdminProps)
             </Dialog>
         </>
     );
+}
+
+function ModeBadge({ mode }: { mode: AttendanceMode }) {
+    return mode === 'online' ? <Badge variant="secondary">Online</Badge> : <Badge variant="outline">Presencial</Badge>;
 }
 
 function StatusBadge({ invitation }: { invitation: InvitationData }) {
@@ -179,6 +228,7 @@ function InvitationDetail({ invitation }: { invitation: InvitationData }) {
                 <DialogTitle className="flex flex-wrap items-center gap-2">
                     {invitation.isLocked && <Lock className="size-4 text-muted-foreground" />}
                     {invitation.guestName}
+                    <ModeBadge mode={invitation.attendanceMode} />
                     <StatusBadge invitation={invitation} />
                     <Badge variant="outline">{invitation.sentAt ? `Enviada ${formatDate(invitation.sentAt)}` : 'Sin enviar'}</Badge>
                 </DialogTitle>
@@ -283,7 +333,7 @@ interface InvitationFieldsProps {
 
 function InvitationFields({ errors, idPrefix, defaults = {} }: InvitationFieldsProps) {
     return (
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-4">
             <div className="grid gap-2">
                 <Label htmlFor={`${idPrefix}-guest-name`}>Invitado</Label>
                 <Input id={`${idPrefix}-guest-name`} name="guest_name" defaultValue={defaults.guestName} required placeholder="Familia Mendoza" />
@@ -308,6 +358,21 @@ function InvitationFields({ errors, idPrefix, defaults = {} }: InvitationFieldsP
                     required
                 />
                 <InputError message={errors.max_passes} />
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor={`${idPrefix}-attendance-mode`}>Modalidad</Label>
+                <select
+                    id={`${idPrefix}-attendance-mode`}
+                    name="attendance_mode"
+                    defaultValue={defaults.attendanceMode ?? 'in_person'}
+                    required
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none dark:bg-input/30"
+                >
+                    <option value="in_person">Presencial</option>
+                    <option value="online">Online</option>
+                </select>
+                <InputError message={errors.attendance_mode} />
             </div>
         </div>
     );

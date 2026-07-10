@@ -1,7 +1,7 @@
 import { Pause, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { WeddingDetails } from '@/types/invitation';
-import placeholderVideoUrl from '../../../assets/video-placeholder.mp4';
+import placeholderVideoUrl from '../../../assets/video-placeholder.webm';
 import videoPosterUrl from '../../../assets/upscalemedia-transformed-2.webp';
 
 interface VideoCardProps {
@@ -9,7 +9,7 @@ interface VideoCardProps {
     wedding: WeddingDetails;
 }
 
-export default function VideoCard({ videoUrl, wedding }: VideoCardProps) {
+export default function VideoCard({ videoUrl }: VideoCardProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playing, setPlaying] = useState(false);
     const resolvedVideoUrl = videoUrl ?? placeholderVideoUrl;
@@ -42,12 +42,12 @@ export default function VideoCard({ videoUrl, wedding }: VideoCardProps) {
                 className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="pointer-events-none absolute top-0 right-0 left-0 h-[34%] bg-gradient-to-b from-[#140d0b]/70 to-transparent" />
-            <div className="absolute top-4 right-[18px] left-[18px] z-[2]">
+            {/* <div className="absolute top-4 right-[18px] left-[18px] z-[2]">
                 <div className="text-[10px] font-semibold tracking-[0.32em] text-cream/72 uppercase">Un mensaje para ti</div>
                 <div className="mt-0.5 font-serif text-[26px] font-semibold text-cream">
                     {wedding.groomName} &amp; {wedding.brideName}
                 </div>
-            </div>
+            </div> */}
             <button
                 type="button"
                 onClick={toggleVideo}

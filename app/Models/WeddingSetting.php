@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
  * @property list<string> $notification_emails
  * @property string|null $godparents_whatsapp
  * @property string|null $godparents_phone
+ * @property string|null $online_meeting_url
  * @property string $hero_eyebrow
  * @property string $hero_scroll_hint
  * @property string $countdown_eyebrow
@@ -40,6 +41,7 @@ class WeddingSetting extends Model
         'notification_emails',
         'godparents_whatsapp',
         'godparents_phone',
+        'online_meeting_url',
         'hero_eyebrow',
         'hero_scroll_hint',
         'countdown_eyebrow',

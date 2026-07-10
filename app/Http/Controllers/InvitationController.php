@@ -99,6 +99,8 @@ class InvitationController extends Controller
                 'name' => $invitation->guest_name,
                 'code' => $invitation->code,
                 'maxPasses' => $invitation->max_passes,
+                'mode' => $invitation->attendance_mode,
+                'meetingUrl' => $invitation->attendance_mode === 'online' ? $wedding->online_meeting_url : null,
                 'locked' => $invitation->is_locked,
                 'videoUrl' => null,
                 'response' => $invitation->responded_at ? [

@@ -1,4 +1,4 @@
-import { Check, ChevronDown, CircleCheckBig, LoaderCircle, Lock, Users, X } from 'lucide-react';
+import { Check, ChevronDown, CircleCheckBig, LoaderCircle, Lock, Users, Video, X } from 'lucide-react';
 import SectionHeader from '@/components/invitation/section-header';
 import VideoCard from '@/components/invitation/video-card';
 import WineButton from '@/components/invitation/wine-button';
@@ -27,9 +27,17 @@ export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) 
                     <div className="mb-[18px] rounded-[18px] bg-gradient-to-br from-wine to-wine-deep px-5 py-[18px] text-cream">
                         <div className="text-xs tracking-[0.04em] opacity-80">Invitación reservada para</div>
                         <div className="mt-0.5 mb-2 font-serif text-[27px] font-semibold">{guest.name}</div>
-                        <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
-                            <Users className="size-3.5" strokeWidth={2} />
-                            {guest.maxPasses} lugares disponibles
+                        <div className="flex flex-wrap gap-2">
+                            <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
+                                <Users className="size-3.5" strokeWidth={2} />
+                                {guest.maxPasses} lugares disponibles
+                            </div>
+                            {guest.mode === 'online' && (
+                                <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
+                                    <Video className="size-3.5" strokeWidth={2} />
+                                    Invitación virtual
+                                </div>
+                            )}
                         </div>
                     </div>
                     <VideoCard videoUrl={guest.videoUrl} wedding={wedding} />
@@ -68,7 +76,7 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
             )}
 
             <div className="mb-[18px]">
-                <label className={labelClass}>¿Nos acompañarás?</label>
+                <label className={labelClass}>{guest.mode === 'online' ? '¿Te unirás de manera virtual?' : '¿Nos acompañarás?'}</label>
                 <div className="grid grid-cols-2 gap-2.5">
                     <button
                         type="button"
@@ -82,7 +90,7 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                         )}
                     >
                         <Check className="size-4" strokeWidth={2.2} />
-                        ¡Sí, asistiré!
+                        ¡Sí, ahí estaré!
                     </button>
                     <button
                         type="button"
@@ -99,29 +107,46 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
                 </div>
             </div>
 
-            {data.attending === 'yes' && (
-                <>
-                    <div className="mb-[18px]">
-                        <label className={labelClass}>
-                            ¿Cuántos asistirán? <span className="font-normal text-ink-faint">(incluyéndote)</span>
-                        </label>
-                        <div className="relative">
-                            <select
-                                value={data.guests}
-                                onChange={(event) => update('guests', Number(event.target.value))}
-                                disabled={locked}
-                                className={cn(fieldClass, 'cursor-pointer appearance-none pr-11 text-[14.5px]')}
-                            >
-                                {guestOptions.map((count) => (
-                                    <option key={count} value={count}>
-                                        {count} {count === 1 ? 'persona' : 'personas'}
-                                    </option>
-                                ))}
-                            </select>
-                            <ChevronDown className="pointer-events-none absolute top-1/2 right-[15px] size-[18px] -translate-y-1/2 text-ink-faint" />
-                        </div>
+            {data.attending === 'yes' && guest.mode === 'online' && (
+                <div className="mb-[18px] flex items-start gap-2.5 rounded-[14px] border border-ink/[0.12] bg-[#f7f4ee] px-[15px] py-[13px]">
+                    <Video className="mt-px size-[18px] flex-none text-wine" strokeWidth={2.2} />
+                    <div className="text-[13px] leading-normal text-ink">
+                        {guest.meetingUrl ? (
+                            <>
+                                Te esperamos en la videollamada.{' '}
+                                <a href={guest.meetingUrl} target="_blank" rel="noreferrer" className="font-bold text-wine underline">
+                                    Unirme a la transmisión
+                                </a>
+                                <p className="mt-1 text-ink-faint">El enlace estará activo el día del evento.</p>
+                            </>
+                        ) : (
+                            'Te compartiremos el enlace de la videollamada antes del evento.'
+                        )}
                     </div>
-                </>
+                </div>
+            )}
+
+            {data.attending === 'yes' && guest.mode === 'in_person' && (
+                <div className="mb-[18px]">
+                    <label className={labelClass}>
+                        ¿Cuántos asistirán? <span className="font-normal text-ink-faint">(incluyéndote)</span>
+                    </label>
+                    <div className="relative">
+                        <select
+                            value={data.guests}
+                            onChange={(event) => update('guests', Number(event.target.value))}
+                            disabled={locked}
+                            className={cn(fieldClass, 'cursor-pointer appearance-none pr-11 text-[14.5px]')}
+                        >
+                            {guestOptions.map((count) => (
+                                <option key={count} value={count}>
+                                    {count} {count === 1 ? 'persona' : 'personas'}
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute top-1/2 right-[15px] size-[18px] -translate-y-1/2 text-ink-faint" />
+                    </div>
+                </div>
             )}
 
             <div className="mb-[22px]">

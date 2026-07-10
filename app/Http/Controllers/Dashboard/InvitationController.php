@@ -29,6 +29,7 @@ class InvitationController extends Controller
                 'email' => $invitation->email,
                 'code' => $invitation->code,
                 'maxPasses' => $invitation->max_passes,
+                'attendanceMode' => $invitation->attendance_mode,
                 'attending' => $invitation->attending,
                 'confirmedPasses' => $invitation->confirmed_passes,
                 'dietary' => $invitation->dietary,
@@ -61,6 +62,7 @@ class InvitationController extends Controller
                 'Email',
                 'Código',
                 'Pases máximos',
+                'Modalidad',
                 'Asistencia',
                 'Pases confirmados',
                 'Restricción alimentaria',
@@ -75,6 +77,7 @@ class InvitationController extends Controller
                     self::sanitizeCsvCell($invitation->email),
                     $invitation->code,
                     $invitation->max_passes,
+                    $invitation->attendance_mode === 'online' ? 'Online' : 'Presencial',
                     match ($invitation->attending) {
                         true => 'Sí',
                         false => 'No',

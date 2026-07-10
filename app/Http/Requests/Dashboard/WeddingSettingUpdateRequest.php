@@ -39,6 +39,7 @@ class WeddingSettingUpdateRequest extends FormRequest
             'notification_emails.*' => ['email:rfc', 'max:255'],
             'godparents_whatsapp' => ['nullable', 'string', 'max:20'],
             'godparents_phone' => ['nullable', 'string', 'max:20'],
+            'online_meeting_url' => ['nullable', 'url', 'max:500'],
         ];
     }
 
