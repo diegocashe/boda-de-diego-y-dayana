@@ -1,6 +1,7 @@
-import { Gift, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { Gift, MapPin, MessageCircle, Phone, Store } from 'lucide-react';
 import SectionHeader from '@/components/invitation/section-header';
 import VenueMap from '@/components/invitation/venue-map';
+import WhatsappGiftButton from '@/components/invitation/whatsapp-gift-button';
 import { VenueIcon } from '@/lib/venue-icons';
 import { cn } from '@/lib/utils';
 import type { GiftRegistryEntry, GodparentsContact, VenueDetail } from '@/types/invitation';
@@ -62,6 +63,15 @@ export default function DetailsSection({ venues, giftRegistry, godparents }: Det
                             </div>
                         ))}
                     </div>
+                    <div className="mt-[15px] grid grid-cols-1 gap-2">
+                        <div className="flex items-start gap-2.5 rounded-xl border border-ink/[0.08] bg-[#f7f3ea] px-[15px] py-3">
+                            <Store className="mt-px size-4 flex-none text-gold-deep" strokeWidth={1.9} />
+                            <div className="text-[13px] leading-normal text-ink-soft">
+                                También encontrarás una mesa de regalos dentro del salón el día del evento.
+                            </div>
+                        </div>
+                    </div>
+                    <WhatsappGiftButton className="mt-[15px]" />
                 </div>
 
                 <div className="reveal rounded-[20px] bg-gradient-to-br from-cocoa to-[#161010] p-[22px] text-cream">
