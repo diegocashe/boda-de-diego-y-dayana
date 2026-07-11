@@ -6,17 +6,53 @@ use App\Http\Controllers\Controller;
 use App\Models\TimelineItem;
 use App\Models\WeddingSetting;
 use App\Services\UploadedImageProcessor;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ImageOptimizationController extends Controller
 {
     /**
-     * Recodifica a WebP las imágenes ya subidas antes de que existiera esta conversión.
+     * Cuántas imágenes recodificar por request: mantiene cada request corto y
+     * con memoria acotada en el hosting compartido. El frontend vuelve a
+     * llamar este endpoint hasta que no queda nada pendiente.
+     */
+    private const BATCH_SIZE = 4;
+
+    /**
+     * Recodifica a WebP un lote de imágenes ya subidas antes de que existiera
+     * esta conversión. Stateless: cada llamada vuelve a buscar lo que falta
+     * (una imagen ya convertida queda con extensión .webp y sale de la lista).
      */
     public function optimize(UploadedImageProcessor $images): RedirectResponse
     {
-        $converted = 0;
+        $pending = $this->pendingTargets();
+        $batch = $pending->take(self::BATCH_SIZE);
+        $remaining = $pending->count() - $batch->count();
+
+        foreach ($batch as $target) {
+            if ($new = $images->reencodeExisting($target['path'])) {
+                $target['model']->update([$target['column'] => $new]);
+            }
+        }
+
+        Inertia::flash('imageOptimization', ['remaining' => $remaining]);
+
+        if ($remaining === 0 && $batch->isNotEmpty()) {
+            Inertia::flash('toast', ['type' => 'success', 'message' => 'Imágenes optimizadas.']);
+        }
+
+        return back();
+    }
+
+    /**
+     * @return Collection<int, array{model: Model, column: string, path: string}>
+     */
+    private function pendingTargets(): Collection
+    {
+        $targets = collect();
 
         $items = TimelineItem::query()
             ->whereNotNull('image_path')
@@ -24,31 +60,21 @@ class ImageOptimizationController extends Controller
             ->get();
 
         foreach ($items as $item) {
-            $updates = [];
+            foreach (['image_path', 'video_poster_path'] as $column) {
+                $path = $item->{$column};
 
-            if ($item->image_path && $new = $images->reencodeExisting($item->image_path)) {
-                $updates['image_path'] = $new;
-            }
-
-            if ($item->video_poster_path && $new = $images->reencodeExisting($item->video_poster_path)) {
-                $updates['video_poster_path'] = $new;
-            }
-
-            if ($updates) {
-                $item->update($updates);
-                $converted += count($updates);
+                if ($path && ! Str::endsWith($path, '.webp')) {
+                    $targets->push(['model' => $item, 'column' => $column, 'path' => $path]);
+                }
             }
         }
 
         $wedding = WeddingSetting::current();
 
-        if ($wedding->og_background_path && $new = $images->reencodeExisting($wedding->og_background_path)) {
-            $wedding->update(['og_background_path' => $new]);
-            $converted++;
+        if ($wedding->og_background_path && ! Str::endsWith($wedding->og_background_path, '.webp')) {
+            $targets->push(['model' => $wedding, 'column' => 'og_background_path', 'path' => $wedding->og_background_path]);
         }
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => "Se optimizaron {$converted} imágenes."]);
-
-        return back();
+        return $targets;
     }
 }

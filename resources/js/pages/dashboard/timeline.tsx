@@ -53,15 +53,30 @@ export default function TimelineAdmin({ items, icons }: TimelineAdminProps) {
     }
 
     const handleOptimizeImages = () => {
-        router.post(
-            optimize.url(),
-            {},
-            {
-                preserveScroll: true,
-                onStart: () => setIsOptimizing(true),
-                onFinish: () => setIsOptimizing(false),
-            },
-        );
+        setIsOptimizing(true);
+
+        const runBatch = () => {
+            router.post(
+                optimize.url(),
+                {},
+                {
+                    preserveScroll: true,
+                    onSuccess: (page) => {
+                        const flash = page.flash as { imageOptimization?: { remaining: number } } | undefined;
+                        const remaining = flash?.imageOptimization?.remaining ?? 0;
+
+                        if (remaining > 0) {
+                            runBatch();
+                        } else {
+                            setIsOptimizing(false);
+                        }
+                    },
+                    onError: () => setIsOptimizing(false),
+                },
+            );
+        };
+
+        runBatch();
     };
 
     const selected = orderedItems.find((item) => item.id === selectedId) ?? null;
