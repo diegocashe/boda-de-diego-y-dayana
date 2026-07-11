@@ -21,7 +21,7 @@ const segmentClass =
 export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) {
     return (
         <>
-            <SectionHeader eyebrow="" title="Confirma tu asistencia" className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader eyebrow="" title="Confirma tu asistencia" className="mb-[clamp(26px,4vw,46px)]" as="h1" />
 
             <div className="grid grid-cols-1 gap-[22px] desk:grid-cols-2 desk:items-start desk:gap-[38px]">
                 <div>

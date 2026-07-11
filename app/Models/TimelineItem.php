@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Storage;
  * @property string|null $image_path
  * @property string|null $video_path
  * @property string|null $video_poster_path
+ * @property int|null $image_width
+ * @property int|null $image_height
  * @property int $sort_order
  * @property-read string|null $image_url
  * @property-read string|null $video_url
@@ -56,6 +58,8 @@ class TimelineItem extends Model
         'image_path',
         'video_path',
         'video_poster_path',
+        'image_width',
+        'image_height',
         'sort_order',
     ];
 
@@ -69,6 +73,8 @@ class TimelineItem extends Model
         return [
             'highlighted' => 'boolean',
             'sort_order' => 'integer',
+            'image_width' => 'integer',
+            'image_height' => 'integer',
         ];
     }
 

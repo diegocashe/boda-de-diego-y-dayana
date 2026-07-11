@@ -37,6 +37,8 @@ export interface TimelineMilestone {
     icon: string;
     highlighted: boolean;
     imageUrl: string | null;
+    imageWidth: number | null;
+    imageHeight: number | null;
     videoUrl: string | null;
     videoPosterUrl: string | null;
 }

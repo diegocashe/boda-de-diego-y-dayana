@@ -49,7 +49,7 @@ function GuestRsvp({ guest, wedding }: { guest: GuestInvitation; wedding: Weddin
 function MissingCodeNotice() {
     return (
         <>
-            <SectionHeader eyebrow="Confirma tu asistencia" title="Enlace personal requerido" className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader eyebrow="Confirma tu asistencia" title="Enlace personal requerido" className="mb-[clamp(26px,4vw,46px)]" as="h1" />
             <div className="mx-auto max-w-[460px] rounded-[18px] border border-ink/[0.12] bg-white px-6 py-9 text-center">
                 <MailOpen className="mx-auto mb-4 size-9 text-wine" strokeWidth={1.6} />
                 <p className="font-serif text-[21px] leading-snug text-ink">Esta sección es personal</p>

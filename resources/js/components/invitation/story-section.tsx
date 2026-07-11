@@ -8,7 +8,7 @@ import type { TimelineMilestone } from '@/types/invitation';
 export default function StorySection({ milestones }: { milestones: TimelineMilestone[] }) {
     return (
         <>
-            <SectionHeader eyebrow="Nuestra historia" title="El camino a este día" className="mb-[clamp(30px,5vw,54px)]" />
+            <SectionHeader eyebrow="Nuestra historia" title="El camino a este día" className="mb-[clamp(30px,5vw,54px)]" as="h1" />
 
             <div className="relative flex flex-col gap-[26px] desk:block desk:pt-3 desk:pb-2">
                 <div className="absolute top-0 bottom-0 left-1/2 hidden w-0.5 -translate-x-1/2 bg-gradient-to-b from-blush-line to-[#c7d0bc] desk:block" />
@@ -45,6 +45,7 @@ function TimelineItem({ milestone, side }: { milestone: TimelineMilestone; side:
                     alt={milestone.title}
                     loading="lazy"
                     decoding="async"
+                    {...(milestone.imageWidth && milestone.imageHeight ? { width: milestone.imageWidth, height: milestone.imageHeight } : {})}
                     className="block h-auto max-h-[50vh] w-auto max-w-[50vw] border border-ink/[0.08]"
                 />
             ) : (

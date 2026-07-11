@@ -33,6 +33,8 @@ class TimelineItemController extends Controller
                 'highlighted' => $item->highlighted,
                 'sortOrder' => $item->sort_order,
                 'imageUrl' => $item->image_url,
+                'imageWidth' => $item->image_width,
+                'imageHeight' => $item->image_height,
                 'videoUrl' => $item->video_url,
                 'videoPosterUrl' => $item->video_poster_url,
             ]),
@@ -45,14 +47,18 @@ class TimelineItemController extends Controller
      */
     public function store(TimelineItemStoreRequest $request, UploadedImageProcessor $images): RedirectResponse
     {
+        $image = $request->file('image') ? $images->store($request->file('image'), 'timeline') : null;
+
         TimelineItem::create([
             ...$request->safe()->except(['image', 'video', 'video_poster']),
             // El checkbox desmarcado no viaja en la petición.
             'highlighted' => $request->boolean('highlighted'),
             'sort_order' => (TimelineItem::max('sort_order') ?? 0) + 1,
-            'image_path' => $request->file('image') ? $images->store($request->file('image'), 'timeline') : null,
+            'image_path' => $image?->path,
+            'image_width' => $image?->width,
+            'image_height' => $image?->height,
             'video_path' => $request->file('video')?->store('timeline', 'public'),
-            'video_poster_path' => $request->file('video_poster') ? $images->store($request->file('video_poster'), 'timeline') : null,
+            'video_poster_path' => $request->file('video_poster') ? $images->store($request->file('video_poster'), 'timeline')->path : null,
         ]);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => 'Momento agregado a la historia.']);
@@ -87,20 +93,25 @@ class TimelineItemController extends Controller
 
         if ($image = $request->file('image')) {
             $this->deleteAssets($timelineItem, image: true, video: true, poster: true);
-            $data['image_path'] = $images->store($image, 'timeline');
+            $uploaded = $images->store($image, 'timeline');
+            $data['image_path'] = $uploaded->path;
+            $data['image_width'] = $uploaded->width;
+            $data['image_height'] = $uploaded->height;
             $data['video_path'] = null;
             $data['video_poster_path'] = null;
         } elseif ($video = $request->file('video')) {
             $this->deleteAssets($timelineItem, image: true, video: true, poster: (bool) $request->file('video_poster'));
             $data['image_path'] = null;
+            $data['image_width'] = null;
+            $data['image_height'] = null;
             $data['video_path'] = $video->store('timeline', 'public');
 
             if ($poster = $request->file('video_poster')) {
-                $data['video_poster_path'] = $images->store($poster, 'timeline');
+                $data['video_poster_path'] = $images->store($poster, 'timeline')->path;
             }
         } elseif ($poster = $request->file('video_poster')) {
             $this->deleteAssets($timelineItem, image: false, video: false, poster: true);
-            $data['video_poster_path'] = $images->store($poster, 'timeline');
+            $data['video_poster_path'] = $images->store($poster, 'timeline')->path;
         }
 
         $timelineItem->update($data);

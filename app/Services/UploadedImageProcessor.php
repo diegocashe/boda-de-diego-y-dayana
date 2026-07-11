@@ -16,13 +16,13 @@ class UploadedImageProcessor
      */
     private const MAX_DIMENSION = 2000;
 
-    private const QUALITY = 82;
+    private const QUALITY = 75;
 
     /**
      * Recodifica un archivo subido a WebP, recortando resolución y calidad
      * a un tope razonable para la web.
      */
-    public function store(UploadedFile $file, string $directory): string
+    public function store(UploadedFile $file, string $directory): UploadedImage
     {
         return $this->convert($file->getRealPath(), $directory);
     }
@@ -38,13 +38,13 @@ class UploadedImageProcessor
         }
 
         $directory = Str::beforeLast($existingPath, '/');
-        $newPath = $this->convert(Storage::disk('public')->path($existingPath), $directory);
+        $newImage = $this->convert(Storage::disk('public')->path($existingPath), $directory);
         Storage::disk('public')->delete($existingPath);
 
-        return $newPath;
+        return $newImage->path;
     }
 
-    private function convert(string $sourcePath, string $directory): string
+    private function convert(string $sourcePath, string $directory): UploadedImage
     {
         $manager = new ImageManager(Driver::class);
         $image = $manager->decodePath($sourcePath)->scaleDown(self::MAX_DIMENSION, self::MAX_DIMENSION);
@@ -56,6 +56,6 @@ class UploadedImageProcessor
             (string) $image->encodeUsingMediaType('image/webp', quality: self::QUALITY),
         );
 
-        return $path;
+        return new UploadedImage($path, $image->width(), $image->height());
     }
 }

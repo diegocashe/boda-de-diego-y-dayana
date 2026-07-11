@@ -49,7 +49,7 @@ class WeddingSettingController extends Controller
                 Storage::disk('public')->delete($wedding->og_background_path);
             }
 
-            $data['og_background_path'] = $images->store($file, 'wedding');
+            $data['og_background_path'] = $images->store($file, 'wedding')->path;
             $ogImages->invalidateAll();
         }
 
