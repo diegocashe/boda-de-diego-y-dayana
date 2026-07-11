@@ -30,7 +30,7 @@ export default function DetailsSection({ venues, giftRegistry, godparents }: Det
 
     return (
         <>
-            <SectionHeader title="Detalles del evento" className="mb-[clamp(26px,4vw,46px)]" />
+            <SectionHeader title="Detalles del evento" className="mb-[clamp(26px,4vw,46px)]" as="h1" />
 
             {venues.length > 0 && (
                 <div className={cn('mb-5 grid grid-cols-1 gap-3.5 desk:items-stretch desk:gap-5', desktopGridCols[columns])}>

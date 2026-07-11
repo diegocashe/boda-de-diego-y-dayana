@@ -50,6 +50,8 @@ class TimelineItemsTest extends TestCase
         $this->assertTrue($item->highlighted);
         $this->assertNotNull($item->image_path);
         $this->assertStringEndsWith('.webp', $item->image_path);
+        $this->assertIsInt($item->image_width);
+        $this->assertIsInt($item->image_height);
         Storage::disk('public')->assertExists($item->image_path);
     }
 
@@ -84,6 +86,8 @@ class TimelineItemsTest extends TestCase
         $this->assertSame('map-pin', $item->icon);
         $this->assertFalse($item->highlighted, 'Un checkbox desmarcado debe persistir como false.');
         $this->assertNotSame($oldPath, $item->image_path);
+        $this->assertIsInt($item->image_width);
+        $this->assertIsInt($item->image_height);
         Storage::disk('public')->assertMissing($oldPath);
         Storage::disk('public')->assertExists($item->image_path);
     }

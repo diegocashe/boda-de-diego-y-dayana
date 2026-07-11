@@ -42,11 +42,11 @@ function HeroSection({ wedding, labels, content }: WeddingSectionProps) {
 
             <div className="relative z-[2] px-6 text-center text-cream">
                 <div className="hero-fade text-xs font-semibold tracking-[0.42em] text-cream/82 uppercase">{content.heroEyebrow}</div>
-                <div className="hero-fade hero-fade-d1 mt-[clamp(14px,3vw,26px)]">
+                <h1 className="hero-fade hero-fade-d1 mt-[clamp(14px,3vw,26px)] font-normal">
                     <div className="font-serif text-[clamp(58px,15vw,132px)] leading-[0.9] font-semibold">{wedding.groomName}</div>
                     <div className="my-0.5 font-serif text-[clamp(28px,7vw,58px)] text-gold italic">&amp;</div>
                     <div className="font-serif text-[clamp(58px,15vw,132px)] leading-[0.9] font-semibold">{wedding.brideName}</div>
-                </div>
+                </h1>
                 <div className="hero-fade hero-fade-d2 mt-[clamp(20px,4vw,34px)] flex items-center justify-center gap-3.5">
                     <span className="h-px w-[clamp(40px,7vw,80px)] bg-gradient-to-r from-transparent to-cream/70" />
                     <span className="size-[7px] rotate-45 bg-gold" />

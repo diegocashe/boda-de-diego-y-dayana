@@ -3,6 +3,11 @@
     <FilesMatch "\.(js|css|woff2|woff|webp|jpg|jpeg|png|svg|ico|mp4|webm)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
+
+    # Sin hash en el nombre; cache corta por si se edita a mano.
+    <FilesMatch "\.(webmanifest)$">
+        Header set Cache-Control "public, max-age=86400"
+    </FilesMatch>
 </IfModule>
 
 # MIME types correctos
