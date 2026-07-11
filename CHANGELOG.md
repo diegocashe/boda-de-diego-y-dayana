@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.8.1...v1.9.0) (2026-07-11)
+
+
+### Features
+
+* add WhatsApp gift button and update invitation sections ([2eb8620](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/2eb8620bf19bce7e0fcd485ad08425f706290ee9))
+
 ## [1.8.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.8.0...v1.8.1) (2026-07-10)
 
 
