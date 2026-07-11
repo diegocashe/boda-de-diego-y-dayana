@@ -1,3 +1,11 @@
+# [1.11.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.10.0...v1.11.0) (2026-07-11)
+
+
+### Features
+
+* add image dimensions to timeline items and update related processing ([c5d3ba2](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c5d3ba22914dd1b1deee42e2e18e2c7a81c7e52d))
+* simplify SSL stream options in mail configuration ([db05ec7](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/db05ec71fd0ed7648df6dc369d9598694d9ec4f7))
+
 # [1.10.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.9.0...v1.10.0) (2026-07-11)
 
 
