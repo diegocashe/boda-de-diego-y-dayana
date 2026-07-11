@@ -11,7 +11,16 @@ use Intervention\Image\ImageManager;
 class UploadedImageProcessor
 {
     /**
-     * Recodifica un archivo subido a WebP sin perder calidad ni redimensionar.
+     * Lado máximo (px) tras el resize; evita fotos de cámara/celular (20+ MP)
+     * agotando el memory_limit de PHP en el hosting compartido al decodificarlas.
+     */
+    private const MAX_DIMENSION = 2000;
+
+    private const QUALITY = 82;
+
+    /**
+     * Recodifica un archivo subido a WebP, recortando resolución y calidad
+     * a un tope razonable para la web.
      */
     public function store(UploadedFile $file, string $directory): string
     {
@@ -38,13 +47,13 @@ class UploadedImageProcessor
     private function convert(string $sourcePath, string $directory): string
     {
         $manager = new ImageManager(Driver::class);
-        $image = $manager->decodePath($sourcePath);
+        $image = $manager->decodePath($sourcePath)->scaleDown(self::MAX_DIMENSION, self::MAX_DIMENSION);
 
         $path = $directory.'/'.Str::uuid().'.webp';
 
         Storage::disk('public')->put(
             $path,
-            (string) $image->encodeUsingMediaType('image/webp', quality: 100),
+            (string) $image->encodeUsingMediaType('image/webp', quality: self::QUALITY),
         );
 
         return $path;
