@@ -1,3 +1,17 @@
+# [1.10.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.9.0...v1.10.0) (2026-07-11)
+
+
+### Bug Fixes
+
+* implement code changes to enhance functionality and improve performance ([d2fbf0c](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/d2fbf0caf9d764372940cdc8b6d90fa8c51074f7))
+
+
+### Features
+
+* add SSL stream options for enhanced mail security ([423b66f](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/423b66f49d1b1b0e572f69118a7cf492d5c5b806))
+* add storage:link command to deploy process and update deployment documentation ([b565b85](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/b565b8506836538d318229c80c33efb0aa634c62))
+* enhance image optimization process with batch handling and improved feedback ([c116f0e](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c116f0eb1a4f36def4f55b86e0589989ff7aeedd))
+
 # [1.9.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.8.1...v1.9.0) (2026-07-11)
 
 
