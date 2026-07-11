@@ -239,6 +239,7 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
             ea-php83 artisan migrate --force
+            ea-php83 artisan storage:link
             ea-php83 artisan optimize
 
       - name: Notify Discord — deploy exitoso

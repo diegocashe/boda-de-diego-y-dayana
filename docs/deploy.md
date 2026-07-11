@@ -13,7 +13,7 @@ Producción es un cPanel al que se despliega vía rsync desde GitHub Actions
    - **Release** — semantic-release publica tag, CHANGELOG y GitHub Release
      (solo si hay commits `feat:`/`fix:`/breaking; un `chore:` no genera release).
    - **Deploy** — job con `environment: production`: compila el tag publicado
-     (`v<versión>`) y hace rsync + `migrate --force` + `optimize`.
+     (`v<versión>`) y hace rsync + `migrate --force` + `storage:link` + `optimize`.
 
 **El merge a `main` es la aprobación del deploy**: nada llega a producción
 desde una feature branch.
@@ -59,6 +59,25 @@ Notas:
   lo levantan; solo `artisan up` lo desactiva.
 - La frase secreta funciona como URL, así que debe ser URL-safe (minúsculas y
   guiones). Si quieres otra, cámbiala en el comando `down` — no está en el código.
+
+## Symlink de storage público
+
+Las imágenes subidas desde el dashboard (timeline, OG images, etc.) se guardan
+físicamente en `storage/app/public/...` pero se sirven desde
+`https://diegoydayana.com/storage/...`, a través del symlink
+`public/storage -> storage/app/public` que crea `artisan storage:link`.
+
+- El post-deploy corre `artisan storage:link` en cada deploy (idempotente: si
+  el symlink ya existe, solo imprime un aviso y sigue, no falla el pipeline).
+- El deploy **excluye `storage/`** del rsync, así que las imágenes ya subidas
+  sobreviven a un deploy — pero si el symlink llegara a perderse (reinstalación
+  manual de `public_html`, restauración desde backup, etc.), las imágenes
+  existentes darán 404 hasta volver a correrlo manualmente:
+
+  ```bash
+  cd "$DEPLOY_PATH"
+  ea-php83 artisan storage:link
+  ```
 
 ## Indexación (Google y otros buscadores)
 
