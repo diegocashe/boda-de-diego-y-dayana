@@ -13,8 +13,12 @@ class InvitationStoreRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        $attendanceMode = $this->input('attendance_mode', 'in_person');
+
         $this->merge([
-            'attendance_mode' => $this->input('attendance_mode', 'in_person'),
+            'attendance_mode' => $attendanceMode,
+            // Las invitaciones online no manejan lugares físicos: siempre es 1 pase.
+            'max_passes' => $attendanceMode === 'online' ? 1 : $this->input('max_passes'),
         ]);
     }
 

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 export const show = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 show.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ show.url = (args: { invitation: string | { code: string } } | [invitation: strin
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 show.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ show.get = (args: { invitation: string | { code: string } } | [invitation: strin
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 show.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ show.head = (args: { invitation: string | { code: string } } | [invitation: stri
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 const showForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const showForm = (args: { invitation: string | { code: string } } | [invitation:
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 showForm.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ showForm.get = (args: { invitation: string | { code: string } } | [invitation: s
 
 /**
 * @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:92
+* @see app/Http/Controllers/InvitationController.php:94
 * @route '/asistencia/{invitation}'
 */
 showForm.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:141
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 export const store = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -121,7 +121,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:141
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 store.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ store.url = (args: { invitation: string | { code: string } } | [invitation: stri
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:141
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 store.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -164,7 +164,7 @@ store.post = (args: { invitation: string | { code: string } } | [invitation: str
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:141
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 const storeForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -174,7 +174,7 @@ const storeForm = (args: { invitation: string | { code: string } } | [invitation
 
 /**
 * @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:141
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 storeForm.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

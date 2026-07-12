@@ -333,6 +333,9 @@ interface InvitationFieldsProps {
 }
 
 function InvitationFields({ errors, idPrefix, defaults = {} }: InvitationFieldsProps) {
+    const [attendanceMode, setAttendanceMode] = useState<AttendanceMode>(defaults.attendanceMode ?? 'in_person');
+    const isOnline = attendanceMode === 'online';
+
     return (
         <div className="grid gap-4 md:grid-cols-4">
             <div className="grid gap-2">
@@ -350,14 +353,17 @@ function InvitationFields({ errors, idPrefix, defaults = {} }: InvitationFieldsP
             <div className="grid gap-2">
                 <Label htmlFor={`${idPrefix}-max-passes`}>Pases</Label>
                 <Input
+                    key={attendanceMode}
                     id={`${idPrefix}-max-passes`}
                     type="number"
                     name="max_passes"
-                    defaultValue={defaults.maxPasses ?? 2}
+                    defaultValue={isOnline ? 1 : (defaults.maxPasses ?? 2)}
                     min={1}
                     max={20}
                     required
+                    disabled={isOnline}
                 />
+                {isOnline && <p className="text-xs text-muted-foreground">Las invitaciones online no requieren pases; siempre es 1.</p>}
                 <InputError message={errors.max_passes} />
             </div>
 
@@ -366,7 +372,8 @@ function InvitationFields({ errors, idPrefix, defaults = {} }: InvitationFieldsP
                 <select
                     id={`${idPrefix}-attendance-mode`}
                     name="attendance_mode"
-                    defaultValue={defaults.attendanceMode ?? 'in_person'}
+                    value={attendanceMode}
+                    onChange={(event) => setAttendanceMode(event.target.value as AttendanceMode)}
                     required
                     className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none dark:bg-input/30"
                 >

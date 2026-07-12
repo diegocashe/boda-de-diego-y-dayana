@@ -21,7 +21,20 @@ const segmentClass =
 export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) {
     return (
         <>
-            <SectionHeader eyebrow="" title="Confirma tu asistencia" className="mb-[clamp(26px,4vw,46px)]" as="h1" />
+            <SectionHeader
+                eyebrow=""
+                title="Confirma tu asistencia"
+                className={guest.mode === 'online' ? 'mb-[18px]' : 'mb-[clamp(26px,4vw,46px)]'}
+                as="h1"
+            />
+
+            {guest.mode === 'online' && (
+                <p className="mx-auto mb-[clamp(26px,4vw,46px)] max-w-[520px] text-center text-[clamp(14px,2.2vw,16.5px)] leading-[1.75] text-ink-soft">
+                    Sabemos que estás muy lejos y que tal vez sea imposible tenerte con nosotros en persona, pero eso{' '}
+                    <strong className="font-bold text-ink">no nos quita las ganas de compartir este día contigo</strong>. Que estés presente, aunque
+                    sea a la distancia, <strong className="font-bold text-ink">va a hacer este momento aún más especial para nosotros</strong>.
+                </p>
+            )}
 
             <div className="grid grid-cols-1 gap-[22px] desk:grid-cols-2 desk:items-start desk:gap-[38px]">
                 <div>
@@ -29,11 +42,12 @@ export default function RsvpSection({ guest, wedding, form }: RsvpSectionProps) 
                         <div className="text-xs tracking-[0.04em] opacity-80">Invitación reservada para</div>
                         <div className="mt-0.5 mb-2 font-serif text-[27px] font-semibold">{guest.name}</div>
                         <div className="flex flex-wrap gap-2">
-                            <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
-                                <Users className="size-3.5" strokeWidth={2} />
-                                {guest.maxPasses} lugares disponibles
-                            </div>
-                            {guest.mode === 'online' && (
+                            {guest.mode === 'in_person' ? (
+                                <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
+                                    <Users className="size-3.5" strokeWidth={2} />
+                                    {guest.maxPasses} {guest.maxPasses === 1 ? 'lugar disponible' : 'lugares disponibles'}
+                                </div>
+                            ) : (
                                 <div className="inline-flex items-center gap-[7px] rounded-[20px] bg-cream/15 px-[11px] py-[5px] text-[12.5px]">
                                     <Video className="size-3.5" strokeWidth={2} />
                                     Invitación virtual

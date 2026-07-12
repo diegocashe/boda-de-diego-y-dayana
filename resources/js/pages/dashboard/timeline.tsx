@@ -371,6 +371,7 @@ function ItemFields({ icons, errors, idPrefix, defaults = {} }: ItemFieldsProps)
             <div className="grid gap-2">
                 <Label htmlFor={`${idPrefix}-image`}>{defaults.id ? 'Reemplazar imagen' : 'Imagen'}</Label>
                 <Input id={`${idPrefix}-image`} type="file" name="image" accept="image/*" />
+                <p className="text-xs text-muted-foreground">Opcional, hasta 10 MB.</p>
                 <InputError message={errors.image} />
             </div>
 
@@ -385,7 +386,7 @@ function ItemFields({ icons, errors, idPrefix, defaults = {} }: ItemFieldsProps)
                 <div className="grid gap-2">
                     <Label htmlFor={`${idPrefix}-video-poster`}>Portada del video</Label>
                     <Input id={`${idPrefix}-video-poster`} type="file" name="video_poster" accept="image/*" />
-                    <p className="text-xs text-muted-foreground">Opcional. Solo aplica si el momento tiene un video.</p>
+                    <p className="text-xs text-muted-foreground">Opcional, hasta 10 MB. Solo aplica si el momento tiene un video.</p>
                     <InputError message={errors.video_poster} />
                 </div>
             </div>

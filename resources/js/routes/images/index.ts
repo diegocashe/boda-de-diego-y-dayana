@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dashboard\ImageOptimizationController::optimize
-* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:17
+* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:29
 * @route '/dashboard/images/optimize'
 */
 export const optimize = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ optimize.definition = {
 
 /**
 * @see \App\Http\Controllers\Dashboard\ImageOptimizationController::optimize
-* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:17
+* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:29
 * @route '/dashboard/images/optimize'
 */
 optimize.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ optimize.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Dashboard\ImageOptimizationController::optimize
-* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:17
+* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:29
 * @route '/dashboard/images/optimize'
 */
 optimize.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ optimize.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Dashboard\ImageOptimizationController::optimize
-* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:17
+* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:29
 * @route '/dashboard/images/optimize'
 */
 const optimizeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const optimizeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> 
 
 /**
 * @see \App\Http\Controllers\Dashboard\ImageOptimizationController::optimize
-* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:17
+* @see app/Http/Controllers/Dashboard/ImageOptimizationController.php:29
 * @route '/dashboard/images/optimize'
 */
 optimizeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -22,7 +22,7 @@ class TimelineItemStoreRequest extends FormRequest
             'description' => ['required', 'string', 'max:1000'],
             'icon' => ['required', 'string', Rule::in(TimelineItem::ICONS)],
             'highlighted' => ['boolean'],
-            'image' => ['nullable', 'image', 'max:4096', Rule::prohibitedIf(fn () => $this->hasFile('video'))],
+            'image' => ['nullable', 'image', 'max:10240', Rule::prohibitedIf(fn () => $this->hasFile('video'))],
             'video' => [
                 'nullable',
                 'file',
@@ -33,7 +33,7 @@ class TimelineItemStoreRequest extends FormRequest
             'video_poster' => [
                 'nullable',
                 'image',
-                'max:4096',
+                'max:10240',
                 Rule::prohibitedIf(fn () => ! $this->hasFile('video') && ! $this->existingTimelineItem()?->video_path),
             ],
         ];
