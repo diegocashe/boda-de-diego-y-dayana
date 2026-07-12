@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.13.0...v1.14.0) (2026-07-12)
+
+
+### Features
+
+* update RSVP section to handle online and in-person attendance modes ([9f8deb5](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/9f8deb529c9758a973030ad62a754008c05ac572))
+
 # [1.13.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.12.0...v1.13.0) (2026-07-12)
 
 
