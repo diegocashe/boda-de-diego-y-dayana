@@ -320,4 +320,62 @@ class TimelineItemsTest extends TestCase
         Storage::disk('public')->assertExists($item->image_path);
         Storage::disk('public')->assertMissing($oldPath);
     }
+
+    public function test_optimizing_images_reprocesses_oversized_legacy_webp_files()
+    {
+        Storage::fake('public');
+        $this->actingAs(User::factory()->create());
+
+        // Simula un .webp generado por una versión anterior del optimizador
+        // que no aplicaba el resize: extensión .webp pero resolución excesiva.
+        $oversizedPath = UploadedFile::fake()->image('legado.webp', 3000, 2400)->store('timeline', 'public');
+        $item = TimelineItem::create([
+            'period' => '2019',
+            'title' => 'Foto heredada',
+            'description' => 'Una foto de una version anterior del optimizador.',
+            'icon' => 'coffee',
+            'sort_order' => 1,
+            'image_path' => $oversizedPath,
+            'image_width' => 3000,
+            'image_height' => 2400,
+        ]);
+
+        $response = $this->post(route('images.optimize'));
+
+        $response->assertRedirect();
+
+        $item->refresh();
+        $this->assertNotSame($oversizedPath, $item->image_path);
+        $this->assertLessThanOrEqual(2000, $item->image_width);
+        $this->assertLessThanOrEqual(2000, $item->image_height);
+        Storage::disk('public')->assertExists($item->image_path);
+        Storage::disk('public')->assertMissing($oversizedPath);
+    }
+
+    public function test_optimizing_images_leaves_correctly_sized_webp_files_untouched()
+    {
+        Storage::fake('public');
+        $this->actingAs(User::factory()->create());
+
+        $path = UploadedFile::fake()->image('ok.webp', 800, 600)->store('timeline', 'public');
+        $item = TimelineItem::create([
+            'period' => '2019',
+            'title' => 'Foto ya optimizada',
+            'description' => 'Ya esta en webp y dentro del tope de resolucion.',
+            'icon' => 'coffee',
+            'sort_order' => 1,
+            'image_path' => $path,
+            'image_width' => 800,
+            'image_height' => 600,
+        ]);
+
+        $response = $this->post(route('images.optimize'));
+
+        $response->assertRedirect();
+        $response->assertInertiaFlash('imageOptimization.remaining', 0);
+
+        $item->refresh();
+        $this->assertSame($path, $item->image_path);
+        Storage::disk('public')->assertExists($path);
+    }
 }
