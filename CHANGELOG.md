@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.14.0...v1.15.0) (2026-07-12)
+
+
+### Features
+
+* update video placeholder asset ([c8c5039](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c8c5039a93ad84aa183fb47386939a213388fca6))
+
 # [1.14.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.13.0...v1.14.0) (2026-07-12)
 
 
