@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.16.0...v1.17.0) (2026-07-12)
+
+
+### Features
+
+* conditionally display age restriction message based on attendance mode ([7726b5d](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/7726b5d16ce90d33b44eaed9891fb8cb5874ef40))
+
 # [1.16.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.15.0...v1.16.0) (2026-07-12)
 
 
