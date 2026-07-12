@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.11.0...v1.12.0) (2026-07-12)
+
+
+### Features
+
+* update invitation sending logic to mark as sent without email and adjust UI feedback ([29d35f4](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/29d35f4ed8a1a05fbb59f6f731636bf0590addee))
+* update video placeholder asset for improved performance ([1ebcc34](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/1ebcc346aff37619696b35e4935ca12ef59bfa47))
+
 # [1.11.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.10.0...v1.11.0) (2026-07-11)
 
 
