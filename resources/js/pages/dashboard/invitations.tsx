@@ -286,7 +286,7 @@ function InvitationDetail({ invitation }: { invitation: InvitationData }) {
                 <div className="flex flex-wrap gap-2 border-t pt-4">
                     <Form {...InvitationController.send.form(invitation.id)} options={{ preserveScroll: true }}>
                         {({ processing }) => (
-                            <Button type="submit" variant="outline" size="sm" disabled={processing || !invitation.email}>
+                            <Button type="submit" variant="outline" size="sm" disabled={processing}>
                                 <Send className="size-4" />
                                 {invitation.sentAt ? 'Reenviar invitación' : 'Enviar invitación'}
                             </Button>
@@ -318,7 +318,9 @@ function InvitationDetail({ invitation }: { invitation: InvitationData }) {
                         )}
                     </Form>
                 </div>
-                {!invitation.email && <p className="text-xs text-muted-foreground">Agrega un correo para poder enviar la invitación.</p>}
+                {!invitation.email && (
+                    <p className="text-xs text-muted-foreground">Sin correo, se marcará como enviada pero no se enviará ningún email.</p>
+                )}
             </div>
         </DialogContent>
     );
