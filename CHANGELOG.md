@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.17.0...v1.18.0) (2026-07-12)
+
+
+### Features
+
+* improve age restriction message display for in-person guests ([c80c680](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/c80c68024e991a14a33da3039f818373c2bba2c5))
+
 # [1.17.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.16.0...v1.17.0) (2026-07-12)
 
 
