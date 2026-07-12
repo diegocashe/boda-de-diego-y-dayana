@@ -92,7 +92,9 @@ function RsvpFormFields({ guest, form }: Pick<RsvpSectionProps, 'guest' | 'form'
 
             <div className="mb-5 flex items-start gap-2.5 rounded-[14px] border border-[#e6d3a3] bg-[#fbf3e0] px-[15px] py-[13px]">
                 <ShieldAlert className="mt-px size-[18px] flex-none text-gold-deep" strokeWidth={2.2} />
-                <div className="text-[13px] leading-normal text-[#6b5417]">No se aceptan menores de edad en el evento.</div>
+                {guest.mode !== 'online' && (
+                    <div className="text-[13px] leading-normal text-[#6b5417]">No se aceptan menores de edad en el evento.</div>
+                )}
             </div>
 
             <div className="mb-[18px]">
