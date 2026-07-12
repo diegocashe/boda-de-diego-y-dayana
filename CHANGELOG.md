@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.12.0...v1.13.0) (2026-07-12)
+
+
+### Features
+
+* add additional CR7 no videos to enhance video selection ([3760dc7](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/3760dc722047849c3f11a9d3187006134f008924))
+
 # [1.12.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.11.0...v1.12.0) (2026-07-12)
 
 
