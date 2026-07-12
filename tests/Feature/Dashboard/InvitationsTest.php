@@ -119,7 +119,7 @@ class InvitationsTest extends TestCase
         $this->assertNotNull($invitation->refresh()->sent_at);
     }
 
-    public function test_sending_requires_an_email_address()
+    public function test_sending_without_an_email_marks_sent_at_without_queuing_mail()
     {
         Mail::fake();
         $this->actingAs(User::factory()->create());
@@ -129,7 +129,7 @@ class InvitationsTest extends TestCase
 
         $response->assertRedirect(route('invitations.index'));
         Mail::assertNothingQueued();
-        $this->assertNull($invitation->refresh()->sent_at);
+        $this->assertNotNull($invitation->refresh()->sent_at);
     }
 
     public function test_the_lock_can_be_toggled()

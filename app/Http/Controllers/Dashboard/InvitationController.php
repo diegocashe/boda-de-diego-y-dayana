@@ -153,22 +153,22 @@ class InvitationController extends Controller
     }
 
     /**
-     * Queue the invitation email with the personal RSVP link. Serves both the
-     * first send and any resend, refreshing the sent timestamp.
+     * Mark the invitation as sent, queuing the email if the guest has one. Serves
+     * both the first send and any resend, refreshing the sent timestamp.
      */
     public function send(Invitation $invitation): RedirectResponse
     {
-        if ($invitation->email === null) {
-            Inertia::flash('toast', ['type' => 'error', 'message' => 'Agrega un correo antes de enviar la invitación.']);
-
-            return to_route('invitations.index');
+        if ($invitation->email !== null) {
+            Mail::to($invitation->email)->queue(new InvitationMail($invitation));
         }
-
-        Mail::to($invitation->email)->queue(new InvitationMail($invitation));
 
         $invitation->update(['sent_at' => now()]);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => "Invitación enviada a {$invitation->email}."]);
+        $message = $invitation->email !== null
+            ? "Invitación enviada a {$invitation->email}."
+            : 'Invitación marcada como enviada.';
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => $message]);
 
         return to_route('invitations.index');
     }
