@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.15.0...v1.16.0) (2026-07-12)
+
+
+### Features
+
+* enhance image optimization process to handle oversized legacy WebP files ([3ccdd3e](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/3ccdd3ee424bacf784eca0b067db0c9348dcdafe))
+
 # [1.15.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.14.0...v1.15.0) (2026-07-12)
 
 
