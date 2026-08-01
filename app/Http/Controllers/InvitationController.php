@@ -9,6 +9,7 @@ use App\Models\Invitation;
 use App\Models\TimelineItem;
 use App\Models\Venue;
 use App\Models\WeddingSetting;
+use App\Models\WishlistItem;
 use App\Services\InvitationOgImageService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -203,6 +204,42 @@ class InvitationController extends Controller
             ],
             'schema' => $this->weddingSchema($wedding, $venues),
         ]);
+    }
+
+    /**
+     * Show the wishlist of gifts guests can reserve for the couple.
+     */
+    public function wishlist(): Response
+    {
+        $wedding = WeddingSetting::current();
+
+        return Inertia::render('invitation/wishlist', [
+            'items' => WishlistItem::query()->ordered()->get()->map(fn (WishlistItem $item): array => [
+                'id' => $item->id,
+                'title' => $item->title,
+                'description' => $item->description,
+                'imageUrl' => $item->image_url,
+                'imageWidth' => $item->image_width,
+                'imageHeight' => $item->image_height,
+                'status' => $item->status,
+            ]),
+        ])->withViewData([
+            'meta' => [
+                'title' => "Lista de deseos · {$wedding->bride_name} & {$wedding->groom_name}",
+                'description' => "Elige un regalo para {$wedding->bride_name} y {$wedding->groom_name} y resérvalo para su boda.",
+            ],
+        ]);
+    }
+
+    /**
+     * Reserve an available wishlist item; anonymous and idempotent, so a
+     * repeated request on an already-reserved item is simply a no-op.
+     */
+    public function reserveWishlistItem(WishlistItem $wishlistItem): RedirectResponse
+    {
+        WishlistItem::whereKey($wishlistItem->id)->where('status', 'available')->update(['status' => 'reserved']);
+
+        return back();
     }
 
     /**

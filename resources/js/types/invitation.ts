@@ -64,6 +64,18 @@ export interface GodparentsContact {
     phoneUrl: string | null;
 }
 
+export type WishlistItemStatus = 'available' | 'reserved';
+
+export interface WishlistItem {
+    id: number;
+    title: string;
+    description: string;
+    imageUrl: string | null;
+    imageWidth: number | null;
+    imageHeight: number | null;
+    status: WishlistItemStatus;
+}
+
 export type RsvpAttendance = 'yes' | 'no';
 
 export interface RsvpFormData {
