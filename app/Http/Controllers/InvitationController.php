@@ -109,7 +109,6 @@ class InvitationController extends Controller
                 'response' => $invitation->responded_at ? [
                     'attending' => $invitation->attending ? 'yes' : 'no',
                     'guests' => $invitation->confirmed_passes ?? 1,
-                    'dietary' => $invitation->dietary ?? '',
                     'message' => $invitation->message ?? '',
                 ] : null,
             ],
@@ -150,7 +149,6 @@ class InvitationController extends Controller
         $invitation->update([
             'attending' => $attending,
             'confirmed_passes' => $attending ? $request->integer('guests') : null,
-            'dietary' => $attending ? $request->input('dietary') : null,
             'message' => $request->input('message'),
             'responded_at' => now(),
         ]);

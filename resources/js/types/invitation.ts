@@ -81,6 +81,5 @@ export type RsvpAttendance = 'yes' | 'no';
 export interface RsvpFormData {
     attending: RsvpAttendance | null;
     guests: number;
-    dietary: string;
     message: string;
 }

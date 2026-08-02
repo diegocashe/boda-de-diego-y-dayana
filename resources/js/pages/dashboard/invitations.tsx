@@ -27,7 +27,6 @@ interface InvitationData {
     attendanceMode: AttendanceMode;
     attending: boolean | null;
     confirmedPasses: number | null;
-    dietary: string | null;
     message: string | null;
     respondedAt: string | null;
     sentAt: string | null;
@@ -238,11 +237,6 @@ function InvitationDetail({ invitation }: { invitation: InvitationData }) {
                 {invitation.respondedAt && (
                     <div className="rounded-lg border bg-muted/40 p-3 text-sm">
                         <p className="text-muted-foreground">Respondió el {formatDate(invitation.respondedAt)}.</p>
-                        {invitation.dietary && (
-                            <p className="mt-1">
-                                <span className="font-medium">Restricciones:</span> {invitation.dietary}
-                            </p>
-                        )}
                         {invitation.message && (
                             <p className="mt-1">
                                 <span className="font-medium">Mensaje:</span> «{invitation.message}»

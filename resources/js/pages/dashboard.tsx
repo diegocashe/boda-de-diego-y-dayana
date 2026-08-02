@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import { CalendarHeart, CheckCircle2, Clock, Send, TrendingUp, UtensilsCrossed, XCircle } from 'lucide-react';
+import { CalendarHeart, CheckCircle2, Clock, Send, TrendingUp, XCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { dashboard } from '@/routes';
 
@@ -11,7 +11,6 @@ interface DashboardStats {
     confirmedGuests: number;
     pendingInvitations: number;
     declinedInvitations: number;
-    dietaryRestrictions: number;
     responseRate: number;
     daysUntilWedding: number;
 }
@@ -47,12 +46,6 @@ export default function Dashboard({ stats }: { stats: DashboardStats }) {
             value: `${stats.responseRate}%`,
             hint: 'sobre lo enviado',
             icon: TrendingUp,
-        },
-        {
-            label: 'Restricciones alimentarias',
-            value: stats.dietaryRestrictions,
-            hint: 'invitados con alguna nota',
-            icon: UtensilsCrossed,
         },
         {
             label: 'Días para la boda',

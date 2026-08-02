@@ -349,7 +349,7 @@ rsvpShow.form = rsvpShowForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::rsvpStore
-* @see app/Http/Controllers/InvitationController.php:144
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 export const rsvpStore = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -364,7 +364,7 @@ rsvpStore.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::rsvpStore
-* @see app/Http/Controllers/InvitationController.php:144
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 rsvpStore.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -397,7 +397,7 @@ rsvpStore.url = (args: { invitation: string | { code: string } } | [invitation: 
 
 /**
 * @see \App\Http\Controllers\InvitationController::rsvpStore
-* @see app/Http/Controllers/InvitationController.php:144
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 rsvpStore.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -407,7 +407,7 @@ rsvpStore.post = (args: { invitation: string | { code: string } } | [invitation:
 
 /**
 * @see \App\Http\Controllers\InvitationController::rsvpStore
-* @see app/Http/Controllers/InvitationController.php:144
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 const rsvpStoreForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -417,7 +417,7 @@ const rsvpStoreForm = (args: { invitation: string | { code: string } } | [invita
 
 /**
 * @see \App\Http\Controllers\InvitationController::rsvpStore
-* @see app/Http/Controllers/InvitationController.php:144
+* @see app/Http/Controllers/InvitationController.php:143
 * @route '/asistencia/{invitation}'
 */
 rsvpStoreForm.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -429,7 +429,7 @@ rsvpStore.form = rsvpStoreForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 export const ogImage = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -444,7 +444,7 @@ ogImage.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
@@ -477,7 +477,7 @@ ogImage.url = (args: { invitation: string | { code: string } } | [invitation: st
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -487,7 +487,7 @@ ogImage.get = (args: { invitation: string | { code: string } } | [invitation: st
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImage.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -497,7 +497,7 @@ ogImage.head = (args: { invitation: string | { code: string } } | [invitation: s
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 const ogImageForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -507,7 +507,7 @@ const ogImageForm = (args: { invitation: string | { code: string } } | [invitati
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImageForm.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -517,7 +517,7 @@ ogImageForm.get = (args: { invitation: string | { code: string } } | [invitation
 
 /**
 * @see \App\Http\Controllers\InvitationController::ogImage
-* @see app/Http/Controllers/InvitationController.php:131
+* @see app/Http/Controllers/InvitationController.php:130
 * @route '/asistencia/{invitation}/og.jpg'
 */
 ogImageForm.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -534,7 +534,7 @@ ogImage.form = ogImageForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 export const details = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -549,7 +549,7 @@ details.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 details.url = (options?: RouteQueryOptions) => {
@@ -558,7 +558,7 @@ details.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 details.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -568,7 +568,7 @@ details.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 details.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -578,7 +578,7 @@ details.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 const detailsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -588,7 +588,7 @@ const detailsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 detailsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -598,7 +598,7 @@ detailsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\InvitationController::details
-* @see app/Http/Controllers/InvitationController.php:176
+* @see app/Http/Controllers/InvitationController.php:174
 * @route '/detalles'
 */
 detailsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -615,7 +615,7 @@ details.form = detailsForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 export const wishlist = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -630,7 +630,7 @@ wishlist.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 wishlist.url = (options?: RouteQueryOptions) => {
@@ -639,7 +639,7 @@ wishlist.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 wishlist.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -649,7 +649,7 @@ wishlist.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 wishlist.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -659,7 +659,7 @@ wishlist.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 const wishlistForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -669,7 +669,7 @@ const wishlistForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 wishlistForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -679,7 +679,7 @@ wishlistForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\InvitationController::wishlist
-* @see app/Http/Controllers/InvitationController.php:212
+* @see app/Http/Controllers/InvitationController.php:210
 * @route '/lista-de-deseos'
 */
 wishlistForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -696,7 +696,7 @@ wishlist.form = wishlistForm
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserveWishlistItem
-* @see app/Http/Controllers/InvitationController.php:238
+* @see app/Http/Controllers/InvitationController.php:236
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 export const reserveWishlistItem = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -711,7 +711,7 @@ reserveWishlistItem.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserveWishlistItem
-* @see app/Http/Controllers/InvitationController.php:238
+* @see app/Http/Controllers/InvitationController.php:236
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserveWishlistItem.url = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -744,7 +744,7 @@ reserveWishlistItem.url = (args: { wishlistItem: number | { id: number } } | [wi
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserveWishlistItem
-* @see app/Http/Controllers/InvitationController.php:238
+* @see app/Http/Controllers/InvitationController.php:236
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserveWishlistItem.post = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -754,7 +754,7 @@ reserveWishlistItem.post = (args: { wishlistItem: number | { id: number } } | [w
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserveWishlistItem
-* @see app/Http/Controllers/InvitationController.php:238
+* @see app/Http/Controllers/InvitationController.php:236
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 const reserveWishlistItemForm = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -764,7 +764,7 @@ const reserveWishlistItemForm = (args: { wishlistItem: number | { id: number } }
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserveWishlistItem
-* @see app/Http/Controllers/InvitationController.php:238
+* @see app/Http/Controllers/InvitationController.php:236
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserveWishlistItemForm.post = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

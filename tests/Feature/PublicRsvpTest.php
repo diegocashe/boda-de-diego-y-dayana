@@ -58,7 +58,6 @@ class PublicRsvpTest extends TestCase
         $response = $this->from(route('invitation.rsvp.show', $invitation))->post(route('invitation.rsvp.store', $invitation), [
             'attending' => 'yes',
             'guests' => 3,
-            'dietary' => 'Sin gluten',
             'message' => 'Ahi estaremos con mucho gusto.',
         ]);
 
@@ -67,7 +66,6 @@ class PublicRsvpTest extends TestCase
         $invitation->refresh();
         $this->assertTrue($invitation->attending);
         $this->assertSame(3, $invitation->confirmed_passes);
-        $this->assertSame('Sin gluten', $invitation->dietary);
         $this->assertSame('Ahi estaremos con mucho gusto.', $invitation->message);
         $this->assertNotNull($invitation->responded_at);
     }
@@ -86,7 +84,6 @@ class PublicRsvpTest extends TestCase
         $invitation->refresh();
         $this->assertFalse($invitation->attending);
         $this->assertNull($invitation->confirmed_passes);
-        $this->assertNull($invitation->dietary);
         $this->assertNotNull($invitation->responded_at);
     }
 

@@ -15,9 +15,7 @@ export interface RsvpForm {
 
 export function useRsvpForm(guest: GuestInvitation, onSubmitted: () => void): RsvpForm {
     // El valor inicial de pases no puede exceder los pases de la invitación.
-    const [data, setData] = useState<RsvpFormData>(
-        guest.response ?? { attending: null, guests: Math.min(2, guest.maxPasses), dietary: '', message: '' },
-    );
+    const [data, setData] = useState<RsvpFormData>(guest.response ?? { attending: null, guests: Math.min(2, guest.maxPasses), message: '' });
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(guest.response !== null);
     const [errors, setErrors] = useState<Record<string, string>>({});

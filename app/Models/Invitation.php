@@ -19,7 +19,6 @@ use Illuminate\Support\Str;
  * @property bool|null $attending
  * @property int|null $confirmed_passes
  * @property int|null $table_number
- * @property string|null $dietary
  * @property string|null $message
  * @property Carbon|null $responded_at
  * @property Carbon|null $sent_at
@@ -45,7 +44,6 @@ class Invitation extends Model
         'attending',
         'confirmed_passes',
         'table_number',
-        'dietary',
         'message',
         'responded_at',
         'sent_at',

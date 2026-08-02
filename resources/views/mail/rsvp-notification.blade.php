@@ -50,12 +50,6 @@
                                 <p class="sans" style="font-size:15px; line-height:1.7; color:#6e6555; text-align:center; margin:22px 0 0;">
                                     Pases confirmados: <strong>{{ $invitation->confirmed_passes }}</strong> de {{ $invitation->max_passes }}
                                 </p>
-
-                                @if ($invitation->dietary)
-                                    <p class="sans" style="font-size:14px; line-height:1.7; color:#6e6555; text-align:center; margin:8px 0 0;">
-                                        Restricciones alimentarias: {{ $invitation->dietary }}
-                                    </p>
-                                @endif
                             @endif
 
                             @if ($invitation->message)
