@@ -1,3 +1,21 @@
+# [1.19.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.18.0...v1.19.0) (2026-08-02)
+
+
+### Bug Fixes
+
+* **dashboard:** scope invitation stats to in-person guests and cap response rate ([5a55106](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/5a551069c2e07da4e4a8c3cbf4c6cf4596ef7127))
+* **invitations:** auto-mark invitation as sent when guest responds ([bbf22af](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/bbf22aff35883af0ea0edd47a3f51d2fef5088c1))
+
+
+### Features
+
+* **invitations:** remove dietary restrictions tracking ([fcfc9cd](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/fcfc9cd3b30a0446cbc51a3af0a384fa1c38b0b9))
+* **wishlist:** add dashboard CRUD UI for wishlist items ([db88eb0](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/db88eb034acdecac46050585f9dc1f244e3ea22d))
+* **wishlist:** add data model, migration and dashboard CRUD backend ([7a101ee](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/7a101ee22947c4d0852b74a316ddb88f470f8a82))
+* **wishlist:** add public wishlist page and nav integration ([eb61192](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/eb6119223fb22a36dd3041d7ac0dd1aa9ec14cb9))
+* **wishlist:** add public wishlist page and reservation endpoint ([591ad07](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/591ad07bf2fe265ebb7ec15569b1917f3efb9533))
+* **wishlist:** wire wishlist routes and regenerate wayfinder helpers ([208ddf2](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/208ddf2c20b53d4b2ebe58d6e1109b7bf6d5a34a))
+
 # [1.18.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.17.0...v1.18.0) (2026-07-12)
 
 
