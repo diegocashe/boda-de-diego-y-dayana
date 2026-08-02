@@ -15,9 +15,9 @@ class DashboardController extends Controller
      */
     public function index(): Response
     {
-        $invitations = Invitation::query()->get([
-            'max_passes', 'confirmed_passes', 'attending', 'sent_at', 'dietary',
-        ]);
+        $invitations = Invitation::query()
+            ->where('attendance_mode', 'in_person')
+            ->get(['max_passes', 'confirmed_passes', 'attending', 'sent_at']);
 
         $total = $invitations->count();
         $sent = $invitations->whereNotNull('sent_at')->count();
@@ -35,8 +35,7 @@ class DashboardController extends Controller
                 'confirmedGuests' => (int) $confirmed->sum('confirmed_passes'),
                 'pendingInvitations' => $pending->count(),
                 'declinedInvitations' => $declined->count(),
-                'dietaryRestrictions' => $invitations->whereNotNull('dietary')->where('dietary', '!=', '')->count(),
-                'responseRate' => $sent > 0 ? round(($responded / $sent) * 100) : 0,
+                'responseRate' => $sent > 0 ? round((min($responded, $sent) / $sent) * 100) : 0,
                 'daysUntilWedding' => (int) now()->diffInDays(WeddingSetting::current()->wedding_at, false),
             ],
         ]);
