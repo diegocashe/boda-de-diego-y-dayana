@@ -6,7 +6,7 @@ export default function BottomNav() {
     const { url } = usePage();
 
     return (
-        <nav className="fixed right-0 bottom-0 left-0 z-50 grid grid-cols-4 items-center border-t border-ink/10 bg-[#f8f4eb]/90 px-1.5 pt-[9px] pb-[calc(9px+env(safe-area-inset-bottom))] backdrop-blur-xl desk:hidden">
+        <nav className="fixed right-0 bottom-0 left-0 z-50 grid grid-cols-5 items-center border-t border-ink/10 bg-[#f8f4eb]/90 px-1.5 pt-[9px] pb-[calc(9px+env(safe-area-inset-bottom))] backdrop-blur-xl desk:hidden">
             {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
                 <Link
                     key={label}
