@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationCo
 use App\Http\Controllers\Dashboard\TimelineItemController;
 use App\Http\Controllers\Dashboard\VenueController;
 use App\Http\Controllers\Dashboard\WeddingSettingController;
+use App\Http\Controllers\Dashboard\WishlistItemController;
 use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,8 @@ Route::get('asistencia/{invitation:code}', [InvitationController::class, 'rsvpSh
 Route::post('asistencia/{invitation:code}', [InvitationController::class, 'rsvpStore'])->name('invitation.rsvp.store');
 Route::get('asistencia/{invitation:code}/og.jpg', [InvitationController::class, 'ogImage'])->name('invitation.og-image');
 Route::get('detalles', [InvitationController::class, 'details'])->name('invitation.details');
+Route::get('lista-de-deseos', [InvitationController::class, 'wishlist'])->name('invitation.wishlist');
+Route::post('lista-de-deseos/{wishlistItem}/reservar', [InvitationController::class, 'reserveWishlistItem'])->name('invitation.wishlist.reserve');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -42,6 +45,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/invitations/{invitation}/send', [DashboardInvitationController::class, 'send'])->name('invitations.send');
     Route::put('dashboard/invitations/{invitation}/lock', [DashboardInvitationController::class, 'toggleLock'])->name('invitations.lock');
     Route::post('dashboard/invitations/{invitation}/og-regenerate', [DashboardInvitationController::class, 'regenerateOgImage'])->name('invitations.og-regenerate');
+
+    Route::get('dashboard/wishlist', [WishlistItemController::class, 'index'])->name('wishlist.index');
+    Route::post('dashboard/wishlist', [WishlistItemController::class, 'store'])->name('wishlist.store');
+    Route::patch('dashboard/wishlist/reorder', [WishlistItemController::class, 'reorder'])->name('wishlist.reorder');
+    Route::put('dashboard/wishlist/{wishlistItem}', [WishlistItemController::class, 'update'])->name('wishlist.update');
+    Route::delete('dashboard/wishlist/{wishlistItem}', [WishlistItemController::class, 'destroy'])->name('wishlist.destroy');
 
     Route::get('dashboard/venues', [VenueController::class, 'index'])->name('venues.index');
     Route::post('dashboard/venues', [VenueController::class, 'store'])->name('venues.store');
