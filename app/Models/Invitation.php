@@ -75,6 +75,12 @@ class Invitation extends Model
         static::creating(function (self $invitation): void {
             $invitation->code ??= self::generateCode();
         });
+
+        static::saving(function (self $invitation): void {
+            if ($invitation->attending !== null && $invitation->sent_at === null) {
+                $invitation->setAttribute('sent_at', now());
+            }
+        });
     }
 
     /**
