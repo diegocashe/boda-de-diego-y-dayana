@@ -1,3 +1,11 @@
+## [1.19.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.19.0...v1.19.1) (2026-08-03)
+
+
+### Bug Fixes
+
+* **dashboard:** update response rate calculation and hint for clarity ([a564429](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/a5644291926fc4ba57cfc422b6721fc7f4626387))
+* **wishlist:** update layout classes for wishlist items ([3b4d5b2](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/3b4d5b2da22c87a791282cff62fb035b486d2d50))
+
 # [1.19.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.18.0...v1.19.0) (2026-08-02)
 
 
