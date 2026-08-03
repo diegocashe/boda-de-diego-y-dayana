@@ -14,7 +14,7 @@ export default function WishlistSection({ items }: WishlistSectionProps) {
         <>
             <SectionHeader eyebrow="Con cariño" title="Mesa de regalos" className="mb-[clamp(26px,4vw,46px)]" as="h1" />
             <p className="reveal mx-auto -mt-[clamp(16px,3vw,26px)] mb-[clamp(26px,4vw,46px)] max-w-[560px] text-center text-[14.5px] leading-relaxed text-ink-soft">
-                Tu presencia es el regalo más importante. Si deseas obsequiarnos algo más, aquí compartimos algunas ideas con todo nuestro cariño.
+                Tu presencia es nuestro mejor regalo. Si deseas tener un detalle adicional con nosotros, aquí compartimos algunas sugerencias.
             </p>
 
             <div className="grid grid-cols-1 gap-5 desk:grid-cols-3 sm:grid-cols-2">
