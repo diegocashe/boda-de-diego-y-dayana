@@ -44,7 +44,7 @@ export default function Dashboard({ stats }: { stats: DashboardStats }) {
         {
             label: 'Tasa de respuesta',
             value: `${stats.responseRate}%`,
-            hint: 'sobre lo enviado',
+            hint: 'sobre el total de invitaciones',
             icon: TrendingUp,
         },
         {

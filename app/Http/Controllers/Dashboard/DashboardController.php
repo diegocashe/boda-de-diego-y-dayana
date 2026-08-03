@@ -21,8 +21,8 @@ class DashboardController extends Controller
 
         $total = $invitations->count();
         $sent = $invitations->whereNotNull('sent_at')->count();
-        $confirmed = $invitations->where('attending', true);
-        $declined = $invitations->where('attending', false);
+        $confirmed = $invitations->whereStrict('attending', true);
+        $declined = $invitations->whereStrict('attending', false);
         $pending = $invitations->whereNull('attending');
         $responded = $confirmed->count() + $declined->count();
 
@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 'confirmedGuests' => (int) $confirmed->sum('confirmed_passes'),
                 'pendingInvitations' => $pending->count(),
                 'declinedInvitations' => $declined->count(),
-                'responseRate' => $sent > 0 ? round((min($responded, $sent) / $sent) * 100) : 0,
+                'responseRate' => $total > 0 ? round(($responded / $total) * 100) : 0,
                 'daysUntilWedding' => (int) now()->diffInDays(WeddingSetting::current()->wedding_at, false),
             ],
         ]);
