@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.19.1...v1.19.2) (2026-08-03)
+
+
+### Bug Fixes
+
+* **wishlist:** update message for clarity and warmth ([63cee14](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/63cee1491e5d1bb34975fe22ef44fe6ac8f667a3))
+
 ## [1.19.1](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.19.0...v1.19.1) (2026-08-03)
 
 
