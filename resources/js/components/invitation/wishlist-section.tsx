@@ -17,7 +17,7 @@ export default function WishlistSection({ items }: WishlistSectionProps) {
                 Tu presencia es el regalo más importante. Si deseas obsequiarnos algo más, aquí compartimos algunas ideas con todo nuestro cariño.
             </p>
 
-            <div className="columns-1 gap-5 desk:columns-3 sm:columns-2">
+            <div className="grid grid-cols-1 gap-5 desk:grid-cols-3 sm:grid-cols-2">
                 {items.map((item) => (
                     <WishlistCard key={item.id} item={item} />
                 ))}
@@ -32,7 +32,7 @@ function WishlistCard({ item }: { item: WishlistItem }) {
     const aspectRatio = item.imageWidth && item.imageHeight ? `${item.imageWidth} / ${item.imageHeight}` : undefined;
 
     return (
-        <div className="reveal group relative mb-5 break-inside-avoid overflow-hidden rounded-[20px] border border-ink/[0.08] bg-white shadow-[0_22px_44px_-32px_rgba(58,52,43,0.7)]">
+        <div className="reveal group relative overflow-hidden rounded-[20px] border border-ink/[0.08] bg-white shadow-[0_22px_44px_-32px_rgba(58,52,43,0.7)]">
             {item.imageUrl ? (
                 <img
                     src={item.imageUrl}
