@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\InvitationController::reserve
-* @see app/Http/Controllers/InvitationController.php:236
+* @see app/Http/Controllers/InvitationController.php:237
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 export const reserve = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ reserve.definition = {
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserve
-* @see app/Http/Controllers/InvitationController.php:236
+* @see app/Http/Controllers/InvitationController.php:237
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserve.url = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ reserve.url = (args: { wishlistItem: number | { id: number } } | [wishlistItem: 
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserve
-* @see app/Http/Controllers/InvitationController.php:236
+* @see app/Http/Controllers/InvitationController.php:237
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserve.post = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ reserve.post = (args: { wishlistItem: number | { id: number } } | [wishlistItem:
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserve
-* @see app/Http/Controllers/InvitationController.php:236
+* @see app/Http/Controllers/InvitationController.php:237
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 const reserveForm = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const reserveForm = (args: { wishlistItem: number | { id: number } } | [wishlist
 
 /**
 * @see \App\Http\Controllers\InvitationController::reserve
-* @see app/Http/Controllers/InvitationController.php:236
+* @see app/Http/Controllers/InvitationController.php:237
 * @route '/lista-de-deseos/{wishlistItem}/reservar'
 */
 reserveForm.post = (args: { wishlistItem: number | { id: number } } | [wishlistItem: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
