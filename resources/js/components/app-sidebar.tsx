@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Gem, Gift, Heart, LayoutGrid, Mail, MapPin, NotebookText, Star } from 'lucide-react';
+import { BookOpen, Camera, FolderGit2, Gem, Gift, Heart, LayoutGrid, Mail, MapPin, NotebookText, Star } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -7,6 +7,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as giftRegistryIndex } from '@/routes/gift-registry';
+import { index as guestUploadsIndex } from '@/routes/guest-uploads';
 import { edit as homeContentEdit } from '@/routes/home-content';
 import { index as invitationsIndex } from '@/routes/invitations';
 import { index as timelineIndex } from '@/routes/timeline';
@@ -40,6 +41,11 @@ const mainNavItems: NavItem[] = [
         title: 'Invitaciones',
         href: invitationsIndex(),
         icon: Mail,
+    },
+    {
+        title: 'Fotos de invitados',
+        href: guestUploadsIndex(),
+        icon: Camera,
     },
     {
         title: 'Ubicaciones',

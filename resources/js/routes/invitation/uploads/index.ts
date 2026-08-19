@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 export const show = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -11,13 +11,13 @@ export const show = (args: { invitation: string | { code: string } } | [invitati
 
 show.definition = {
     methods: ["get","head"],
-    url: '/asistencia/{invitation}',
+    url: '/fotos/{invitation}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 show.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -48,9 +48,9 @@ show.url = (args: { invitation: string | { code: string } } | [invitation: strin
 }
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 show.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -58,9 +58,9 @@ show.get = (args: { invitation: string | { code: string } } | [invitation: strin
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 show.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
@@ -68,9 +68,9 @@ show.head = (args: { invitation: string | { code: string } } | [invitation: stri
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 const showForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
@@ -78,9 +78,9 @@ const showForm = (args: { invitation: string | { code: string } } | [invitation:
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 showForm.get = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
@@ -88,9 +88,9 @@ showForm.get = (args: { invitation: string | { code: string } } | [invitation: s
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::show
-* @see app/Http/Controllers/InvitationController.php:96
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::show
+* @see app/Http/Controllers/GuestUploadController.php:21
+* @route '/fotos/{invitation}'
 */
 showForm.head = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, {
@@ -105,9 +105,9 @@ showForm.head = (args: { invitation: string | { code: string } } | [invitation: 
 show.form = showForm
 
 /**
-* @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:144
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::store
+* @see app/Http/Controllers/GuestUploadController.php:42
+* @route '/fotos/{invitation}'
 */
 export const store = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -116,13 +116,13 @@ export const store = (args: { invitation: string | { code: string } } | [invitat
 
 store.definition = {
     methods: ["post"],
-    url: '/asistencia/{invitation}',
+    url: '/fotos/{invitation}',
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:144
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::store
+* @see app/Http/Controllers/GuestUploadController.php:42
+* @route '/fotos/{invitation}'
 */
 store.url = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -153,9 +153,9 @@ store.url = (args: { invitation: string | { code: string } } | [invitation: stri
 }
 
 /**
-* @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:144
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::store
+* @see app/Http/Controllers/GuestUploadController.php:42
+* @route '/fotos/{invitation}'
 */
 store.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -163,9 +163,9 @@ store.post = (args: { invitation: string | { code: string } } | [invitation: str
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:144
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::store
+* @see app/Http/Controllers/GuestUploadController.php:42
+* @route '/fotos/{invitation}'
 */
 const storeForm = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: store.url(args, options),
@@ -173,9 +173,9 @@ const storeForm = (args: { invitation: string | { code: string } } | [invitation
 })
 
 /**
-* @see \App\Http\Controllers\InvitationController::store
-* @see app/Http/Controllers/InvitationController.php:144
-* @route '/asistencia/{invitation}'
+* @see \App\Http\Controllers\GuestUploadController::store
+* @see app/Http/Controllers/GuestUploadController.php:42
+* @route '/fotos/{invitation}'
 */
 storeForm.post = (args: { invitation: string | { code: string } } | [invitation: string | { code: string } ] | string | { code: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: store.url(args, options),
@@ -184,9 +184,9 @@ storeForm.post = (args: { invitation: string | { code: string } } | [invitation:
 
 store.form = storeForm
 
-const rsvp = {
+const uploads = {
     show: Object.assign(show, show),
     store: Object.assign(store, store),
 }
 
-export default rsvp
+export default uploads

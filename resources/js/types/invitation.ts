@@ -64,6 +64,11 @@ export interface GodparentsContact {
     phoneUrl: string | null;
 }
 
+export interface GuestUploadInvitation {
+    name: string;
+    code: string;
+}
+
 export type WishlistItemStatus = 'available' | 'reserved';
 
 export interface WishlistItem {

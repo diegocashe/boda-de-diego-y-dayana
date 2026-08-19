@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\GiftRegistryEntryController;
+use App\Http\Controllers\Dashboard\GuestUploadController as DashboardGuestUploadController;
 use App\Http\Controllers\Dashboard\HomeContentController;
 use App\Http\Controllers\Dashboard\ImageOptimizationController;
 use App\Http\Controllers\Dashboard\InvitationController as DashboardInvitationController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Dashboard\TimelineItemController;
 use App\Http\Controllers\Dashboard\VenueController;
 use App\Http\Controllers\Dashboard\WeddingSettingController;
 use App\Http\Controllers\Dashboard\WishlistItemController;
+use App\Http\Controllers\GuestUploadController;
 use App\Http\Controllers\InvitationController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,8 @@ Route::get('asistencia', [InvitationController::class, 'rsvp'])->name('invitatio
 Route::get('asistencia/{invitation:code}', [InvitationController::class, 'rsvpShow'])->name('invitation.rsvp.show');
 Route::post('asistencia/{invitation:code}', [InvitationController::class, 'rsvpStore'])->name('invitation.rsvp.store');
 Route::get('asistencia/{invitation:code}/og.jpg', [InvitationController::class, 'ogImage'])->name('invitation.og-image');
+Route::get('fotos/{invitation:code}', [GuestUploadController::class, 'show'])->name('invitation.uploads.show');
+Route::post('fotos/{invitation:code}', [GuestUploadController::class, 'store'])->name('invitation.uploads.store');
 Route::get('detalles', [InvitationController::class, 'details'])->name('invitation.details');
 Route::get('lista-de-deseos', [InvitationController::class, 'wishlist'])->name('invitation.wishlist');
 Route::post('lista-de-deseos/{wishlistItem}/reservar', [InvitationController::class, 'reserveWishlistItem'])->name('invitation.wishlist.reserve');
@@ -45,6 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('dashboard/invitations/{invitation}/send', [DashboardInvitationController::class, 'send'])->name('invitations.send');
     Route::put('dashboard/invitations/{invitation}/lock', [DashboardInvitationController::class, 'toggleLock'])->name('invitations.lock');
     Route::post('dashboard/invitations/{invitation}/og-regenerate', [DashboardInvitationController::class, 'regenerateOgImage'])->name('invitations.og-regenerate');
+
+    Route::get('dashboard/guest-uploads', [DashboardGuestUploadController::class, 'index'])->name('guest-uploads.index');
 
     Route::get('dashboard/wishlist', [WishlistItemController::class, 'index'])->name('wishlist.index');
     Route::post('dashboard/wishlist', [WishlistItemController::class, 'store'])->name('wishlist.store');
