@@ -1,3 +1,15 @@
+# [1.20.0](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.19.2...v1.20.0) (2026-08-26)
+
+
+### Bug Fixes
+
+* **upload:** change to postJson for invalid file type handling ([017393d](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/017393d9ad73f7257021ff7f723f39fc2b271fb2))
+
+
+### Features
+
+* **guest-uploads:** let guests upload wedding photos/videos and review them in the dashboard ([d61a654](https://github.com/diegocashe/boda-de-diego-y-dayana/commit/d61a654f0ac5adb00e0bbfbdf6fc4598ab9ff4be))
+
 ## [1.19.2](https://github.com/diegocashe/boda-de-diego-y-dayana/compare/v1.19.1...v1.19.2) (2026-08-03)
 
 
