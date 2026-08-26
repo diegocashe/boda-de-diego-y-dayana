@@ -69,7 +69,7 @@ class GuestUploadTest extends TestCase
         $invitation = Invitation::factory()->create();
         $file = UploadedFile::fake()->create('archivo.pdf', 100, 'application/pdf');
 
-        $response = $this->post(route('invitation.uploads.store', $invitation), ['file' => $file]);
+        $response = $this->postJson(route('invitation.uploads.store', $invitation), ['file' => $file]);
 
         $response->assertStatus(422);
         $this->assertSame(0, GuestUpload::count());
